@@ -19,7 +19,7 @@
     <div class="difficulty-circle">{card.difficulty}</div>
 
     <!-- C: Block modifier (top-right corner) -->
-    {#if card.hasBlock}
+    {#if card.hasBlock === true}
       <div class="block-modifier-corner">
         <ZoneSymbol zone={card.blockZone} size={12} color="#333" />
         <span class="block-number">+{card.blockModifier}</span>
@@ -47,32 +47,50 @@
         </div>
       {/if}
 
-      <!-- D: Attack zone/speed (middle-right on art) -->
+      <!-- D & E: Attack zone/speed and damage (middle-right on attack cards) -->
       {#if card.cardType === 'attack'}
-        <div class="attack-zone-stat">
-          <div class="zone-speed-circle">
-            <ZoneSymbol zone={card.attackZone} size={10} color="#333" />
-            <span class="speed-value">{card.speed}</span>
+        <div class="attack-stats-group">
+          <div class="attack-zone-stat">
+            <div class="zone-speed-circle">
+              <ZoneSymbol zone={card.attackZone} size={10} color="#333" />
+              <span class="speed-value">{card.speed}</span>
+            </div>
           </div>
-        </div>
-      {/if}
-
-      <!-- E: Damage value (lower-right on art) -->
-      {#if card.cardType === 'attack'}
-        <div class="damage-stat">
-          <div class="damage-value-circle">
-            <span class="damage-value">{card.damage}</span>
+          <div class="damage-stat">
+            <div class="damage-value-circle">
+              <span class="damage-value">{card.damage}</span>
+            </div>
           </div>
         </div>
       {/if}
 
       <!-- Character stats for character cards -->
       {#if card.cardType === 'character'}
-        <div class="character-hand-size">
-          <UFSStatSymbols type="handsize" value={card.handSize} size={20} />
-        </div>
-        <div class="character-vitality">
-          <UFSStatSymbols type="vitality" value={card.maxVitality} size={20} />
+        <div class="character-stats-group">
+          <div class="character-hand-size">
+            <UFSStatSymbols type="handsize" value={card.handSize} size={20} />
+          </div>
+          <div class="character-vitality">
+            <UFSStatSymbols type="vitality" value={card.maxVitality} size={20} />
+          </div>
+          <div class="character-vital-stats">
+            <div class="vital-stat-item">
+              <span class="vital-label">G:</span>
+              <span class="vital-value">{card.vitalStats.gender || '?'}</span>
+            </div>
+            <div class="vital-stat-item">
+              <span class="vital-label">Ht:</span>
+              <span class="vital-value">{card.vitalStats.height || '?'}</span>
+            </div>
+            <div class="vital-stat-item">
+              <span class="vital-label">Wt:</span>
+              <span class="vital-value">{card.vitalStats.weight || '?'}</span>
+            </div>
+            <div class="vital-stat-item">
+              <span class="vital-label">Bt:</span>
+              <span class="vital-value">{card.vitalStats.bloodType || '?'}</span>
+            </div>
+          </div>
         </div>
       {/if}
     </div>
@@ -105,15 +123,6 @@
       </div>
     </div>
 
-    <!-- H: Vital Statistics (Character only - bottom right) -->
-    {#if card.cardType === 'character'}
-      <div class="vital-stats-box">
-        <div class="vital-line">G: {card.vitalStats.gender || '?'}</div>
-        <div class="vital-line">Ht: {card.vitalStats.height || '?'}</div>
-        <div class="vital-line">Wt: {card.vitalStats.weight || '?'}</div>
-        <div class="vital-line">Bt: {card.vitalStats.bloodType || '?'}</div>
-      </div>
-    {/if}
 
     <!-- Bottom Footer -->
     <div class="card-footer">
@@ -127,10 +136,6 @@
         {card.rarity?.toUpperCase()} • {card.setNumber || 'XXX/XXX'}
       </div>
       
-      <!-- J: Control Value (right) -->
-      <div class="control-circle">
-        <ControlSymbol value={card.controlValue} size={16} color="black" backgroundColor="white" />
-      </div>
     </div>
 
     <!-- G: Card type indicator (bottom-left) -->
@@ -141,6 +146,11 @@
     <!-- I: Universe/set info (bottom-left corner) -->
     <div class="universe-set-corner">
       {card.universe || 'UFS'}
+    </div>
+
+    <!-- J: Control Value (bottom-right corner) -->
+    <div class="control-value-corner">
+      <ControlSymbol value={card.controlValue} size={16} color="black" backgroundColor="white" />
     </div>
   </div>
 </div>
@@ -304,26 +314,6 @@
     color: #333;
   }
 
-  /* Vital Stats Box */
-  .vital-stats-box {
-    position: absolute;
-    bottom: 110px;
-    right: 8px;
-    background: rgba(255, 255, 255, 0.95);
-    border: 1px solid rgba(139, 69, 19, 0.5);
-    border-radius: 4px;
-    padding: 4px 6px;
-    font-size: 6px;
-    line-height: 1.2;
-    color: #333;
-    z-index: 15;
-    backdrop-filter: blur(2px);
-    box-shadow: 0 1px 4px rgba(0,0,0,0.2);
-  }
-
-  .vital-line {
-    white-space: nowrap;
-  }
 
   /* Footer */
   .card-footer {
@@ -385,7 +375,7 @@
 
     * {
       -webkit-print-color-adjust: exact !important;
-      color-adjust: exact !important;
+      print-color-adjust: exact !important;
     }
   }
 
@@ -489,18 +479,23 @@
     color: var(--frame-color);
   }
 
-  .attack-zone-stat {
+  .attack-stats-group {
     position: absolute;
-    top: 40%;
+    top: 50%;
     right: 8px;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
     z-index: 10;
   }
 
+  .attack-zone-stat {
+    position: relative;
+  }
+
   .damage-stat {
-    position: absolute;
-    bottom: 30%;
-    right: 8px;
-    z-index: 10;
+    position: relative;
   }
 
   .zone-speed-circle, .damage-value-circle {
@@ -524,38 +519,62 @@
     color: var(--frame-color);
   }
 
-  .character-hand-size {
+  .character-stats-group {
     position: absolute;
     top: 40px;
     right: 8px;
-    z-index: 10;
-    background: rgba(255, 255, 255, 0.95);
-    border: 2px solid var(--frame-color);
-    border-radius: 50%;
-    width: 24px;
-    height: 24px;
     display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: bold;
-    font-size: 10px;
+    flex-direction: column;
+    gap: 6px;
+    z-index: 10;
   }
 
+  .character-hand-size,
   .character-vitality {
-    position: absolute;
-    top: 70px;
-    right: 8px;
-    z-index: 10;
     background: rgba(255, 255, 255, 0.95);
     border: 2px solid var(--frame-color);
     border-radius: 50%;
-    width: 24px;
-    height: 24px;
+    width: 28px;
+    height: 28px;
     display: flex;
     align-items: center;
     justify-content: center;
     font-weight: bold;
     font-size: 10px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  }
+
+  .character-vital-stats {
+    background: rgba(255, 255, 255, 0.95);
+    border: 2px solid var(--frame-color);
+    border-radius: 6px;
+    padding: 6px 8px;
+    backdrop-filter: blur(2px);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  }
+
+  .vital-stat-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 7px;
+    line-height: 1.2;
+    margin-bottom: 2px;
+  }
+
+  .vital-stat-item:last-child {
+    margin-bottom: 0;
+  }
+
+  .vital-label {
+    font-weight: bold;
+    color: var(--frame-color);
+    min-width: 12px;
+  }
+
+  .vital-value {
+    color: #333;
+    font-weight: 500;
   }
 
   .universe-set-corner {
@@ -568,6 +587,25 @@
     padding: 2px 4px;
     border-radius: 3px;
     z-index: 10;
+  }
+
+  .control-value-corner {
+    position: absolute;
+    bottom: 8px;
+    right: 8px;
+    width: 24px;
+    height: 24px;
+    background: white;
+    color: black;
+    border: 2px solid var(--frame-color);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    font-weight: bold;
+    z-index: 10;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
   }
 
   /* Card Type Colors */
