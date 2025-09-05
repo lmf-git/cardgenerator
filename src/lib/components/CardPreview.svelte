@@ -355,18 +355,6 @@
     opacity: 0.8;
   }
 
-  .control-circle {
-    width: 16px;
-    height: 16px;
-    background: white;
-    color: black;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 10px;
-    font-weight: bold;
-  }
 
   /* Card Type Indicator */
   .card-type-indicator {

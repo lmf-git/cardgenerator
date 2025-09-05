@@ -516,11 +516,6 @@
     transform: translateY(-0.0625em); /* -1px */
   }
 
-  .keyword-checkbox {
-    width: auto;
-    margin: 0;
-    transform: scale(1.1);
-  }
 
   .keyword-name {
     text-transform: capitalize;
@@ -535,11 +530,6 @@
     font-style: italic;
   }
 
-  .form-textarea-specific {
-    resize: vertical;
-    min-height: 5em; /* 80px */
-    line-height: 1.4;
-  }
 
 
   /* Scrollbar styling */
