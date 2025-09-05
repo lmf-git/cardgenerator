@@ -64,23 +64,23 @@
             {showEditMobile ? '👁️ Preview' : '✏️ Edit'}
           </button>
         </div>
-        
-        <div class="export-controls">
-          <button onclick={() => window.print()} class="print-btn">
-            🖨️ Print
-          </button>
-          <button onclick={exportToPDF} class="export-btn" disabled={isExporting}>
-            {isExporting ? 'Exporting...' : '📄 PDF'}
-          </button>
-          <button onclick={exportToPNG} class="export-btn" disabled={isExporting}>
-            {isExporting ? 'Exporting...' : '🖼️ PNG'}
-          </button>
-        </div>
       </div>
 
       <div bind:this={cardPreviewRef} class="preview-container">
         <CardPreview />
       </div>
+    </div>
+
+    <div class="export-controls">
+      <button onclick={() => window.print()} class="print-btn">
+        🖨️ Print
+      </button>
+      <button onclick={exportToPDF} class="export-btn" disabled={isExporting}>
+        {isExporting ? 'Exporting...' : '📄 PDF'}
+      </button>
+      <button onclick={exportToPNG} class="export-btn" disabled={isExporting}>
+        {isExporting ? 'Exporting...' : '🖼️ PNG'}
+      </button>
     </div>
   </div>
 </main>
@@ -141,6 +141,7 @@
     border: 1px solid #e9ecef;
     position: sticky;
     top: 20px;
+    position: relative; /* For absolute positioned export controls */
   }
 
   .preview-controls {
@@ -157,6 +158,9 @@
   }
 
   .export-controls {
+    position: absolute;
+    bottom: -60px;
+    right: 0;
     display: flex;
     gap: 8px;
     flex-wrap: wrap;
@@ -234,8 +238,14 @@
     .preview-panel {
       order: 1;
       background: white;
-      padding: 15px;
-      border-radius: 8px;
+      padding: 0;
+      border-radius: 0;
+      width: 100vw;
+      margin-left: calc(-50vw + 50%);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 50vh;
     }
 
     .mobile-edit-toggle {
@@ -243,11 +253,30 @@
     }
 
     .preview-controls {
+      position: static;
       margin-bottom: 15px;
+      padding: 15px;
+      border-bottom: none;
+      box-shadow: none;
+      order: 3;
+      background: #f8f9fa;
+      border-radius: 8px;
     }
 
     .export-controls {
-      justify-content: center;
+      position: static;
+      bottom: auto;
+      left: auto;
+      right: auto;
+      background: #f8f9fa;
+      padding: 15px;
+      border-top: 1px solid #ddd;
+      border-radius: 8px;
+      box-shadow: none;
+      z-index: auto;
+      display: flex;
+      gap: 10px;
+      margin-top: 20px;
     }
 
     .title-mobile {
@@ -273,13 +302,9 @@
       padding: 15px;
     }
 
-    .export-controls {
-      flex-direction: column;
-      align-items: stretch;
-    }
-
     .edit-btn, .print-btn, .export-btn {
-      width: 100%;
+      flex: 1;
+      min-height: 48px; /* Better touch targets */
     }
   }
 

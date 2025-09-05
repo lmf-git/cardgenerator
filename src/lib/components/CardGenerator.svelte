@@ -371,6 +371,41 @@
       </div>
     </div>
 
+    <div class="form-row">
+      <div class="form-group">
+        <label for="set-name">Set Name</label>
+        <input 
+          id="set-name" 
+          type="text" 
+          class="form-input"
+          bind:value={card.setName}
+          placeholder="Shadowar 01"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="card-number">Card Number</label>
+        <input 
+          id="card-number" 
+          type="text" 
+          class="form-input"
+          bind:value={card.cardNumber}
+          placeholder="001/150"
+        />
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="artist">Artist Credits</label>
+      <input 
+        id="artist" 
+        type="text" 
+        class="form-input"
+        bind:value={card.artist}
+        placeholder="Artist Name"
+      />
+    </div>
+
     <div class="form-group">
       <label for="card-art">Card Art</label>
       <input 

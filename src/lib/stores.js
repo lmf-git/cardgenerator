@@ -21,7 +21,10 @@ export const cardData = writable({
   universe: '',
   cardArt: null,
   rarity: '',
-  setNumber: ''
+  setNumber: '',
+  setName: '',
+  cardNumber: '',
+  artist: ''
 });
 
 // Print settings store

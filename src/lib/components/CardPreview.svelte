@@ -152,6 +152,22 @@
     <div class="control-value-corner">
       <ControlSymbol value={card.controlValue} size={16} color="black" backgroundColor="white" />
     </div>
+
+    <!-- Bottom card info -->
+    <div class="bottom-card-info">
+      <div class="info-item">
+        <span class="info-text">{card.setName || 'Set Name'}</span>
+      </div>
+      <div class="info-item">
+        <span class="info-text">{card.rarity || 'Rarity'}</span>
+      </div>
+      <div class="info-item">
+        <span class="info-text">{card.cardNumber || '000/000'}</span>
+      </div>
+      <div class="info-item">
+        <span class="info-text">{card.artist || 'Artist Name'}</span>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -169,16 +185,15 @@
     
     width: 15.625em; /* 250px */
     height: 21.875em; /* 350px */
-    background: white;
+    background: var(--frame-color);
     border: 0.1875em solid var(--frame-color); /* 3px */
+    border-radius: 0.75em; /* 12px */
     position: relative;
     box-shadow: 0 0.375em 1.25em rgba(0, 0, 0, 0.4); /* 0 6px 20px */
     font-family: 'Arial Black', Arial, sans-serif;
     overflow: hidden;
     display: flex;
     flex-direction: column;
-    /* UFS style angled corners */
-    clip-path: polygon(0.75em 0, 100% 0, 100% calc(100% - 0.75em), calc(100% - 0.75em) 100%, 0 100%, 0 0.75em);
     /* Ensure consistent anti-aliasing */
     -webkit-transform: translateZ(0);
     transform: translateZ(0);
@@ -191,11 +206,11 @@
   .card-art-area {
     flex: 1;
     position: relative;
-    background: #f0f0f0;
+    background: var(--frame-color);
     margin: 0.125em; /* 2px */
     overflow: hidden;
-    /* UFS style angled corners */
-    clip-path: polygon(0.5em 0, 100% 0, 100% calc(100% - 0.5em), calc(100% - 0.5em) 100%, 0 100%, 0 0.5em);
+    /* UFS style angled cut - only top-left corner */
+    clip-path: polygon(1em 0, 100% 0, 100% 100%, 0 100%, 0 1em);
   }
 
   .card-art {
@@ -260,11 +275,11 @@
   .art-placeholder {
     width: 100%;
     height: 100%;
-    background: linear-gradient(135deg, #e8e8e8, #d0d0d0);
+    background: var(--frame-color);
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #999;
+    color: white;
     font-size: 14px;
     font-weight: bold;
   }
@@ -603,21 +618,47 @@
 
   .control-value-corner {
     position: absolute;
-    bottom: 8px;
-    right: 8px;
-    width: 24px;
-    height: 24px;
+    bottom: 0.5em; /* 8px */
+    right: 0.5em; /* 8px */
+    width: 1.5em; /* 24px */
+    height: 1.5em; /* 24px */
     background: white;
     color: black;
-    border: 2px solid var(--frame-color);
+    border: 0.125em solid var(--frame-color); /* 2px */
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 10px;
+    font-size: 0.625em; /* 10px */
     font-weight: bold;
     z-index: 10;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    box-shadow: 0 0.125em 0.25em rgba(0,0,0,0.2); /* 0 2px 4px */
+  }
+
+  .bottom-card-info {
+    position: absolute;
+    bottom: -1.25em; /* 20px below card */
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    z-index: 5;
+  }
+
+  .info-item {
+    text-align: center;
+  }
+
+  .info-text {
+    color: black;
+    font-size: 0.5em; /* 8px */
+    font-weight: bold;
+    text-shadow: 
+      0 0 0.125em white,
+      0 0 0.25em white,
+      0 0 0.375em white;
+    white-space: nowrap;
   }
 
   /* Card Type Colors */
