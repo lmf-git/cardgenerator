@@ -42,7 +42,10 @@
 
 <main class="container">
   <header>
-    <h1>Universal Fighting System Card Generator</h1>
+    <h1>
+      <span class="title-full">Universal Fighting System Card Generator</span>
+      <span class="title-mobile">UFS Card Generator</span>
+    </h1>
     <p>Create and print custom UFS cards</p>
   </header>
 
@@ -98,6 +101,14 @@
   header h1 {
     color: #2c3e50;
     margin-bottom: 10px;
+  }
+
+  .title-mobile {
+    display: none;
+  }
+
+  .title-full {
+    display: inline;
   }
 
   header p {
@@ -204,48 +215,47 @@
   @media (max-width: 1024px) {
     .app-layout {
       grid-template-columns: 1fr;
-      gap: 15px;
-      position: relative;
+      gap: 20px;
     }
 
     .generator-panel {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      z-index: 1000;
       background: #f8f9fa;
-      overflow-y: auto;
+      padding: 15px;
+      border-radius: 8px;
+      order: 2;
       max-height: none;
+      overflow: visible;
     }
 
     .generator-panel.hide-mobile {
-      display: none;
+      display: block; /* Always show on mobile */
     }
 
     .preview-panel {
-      position: relative;
-      top: auto;
-      min-height: 100vh;
+      order: 1;
+      background: white;
+      padding: 15px;
+      border-radius: 8px;
     }
 
     .mobile-edit-toggle {
-      display: block;
+      display: none; /* Hide toggle buttons on mobile */
     }
 
     .preview-controls {
-      position: sticky;
-      top: 0;
-      background: white;
-      z-index: 100;
-      border-bottom: 1px solid #eee;
-      padding: 15px;
-      margin: -20px -20px 20px -20px;
+      margin-bottom: 15px;
     }
 
     .export-controls {
       justify-content: center;
+    }
+
+    .title-mobile {
+      display: inline;
+    }
+
+    .title-full {
+      display: none;
     }
   }
 

@@ -392,6 +392,14 @@
     font-size: 1rem;
   }
 
+  @media (max-width: 1024px) {
+    .card-generator {
+      max-height: none;
+      overflow-y: visible;
+      padding-right: 0;
+    }
+  }
+
   .card-generator h2 {
     margin-top: 0;
     margin-bottom: 1.25em; /* 20px */

@@ -171,13 +171,18 @@
     height: 21.875em; /* 350px */
     background: white;
     border: 0.1875em solid var(--frame-color); /* 3px */
-    border-radius: 0.75em; /* 12px */
     position: relative;
     box-shadow: 0 0.375em 1.25em rgba(0, 0, 0, 0.4); /* 0 6px 20px */
     font-family: 'Arial Black', Arial, sans-serif;
     overflow: hidden;
     display: flex;
     flex-direction: column;
+    /* UFS style angled corners */
+    clip-path: polygon(0.75em 0, 100% 0, 100% calc(100% - 0.75em), calc(100% - 0.75em) 100%, 0 100%, 0 0.75em);
+    /* Ensure consistent anti-aliasing */
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+    backface-visibility: hidden;
   }
 
   /* Removed old header styles - now using absolute positioning */
@@ -188,8 +193,9 @@
     position: relative;
     background: #f0f0f0;
     margin: 0.125em; /* 2px */
-    border-radius: 0.25em; /* 4px */
     overflow: hidden;
+    /* UFS style angled corners */
+    clip-path: polygon(0.5em 0, 100% 0, 100% calc(100% - 0.5em), calc(100% - 0.5em) 100%, 0 100%, 0 0.5em);
   }
 
   .card-art {
