@@ -3,7 +3,9 @@
 </script>
 
 <svg width={size} height={size} viewBox="0 0 24 24" class="symbol-icon">
-  <path d="M6 2l3 6h6l3-6-6 4-6-4zm0 20l3-6h6l3 6-6-4-6 4z" fill={color}/>
+  <!-- Water symbol: Water droplet -->
+  <path d="M12 2c-4 6-7 9-7 13 0 4 3 7 7 7s7-3 7-7c0-4-3-7-7-13z" fill={color}/>
+  <ellipse cx="10" cy="16" rx="2" ry="3" fill="white" opacity="0.3"/>
 </svg>
 
 <style>

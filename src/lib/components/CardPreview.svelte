@@ -167,13 +167,13 @@
     --frame-color: #666666;
     --frame-secondary: #888888;
     
-    width: 250px;
-    height: 350px;
+    width: 15.625em; /* 250px */
+    height: 21.875em; /* 350px */
     background: white;
-    border: 3px solid var(--frame-color);
-    border-radius: 12px;
+    border: 0.1875em solid var(--frame-color); /* 3px */
+    border-radius: 0.75em; /* 12px */
     position: relative;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 0.375em 1.25em rgba(0, 0, 0, 0.4); /* 0 6px 20px */
     font-family: 'Arial Black', Arial, sans-serif;
     overflow: hidden;
     display: flex;
@@ -187,8 +187,8 @@
     flex: 1;
     position: relative;
     background: #f0f0f0;
-    margin: 2px;
-    border-radius: 4px;
+    margin: 0.125em; /* 2px */
+    border-radius: 0.25em; /* 4px */
     overflow: hidden;
   }
 
@@ -215,22 +215,40 @@
     opacity: 0.9;
   }
 
+  /* Non-character cards have smaller contained image areas */
+  .card-art-area:not(.character-art) {
+    flex: none;
+    height: 60%;
+    margin: 0.5em; /* 8px */
+    margin-bottom: 0.25em; /* 4px */
+  }
+
+  .card-art-area.attack-art,
+  .card-art-area.action-art,
+  .card-art-area.foundation-art,
+  .card-art-area.asset-art {
+    flex: none;
+    height: 60%;
+    margin: 0.5em; /* 8px */
+    margin-bottom: 0.25em; /* 4px */
+  }
+
   /* Ensure character stats are visible over full image */
 
   .ufs-card:has(.character-art) .text-box-area {
     background: rgba(255, 255, 255, 0.98);
-    backdrop-filter: blur(4px);
-    border: 2px solid rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(0.25em); /* 4px */
+    border: 0.125em solid rgba(255, 255, 255, 0.8); /* 2px */
   }
 
   .ufs-card:has(.character-art) .card-footer {
     background: rgba(139, 69, 19, 0.9);
-    backdrop-filter: blur(2px);
+    backdrop-filter: blur(0.125em); /* 2px */
   }
 
   .ufs-card:has(.character-art) .resource-symbols-bar {
     background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(2px);
+    backdrop-filter: blur(0.125em); /* 2px */
   }
 
   .art-placeholder {
@@ -249,29 +267,29 @@
 
   /* Resource Symbols Bar */
   .resource-symbols-bar {
-    height: 20px;
+    height: 1.25em; /* 20px */
     background: rgba(255, 255, 255, 0.9);
-    border-top: 1px solid #ddd;
-    border-bottom: 1px solid #ddd;
+    border-top: 0.0625em solid #ddd; /* 1px */
+    border-bottom: 0.0625em solid #ddd; /* 1px */
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 4px;
+    gap: 0.25em; /* 4px */
     color: var(--frame-color);
-    margin: 0 2px;
-    padding: 2px 4px;
+    margin: 0 0.125em; /* 0 2px */
+    padding: 0.125em 0.25em; /* 2px 4px */
   }
 
   /* Text Box */
   .text-box-area {
     background: rgba(255, 255, 255, 0.95);
-    border: 1px solid #ccc;
-    margin: 2px 8px;
-    padding: 6px;
-    border-radius: 4px;
-    font-size: 8px;
+    border: 0.0625em solid #ccc; /* 1px */
+    margin: 0.125em 0.5em; /* 2px 8px */
+    padding: 0.375em; /* 6px */
+    border-radius: 0.25em; /* 4px */
+    font-size: 0.5em; /* 8px */
     line-height: 1.2;
-    max-height: 60px;
+    max-height: 3.75em; /* 60px */
     overflow: hidden;
   }
 
@@ -382,29 +400,29 @@
   /* Updated positioning for official UFS layout */
   .difficulty-circle {
     position: absolute;
-    top: 8px;
-    left: 8px;
-    width: 24px;
-    height: 24px;
+    top: 0.5em; /* 8px */
+    left: 0.5em; /* 8px */
+    width: 1.5em; /* 24px */
+    height: 1.5em; /* 24px */
     background: white;
     color: black;
-    border: 2px solid var(--frame-color);
+    border: 0.125em solid var(--frame-color); /* 2px */
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 12px;
+    font-size: 0.75em; /* 12px */
     font-weight: bold;
     z-index: 10;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    box-shadow: 0 0.125em 0.25em rgba(0,0,0,0.2); /* 0 2px 4px */
   }
 
   .card-name-vertical {
     position: absolute;
-    top: 40px;
-    left: 4px;
-    bottom: 100px;
-    width: 20px;
+    top: 2.5em; /* 40px */
+    left: 0.25em; /* 4px */
+    bottom: 6.25em; /* 100px */
+    width: 1.25em; /* 20px */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -416,26 +434,26 @@
     writing-mode: vertical-rl;
     text-orientation: mixed;
     color: white;
-    font-size: 10px;
+    font-size: 0.625em; /* 10px */
     font-weight: bold;
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
-    letter-spacing: 1px;
+    text-shadow: 0.0625em 0.0625em 0.125em rgba(0,0,0,0.8); /* 1px 1px 2px */
+    letter-spacing: 0.0625em; /* 1px */
     text-align: center;
   }
 
   /* Character card name - horizontal across top */
   .card-name-vertical.character-name {
     position: absolute;
-    top: 8px;
-    left: 40px;
-    right: 40px;
-    height: 24px;
+    top: 0.5em; /* 8px */
+    left: 2.5em; /* 40px */
+    right: 2.5em; /* 40px */
+    height: 1.5em; /* 24px */
     width: auto;
     display: flex;
     align-items: center;
     justify-content: center;
     background: linear-gradient(to right, var(--frame-color), var(--frame-secondary));
-    border-radius: 12px;
+    border-radius: 0.75em; /* 12px */
     z-index: 15;
   }
 
@@ -443,10 +461,10 @@
     writing-mode: initial;
     text-orientation: initial;
     color: white;
-    font-size: 12px;
+    font-size: 0.75em; /* 12px */
     font-weight: bold;
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
-    letter-spacing: 1px;
+    text-shadow: 0.0625em 0.0625em 0.125em rgba(0,0,0,0.8); /* 1px 1px 2px */
+    letter-spacing: 0.0625em; /* 1px */
     text-align: center;
     white-space: nowrap;
     overflow: hidden;
@@ -455,22 +473,22 @@
 
   .block-modifier-corner {
     position: absolute;
-    top: 8px;
-    right: 8px;
-    width: 24px;
-    height: 32px;
+    top: 0.5em; /* 8px */
+    right: 0.5em; /* 8px */
+    width: 1.5em; /* 24px */
+    height: 2em; /* 32px */
     background: white;
-    border: 2px solid var(--frame-color);
-    border-radius: 4px;
+    border: 0.125em solid var(--frame-color); /* 2px */
+    border-radius: 0.25em; /* 4px */
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    font-size: 8px;
+    font-size: 0.5em; /* 8px */
     font-weight: bold;
-    gap: 1px;
+    gap: 0.0625em; /* 1px */
     z-index: 10;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    box-shadow: 0 0.125em 0.25em rgba(0,0,0,0.2); /* 0 2px 4px */
   }
 
   .block-number {
@@ -482,11 +500,11 @@
   .attack-stats-group {
     position: absolute;
     top: 50%;
-    right: 8px;
+    right: 0.5em; /* 8px */
     transform: translateY(-50%);
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 0.5em; /* 8px */
     z-index: 10;
   }
 
@@ -499,18 +517,18 @@
   }
 
   .zone-speed-circle, .damage-value-circle {
-    width: 28px;
-    height: 28px;
+    width: 1.75em; /* 28px */
+    height: 1.75em; /* 28px */
     background: rgba(255, 255, 255, 0.95);
-    border: 2px solid var(--frame-color);
+    border: 0.125em solid var(--frame-color); /* 2px */
     border-radius: 50%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     font-weight: bold;
-    font-size: 10px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    font-size: 0.625em; /* 10px */
+    box-shadow: 0 0.125em 0.25em rgba(0,0,0,0.3); /* 0 2px 4px */
   }
 
   .speed-value, .damage-value {
@@ -521,27 +539,27 @@
 
   .character-stats-group {
     position: absolute;
-    top: 40px;
-    right: 8px;
+    top: 2.5em; /* 40px */
+    right: 0.5em; /* 8px */
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    gap: 0.375em; /* 6px */
     z-index: 10;
   }
 
   .character-hand-size,
   .character-vitality {
     background: rgba(255, 255, 255, 0.95);
-    border: 2px solid var(--frame-color);
+    border: 0.125em solid var(--frame-color); /* 2px */
     border-radius: 50%;
-    width: 28px;
-    height: 28px;
+    width: 1.75em; /* 28px */
+    height: 1.75em; /* 28px */
     display: flex;
     align-items: center;
     justify-content: center;
     font-weight: bold;
-    font-size: 10px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    font-size: 0.625em; /* 10px */
+    box-shadow: 0 0.125em 0.25em rgba(0,0,0,0.2); /* 0 2px 4px */
   }
 
   .character-vital-stats {

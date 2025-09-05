@@ -3,7 +3,9 @@
 </script>
 
 <svg width={size} height={size} viewBox="0 0 24 24" class="symbol-icon">
-  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill={color}/>
+  <!-- All symbol: Star with inner circle -->
+  <circle cx="12" cy="12" r="10" fill="none" stroke={color} stroke-width="2"/>
+  <path d="M12 4l2.4 4.8 5.6.8-4 3.6.8 5.6L12 16.8l-4.8 2-0.8-5.6-4-3.6 5.6-.8L12 4z" fill={color}/>
 </svg>
 
 <style>

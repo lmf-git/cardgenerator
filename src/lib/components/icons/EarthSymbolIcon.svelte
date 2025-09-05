@@ -3,7 +3,9 @@
 </script>
 
 <svg width={size} height={size} viewBox="0 0 24 24" class="symbol-icon">
-  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" fill={color}/>
+  <!-- Earth symbol: Mountain peaks -->
+  <path d="M3 20h18l-4-8-3 6-4-10-3 6-4 6z" fill={color}/>
+  <path d="M5 18l2-4 2 4h-4zm6-2l2-6 2 6h-4zm6 0l2-4 2 4h-4z" fill="white" opacity="0.3"/>
 </svg>
 
 <style>
