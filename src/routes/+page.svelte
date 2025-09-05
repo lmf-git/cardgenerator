@@ -1,0 +1,320 @@
+<script>
+  import { cardData, printSettings } from '../lib/stores.js';
+  import CardGenerator from '../lib/components/CardGenerator.svelte';
+  import CardPreview from '../lib/components/CardPreview.svelte';
+  import { exportCardToPDF, exportCardToPNG } from '../lib/export.js';
+
+  let showEditMobile = $state(false);
+  let cardPreviewRef = $state(null);
+  let isExporting = $state(false);
+
+  // Export functions
+  async function exportToPDF() {
+    if (!cardPreviewRef) return;
+    
+    isExporting = true;
+    const cardElement = cardPreviewRef.querySelector('.ufs-card');
+    const success = await exportCardToPDF(cardElement, `${$cardData.name || 'ufs-card'}.pdf`);
+    
+    if (success) {
+      alert('PDF exported successfully!');
+    } else {
+      alert('Failed to export PDF. Please try again.');
+    }
+    isExporting = false;
+  }
+
+  async function exportToPNG() {
+    if (!cardPreviewRef) return;
+    
+    isExporting = true;
+    const cardElement = cardPreviewRef.querySelector('.ufs-card');
+    const success = await exportCardToPNG(cardElement, `${$cardData.name || 'ufs-card'}.png`);
+    
+    if (success) {
+      alert('PNG exported successfully!');
+    } else {
+      alert('Failed to export PNG. Please try again.');
+    }
+    isExporting = false;
+  }
+</script>
+
+<main class="container">
+  <header>
+    <h1>Universal Fighting System Card Generator</h1>
+    <p>Create and print custom UFS cards</p>
+  </header>
+
+  <div class="app-layout">
+    <div class="generator-panel" class:hide-mobile={!showEditMobile}>
+      <CardGenerator />
+    </div>
+
+    <div class="preview-panel">
+      <div class="preview-controls">
+        <div class="mobile-edit-toggle">
+          <button 
+            onclick={() => showEditMobile = !showEditMobile}
+            class="edit-btn"
+          >
+            {showEditMobile ? '👁️ Preview' : '✏️ Edit'}
+          </button>
+        </div>
+        
+        <div class="export-controls">
+          <button onclick={() => window.print()} class="print-btn">
+            🖨️ Print
+          </button>
+          <button onclick={exportToPDF} class="export-btn" disabled={isExporting}>
+            {isExporting ? 'Exporting...' : '📄 PDF'}
+          </button>
+          <button onclick={exportToPNG} class="export-btn" disabled={isExporting}>
+            {isExporting ? 'Exporting...' : '🖼️ PNG'}
+          </button>
+        </div>
+      </div>
+
+      <div bind:this={cardPreviewRef} class="preview-container">
+        <CardPreview />
+      </div>
+    </div>
+  </div>
+</main>
+
+<style>
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+
+  header {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+
+  header h1 {
+    color: #2c3e50;
+    margin-bottom: 10px;
+  }
+
+  header p {
+    color: #7f8c8d;
+    font-size: 1.1em;
+  }
+
+  .app-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    min-height: 600px;
+    align-items: start;
+  }
+
+  .generator-panel {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 10px;
+    border: 1px solid #e9ecef;
+    height: fit-content;
+    max-height: 80vh;
+    overflow-y: auto;
+  }
+
+  .preview-panel {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    border: 1px solid #e9ecef;
+    position: sticky;
+    top: 20px;
+  }
+
+  .preview-controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 20px;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .mobile-edit-toggle {
+    display: none;
+  }
+
+  .export-controls {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .edit-btn, .print-btn, .export-btn {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+  }
+
+  .edit-btn {
+    background: #3498db;
+    color: white;
+  }
+
+  .edit-btn:hover {
+    background: #2980b9;
+  }
+
+  .print-btn {
+    background: #27ae60;
+    color: white;
+  }
+
+  .print-btn:hover {
+    background: #229954;
+  }
+
+  .export-btn {
+    background: #8e44ad;
+    color: white;
+  }
+
+  .export-btn:hover:not(:disabled) {
+    background: #7d3c98;
+  }
+
+  .export-btn:disabled {
+    background: #bdc3c7;
+    cursor: not-allowed;
+  }
+
+  .preview-container {
+    display: block;
+  }
+
+  /* Desktop: always show both panels regardless of hide-mobile class */
+
+  /* Mobile responsive design */
+  @media (max-width: 1024px) {
+    .app-layout {
+      grid-template-columns: 1fr;
+      gap: 15px;
+      position: relative;
+    }
+
+    .generator-panel {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 1000;
+      background: #f8f9fa;
+      overflow-y: auto;
+      max-height: none;
+    }
+
+    .generator-panel.hide-mobile {
+      display: none;
+    }
+
+    .preview-panel {
+      position: relative;
+      top: auto;
+      min-height: 100vh;
+    }
+
+    .mobile-edit-toggle {
+      display: block;
+    }
+
+    .preview-controls {
+      position: sticky;
+      top: 0;
+      background: white;
+      z-index: 100;
+      border-bottom: 1px solid #eee;
+      padding: 15px;
+      margin: -20px -20px 20px -20px;
+    }
+
+    .export-controls {
+      justify-content: center;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .container {
+      padding: 10px;
+    }
+
+    header h1 {
+      font-size: 1.8em;
+    }
+
+    .generator-panel,
+    .preview-panel {
+      padding: 15px;
+    }
+
+    .export-controls {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .edit-btn, .print-btn, .export-btn {
+      width: 100%;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .container {
+      padding: 5px;
+    }
+
+    header {
+      margin-bottom: 15px;
+    }
+
+    header h1 {
+      font-size: 1.5em;
+    }
+
+    .app-layout {
+      gap: 15px;
+    }
+  }
+
+  @media print {
+    .container {
+      max-width: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .app-layout {
+      grid-template-columns: 1fr;
+      gap: 0;
+    }
+
+    .generator-panel {
+      display: none;
+    }
+
+    .preview-controls {
+      display: none;
+    }
+
+    .preview-panel {
+      background: white;
+      border: none;
+      padding: 0;
+    }
+  }
+</style>
