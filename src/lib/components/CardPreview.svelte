@@ -26,9 +26,9 @@
       </div>
     {/if}
 
-    <!-- B: Card name (vertical text on left side) -->
-    <div class="card-name-vertical">
-      <span class="vertical-name">{card.name || 'CARD NAME'}</span>
+    <!-- B: Card name (vertical text on left side for non-character, horizontal on top for character) -->
+    <div class="card-name-vertical" class:character-name={card.cardType === 'character'}>
+      <span class="vertical-name" class:horizontal-name={card.cardType === 'character'}>{card.name || 'CARD NAME'}</span>
     </div>
 
     <!-- Main Art Area - different layouts per card type -->
@@ -431,6 +431,36 @@
     text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
     letter-spacing: 1px;
     text-align: center;
+  }
+
+  /* Character card name - horizontal across top */
+  .card-name-vertical.character-name {
+    position: absolute;
+    top: 8px;
+    left: 40px;
+    right: 40px;
+    height: 24px;
+    width: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(to right, var(--frame-color), var(--frame-secondary));
+    border-radius: 12px;
+    z-index: 15;
+  }
+
+  .horizontal-name {
+    writing-mode: initial;
+    text-orientation: initial;
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+    letter-spacing: 1px;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .block-modifier-corner {
