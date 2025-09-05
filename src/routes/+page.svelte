@@ -54,34 +54,23 @@
       <CardGenerator />
     </div>
 
-    <div class="preview-panel">
-      <div class="preview-controls">
-        <div class="mobile-edit-toggle">
-          <button 
-            onclick={() => showEditMobile = !showEditMobile}
-            class="edit-btn"
-          >
-            {showEditMobile ? '👁️ Preview' : '✏️ Edit'}
-          </button>
-        </div>
-      </div>
-
-      <div bind:this={cardPreviewRef} class="preview-container">
+    <div bind:this={cardPreviewRef} class="preview-panel">
+      <div class="card-container">
         <CardPreview />
       </div>
     </div>
+  </div>
 
-    <div class="export-controls">
-      <button onclick={() => window.print()} class="print-btn">
-        🖨️ Print
-      </button>
-      <button onclick={exportToPDF} class="export-btn" disabled={isExporting}>
-        {isExporting ? 'Exporting...' : '📄 PDF'}
-      </button>
-      <button onclick={exportToPNG} class="export-btn" disabled={isExporting}>
-        {isExporting ? 'Exporting...' : '🖼️ PNG'}
-      </button>
-    </div>
+  <div class="export-controls">
+    <button onclick={() => window.print()} class="print-btn">
+      🖨️ Print
+    </button>
+    <button onclick={exportToPDF} class="export-btn" disabled={isExporting}>
+      {isExporting ? 'Exporting...' : '📄 PDF'}
+    </button>
+    <button onclick={exportToPNG} class="export-btn" disabled={isExporting}>
+      {isExporting ? 'Exporting...' : '🖼️ PNG'}
+    </button>
   </div>
 </main>
 
@@ -117,14 +106,14 @@
   }
 
   .app-layout {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+    display: flex;
     gap: 20px;
     min-height: 600px;
     align-items: start;
   }
 
   .generator-panel {
+    flex: 1;
     background: #f8f9fa;
     padding: 20px;
     border-radius: 10px;
@@ -132,9 +121,16 @@
     height: fit-content;
     max-height: 80vh;
     overflow-y: auto;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* Internet Explorer 10+ */
+  }
+
+  .generator-panel::-webkit-scrollbar {
+    display: none; /* WebKit */
   }
 
   .preview-panel {
+    flex: 1;
     background: #ffffff;
     padding: 20px;
     border-radius: 10px;
@@ -142,28 +138,32 @@
     position: sticky;
     top: 20px;
     position: relative; /* For absolute positioned export controls */
-  }
-
-  .preview-controls {
     display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-bottom: 20px;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
   }
 
-  .mobile-edit-toggle {
-    display: none;
+  .card-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
   }
+
 
   .export-controls {
     position: absolute;
-    bottom: -60px;
-    right: 0;
+    bottom: 2em;
+    right: 2em;
     display: flex;
     gap: 8px;
     flex-wrap: wrap;
+    padding: 15px;
+    background: #f8f9fa;
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    z-index: 100;
   }
 
   .edit-btn, .print-btn, .export-btn {
@@ -209,16 +209,13 @@
     cursor: not-allowed;
   }
 
-  .preview-container {
-    display: block;
-  }
 
   /* Desktop: always show both panels regardless of hide-mobile class */
 
   /* Mobile responsive design */
   @media (max-width: 1024px) {
     .app-layout {
-      grid-template-columns: 1fr;
+      flex-direction: column;
       gap: 20px;
     }
 
@@ -226,9 +223,12 @@
       background: #f8f9fa;
       padding: 15px;
       border-radius: 8px;
+      border: none;
       order: 2;
       max-height: none;
       overflow: visible;
+      width: 100%;
+      margin: 0;
     }
 
     .generator-panel.hide-mobile {
@@ -240,43 +240,29 @@
       background: white;
       padding: 0;
       border-radius: 0;
-      width: 100vw;
-      margin-left: calc(-50vw + 50%);
+      border: none;
       display: flex;
       justify-content: center;
       align-items: center;
       min-height: 50vh;
-    }
-
-    .mobile-edit-toggle {
-      display: none; /* Hide toggle buttons on mobile */
-    }
-
-    .preview-controls {
+      width: 100%;
       position: static;
-      margin-bottom: 15px;
-      padding: 15px;
-      border-bottom: none;
-      box-shadow: none;
-      order: 3;
-      background: #f8f9fa;
-      border-radius: 8px;
     }
 
     .export-controls {
       position: static;
       bottom: auto;
-      left: auto;
       right: auto;
       background: #f8f9fa;
       padding: 15px;
-      border-top: 1px solid #ddd;
+      border: 1px solid #ddd;
       border-radius: 8px;
       box-shadow: none;
       z-index: auto;
       display: flex;
       gap: 10px;
       margin-top: 20px;
+      justify-content: center;
     }
 
     .title-mobile {
@@ -290,16 +276,21 @@
 
   @media (max-width: 768px) {
     .container {
-      padding: 10px;
+      padding: 5px;
     }
 
     header h1 {
       font-size: 1.8em;
     }
 
-    .generator-panel,
+    .generator-panel {
+      padding: 10px;
+      border-radius: 0;
+      background: white;
+    }
+
     .preview-panel {
-      padding: 15px;
+      padding: 0;
     }
 
     .edit-btn, .print-btn, .export-btn {

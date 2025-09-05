@@ -21,6 +21,11 @@
     'Reversal', 'Stun', 'Desperation'
   ];
 
+  const RESOURCE_SYMBOLS = [
+    'all', 'fire', 'water', 'earth', 'air', 'void', 
+    'life', 'death', 'chaos', 'order', 'good', 'evil', 'energy'
+  ];
+
   let card = $state($cardData);
   
   // Update store when card changes
@@ -69,6 +74,20 @@
       card.keywords = card.keywords.filter(k => k !== keyword);
     } else {
       card.keywords.push(keyword);
+    }
+    cardData.set(card);
+  }
+
+  // Add/remove resource symbols
+  function toggleResourceSymbol(symbol) {
+    if (!Array.isArray(card.resourceSymbols)) {
+      card.resourceSymbols = [];
+    }
+    
+    if (card.resourceSymbols.includes(symbol)) {
+      card.resourceSymbols = card.resourceSymbols.filter(s => s !== symbol);
+    } else {
+      card.resourceSymbols = [...card.resourceSymbols, symbol];
     }
     cardData.set(card);
   }
@@ -298,17 +317,27 @@
   <!-- Resource Symbols -->
   <fieldset class="form-section">
     <legend>Resource Symbols</legend>
-    <div class="form-group">
-      <label for="resource-symbols">Resource Symbols (comma-separated)</label>
-      <input 
-        id="resource-symbols" 
-        type="text" 
-        class="form-input"
-        bind:value={card.resourceSymbols}
-        placeholder="all, fire, water, etc."
-      />
-      <small class="form-helper">Enter resource symbols separated by commas</small>
+    <div class="resource-symbol-grid">
+      {#each RESOURCE_SYMBOLS as symbol}
+        <div class="symbol-option" class:selected={card.resourceSymbols.includes(symbol)}>
+          <button 
+            type="button"
+            class="symbol-button"
+            onclick={() => toggleResourceSymbol(symbol)}
+            title="{symbol} symbol"
+          >
+            <img 
+              src="/symbols/{symbol}.png" 
+              alt="{symbol} symbol" 
+              width="24" 
+              height="24"
+            />
+            <span class="symbol-name">{symbol}</span>
+          </button>
+        </div>
+      {/each}
     </div>
+    <small class="form-helper">Click symbols to add/remove them from the card</small>
   </fieldset>
 
   <!-- Keywords -->
@@ -341,6 +370,7 @@
         bind:value={card.textBox}
         placeholder="Enter card text and abilities..."
       ></textarea>
+      <small class="form-helper">Use {`{symbolname}`} shortcodes for symbols (e.g., {`{fire}`}, {`{water}`}, {`{all}`})</small>
     </div>
   </fieldset>
 
@@ -563,6 +593,53 @@
   .keyword-name {
     text-transform: capitalize;
     font-weight: 500;
+  }
+
+  .resource-symbol-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(5em, 1fr)); /* 80px */
+    gap: 0.5em; /* 8px */
+    padding: 0.5em 0; /* 8px */
+  }
+
+  .symbol-option {
+    display: flex;
+    justify-content: center;
+  }
+
+  .symbol-button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25em; /* 4px */
+    padding: 0.5em; /* 8px */
+    background: #ffffff;
+    border: 0.125em solid #e1e8ed; /* 2px */
+    border-radius: 0.375em; /* 6px */
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 0.75em; /* 12px */
+    min-width: 3.5em; /* 56px */
+  }
+
+  .symbol-button:hover {
+    border-color: #3498db;
+    background: #f8f9fa;
+    transform: translateY(-0.0625em); /* -1px */
+  }
+
+  .symbol-option.selected .symbol-button {
+    border-color: #3498db;
+    background: #e3f2fd;
+    box-shadow: 0 0 0 0.125em rgba(52, 152, 219, 0.15); /* 2px */
+  }
+
+  .symbol-name {
+    text-transform: capitalize;
+    font-weight: 500;
+    color: #2c3e50;
+    text-align: center;
+    line-height: 1;
   }
 
   .form-helper {

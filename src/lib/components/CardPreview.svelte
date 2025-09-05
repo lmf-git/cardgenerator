@@ -13,8 +13,7 @@
   });
 </script>
 
-<div class="card-preview">
-  <div class="ufs-card" class:character-card={card.cardType === 'character'} class:attack-card={card.cardType === 'attack'} class:action-card={card.cardType === 'action'} class:foundation-card={card.cardType === 'foundation'} class:asset-card={card.cardType === 'asset'}>
+<div class="ufs-card" class:character-card={card.cardType === 'character'} class:attack-card={card.cardType === 'attack'} class:action-card={card.cardType === 'action'} class:foundation-card={card.cardType === 'foundation'} class:asset-card={card.cardType === 'asset'}>
     <!-- A: Difficulty circle (top-left corner) -->
     <div class="difficulty-circle">{card.difficulty}</div>
 
@@ -95,33 +94,7 @@
       {/if}
     </div>
 
-    <!-- F: Resource Symbols Bar -->
-    {#if card.resourceSymbols.length > 0}
-      <div class="resource-symbols-bar">
-        {#each card.resourceSymbols as symbol}
-          <SymbolIcon {symbol} size={14} color="var(--frame-color)" />
-        {/each}
-      </div>
-    {/if}
 
-    <!-- G: Text Box Area -->
-    <div class="text-box-area" class:character-textbox={card.cardType === 'character'}>
-      <!-- Keywords -->
-      {#if card.keywords.length > 0}
-        <div class="keywords-line">
-          <strong>{card.keywords.join(', ')}</strong>
-        </div>
-      {/if}
-      
-      <!-- Main Text -->
-      <div class="card-text">
-        {#if card.textBox}
-          {@html card.textBox.replace(/\n/g, '<br>')}
-        {:else}
-          <em>Card abilities and text</em>
-        {/if}
-      </div>
-    </div>
 
 
     <!-- Bottom Footer -->
@@ -138,10 +111,6 @@
       
     </div>
 
-    <!-- G: Card type indicator (bottom-left) -->
-    <div class="card-type-indicator">
-      {card.cardType.toUpperCase()}
-    </div>
 
     <!-- I: Universe/set info (bottom-left corner) -->
     <div class="universe-set-corner">
@@ -153,38 +122,71 @@
       <ControlSymbol value={card.controlValue} size={16} color="black" backgroundColor="white" />
     </div>
 
-    <!-- Bottom card info -->
-    <div class="bottom-card-info">
-      <div class="info-item">
-        <span class="info-text">{card.setName || 'Set Name'}</span>
-      </div>
-      <div class="info-item">
-        <span class="info-text">{card.rarity || 'Rarity'}</span>
-      </div>
-      <div class="info-item">
-        <span class="info-text">{card.cardNumber || '000/000'}</span>
-      </div>
-      <div class="info-item">
-        <span class="info-text">{card.artist || 'Artist Name'}</span>
+    <!-- Card Type (outside info section, top left) -->
+    <div class="card-type-label">
+      <span class="card-type-text">{card.cardType.toUpperCase()}</span>
+    </div>
+    
+    <!-- Card Info Section -->
+    <div class="card-info-section">
+      <!-- Resource Symbols at top -->
+      {#if card.resourceSymbols.length > 0}
+        <div class="resource-symbols">
+          {#each card.resourceSymbols as symbol}
+            <SymbolIcon {symbol} size={16} />
+          {/each}
+        </div>
+      {/if}
+      
+      <!-- Card Text/Abilities -->
+      <div class="info-text-area">
+        <!-- Keywords -->
+        {#if card.keywords.length > 0}
+          <div class="keywords-line">
+            <strong>{card.keywords.join(', ')}</strong>
+          </div>
+        {/if}
+        
+        <!-- Main Text -->
+        <div class="card-text">
+          {#if card.textBox}
+            {@html card.textBox
+              .replace(/\n/g, '<br>')
+              .replace(/\{([^}]+)\}/g, '<img src="/symbols/$1.png" alt="$1 symbol" class="inline-symbol">')
+            }
+          {:else}
+            <em>Card abilities and text</em>
+          {/if}
+        </div>
       </div>
     </div>
   </div>
-</div>
+  
+  <!-- Card Meta (below card) -->
+  <div class="card-meta">
+    <div class="info-item">
+      <span class="info-text">{card.setName || 'Set Name'}</span>
+    </div>
+    <div class="info-item">
+      <span class="info-text">{card.rarity || 'Rarity'}</span>
+    </div>
+    <div class="info-item">
+      <span class="info-text">{card.cardNumber || '000/000'}</span>
+    </div>
+    <div class="info-item">
+      <span class="info-text">{card.artist || 'Artist Name'}</span>
+    </div>
+  </div>
 
 <style>
-  .card-preview {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
-  }
 
   .ufs-card {
     --frame-color: #666666;
     --frame-secondary: #888888;
     
-    width: 15.625em; /* 250px */
-    height: 21.875em; /* 350px */
+    width: 100%;
+    max-width: 15.625em; /* 250px */
+    aspect-ratio: 5/7; /* UFS card aspect ratio */
     background: var(--frame-color);
     border: 0.1875em solid var(--frame-color); /* 3px */
     border-radius: 0.75em; /* 12px */
@@ -198,6 +200,7 @@
     -webkit-transform: translateZ(0);
     transform: translateZ(0);
     backface-visibility: hidden;
+    box-sizing: border-box;
   }
 
   /* Removed old header styles - now using absolute positioning */
@@ -236,10 +239,10 @@
     opacity: 0.9;
   }
 
-  /* Non-character cards have smaller contained image areas */
+  /* Non-character cards have smaller contained image areas - fixed at 40% for info section */
   .card-art-area:not(.character-art) {
-    flex: none;
-    height: 60%;
+    flex: 1;
+    max-height: 60%; /* Ensure info section gets 40% */
     margin: 0.5em; /* 8px */
     margin-bottom: 0.25em; /* 4px */
   }
@@ -248,10 +251,11 @@
   .card-art-area.action-art,
   .card-art-area.foundation-art,
   .card-art-area.asset-art {
-    flex: none;
-    height: 60%;
+    flex: 1;
+    max-height: 60%; /* Art stops at 60%, leaving 40% for text and info */
     margin: 0.5em; /* 8px */
     margin-bottom: 0.25em; /* 4px */
+    min-height: 0; /* Allow flex shrinking */
   }
 
   /* Ensure character stats are visible over full image */
@@ -286,20 +290,6 @@
 
   /* Removed old overlay styles - now using new positioning system */
 
-  /* Resource Symbols Bar */
-  .resource-symbols-bar {
-    height: 1.25em; /* 20px */
-    background: rgba(255, 255, 255, 0.9);
-    border-top: 0.0625em solid #ddd; /* 1px */
-    border-bottom: 0.0625em solid #ddd; /* 1px */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.25em; /* 4px */
-    color: var(--frame-color);
-    margin: 0 0.125em; /* 0 2px */
-    padding: 0.125em 0.25em; /* 2px 4px */
-  }
 
   /* Text Box */
   .text-box-area {
@@ -440,7 +430,7 @@
   }
 
   .vertical-name {
-    writing-mode: vertical-rl;
+    writing-mode: vertical-lr;
     text-orientation: mixed;
     color: white;
     font-size: 0.625em; /* 10px */
@@ -635,15 +625,76 @@
     box-shadow: 0 0.125em 0.25em rgba(0,0,0,0.2); /* 0 2px 4px */
   }
 
-  .bottom-card-info {
+  .card-type-label {
     position: absolute;
-    bottom: -1.25em; /* 20px below card */
+    bottom: 40.5%; /* Just above the info section */
     left: 0;
-    right: 0;
+    background: rgba(255, 255, 255, 0.95);
+    padding: 0.25em 0.5em;
+    border-radius: 0 0.375em 0 0;
+    z-index: 16;
+    font-weight: bold;
+    font-size: 0.6em;
+    color: var(--frame-color);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-right: 0.125em solid var(--frame-color);
+    border-top: 0.125em solid var(--frame-color);
+  }
+
+  .card-info-section {
+    position: absolute;
+    bottom: 0.125em;
+    left: 0.5em;
+    right: 0.5em;
+    height: 40%; /* Fixed 40% height for info section */
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(0.125em);
+    border-radius: 0.375em 0.375em 0 0;
+    padding: 0.375em 0.5em 0.25em;
+    z-index: 15;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25em;
+  }
+
+  .resource-symbols {
+    display: flex;
+    align-items: center;
+    gap: 0.25em;
+  }
+
+  .info-text-area {
+    flex: 1;
+    overflow-y: auto;
+    font-size: 0.5em;
+    line-height: 1.2;
+  }
+
+  .keywords-line {
+    margin-bottom: 0.25em;
+    color: var(--frame-color);
+  }
+
+  .card-text {
+    color: #333;
+  }
+
+  .inline-symbol {
+    width: 0.75em;
+    height: 0.75em;
+    display: inline;
+    vertical-align: middle;
+  }
+
+  .card-meta {
     display: flex;
     justify-content: space-evenly;
     align-items: center;
-    z-index: 5;
+    margin-top: 0.5em;
+    width: 100%;
+    max-width: 15.625em; /* Match card width */
   }
 
   .info-item {
@@ -689,12 +740,12 @@
 
   @media (max-width: 768px) {
     .card-preview {
-      padding: 10px;
+      padding: 0.625em;
     }
     
     .ufs-card {
-      width: 200px;
-      height: 280px;
+      max-width: none;
+      width: 100%;
     }
   }
 </style>
