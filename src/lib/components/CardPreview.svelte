@@ -20,7 +20,7 @@
     <!-- C: Block modifier (top-right corner) -->
     {#if card.hasBlock === true}
       <div class="block-modifier-corner">
-        <ZoneSymbol zone={card.blockZone} size={12} color="#333" />
+        <ZoneSymbol zone={card.blockZone} size={16} color="#333" />
         <span class="block-number">+{card.blockModifier}</span>
       </div>
     {/if}
@@ -43,13 +43,15 @@
 
     <!-- J: Control Value (bottom-right corner) -->
     <div class="control-value-corner">
-      <ControlSymbol value={card.controlValue} size={16} color="black" backgroundColor="white" />
+      <ControlSymbol value={card.controlValue} size={20} color="black" backgroundColor="white" />
     </div>
 
-    <!-- Card Type Label -->
-    <div class="card-type-label">
-      <span class="card-type-text">{card.cardType.toUpperCase()}</span>
-    </div>
+    <!-- Card Type Label (not shown for character cards) -->
+    {#if card.cardType !== 'character'}
+      <div class="card-type-label">
+        <span class="card-type-text">{card.cardType.toUpperCase()}</span>
+      </div>
+    {/if}
 
     <!-- Card Content Layout -->
     <div class="card-content">
@@ -69,7 +71,7 @@
           <div class="attack-stats-group">
             <div class="attack-zone-stat">
               <div class="zone-speed-circle">
-                <ZoneSymbol zone={card.attackZone} size={10} color="#333" />
+                <ZoneSymbol zone={card.attackZone} size={14} color="#333" />
                 <span class="speed-value">{card.speed}</span>
               </div>
             </div>
@@ -85,10 +87,10 @@
         {#if card.cardType === 'character'}
           <div class="character-stats-group">
             <div class="character-hand-size">
-              <UFSStatSymbols type="handsize" value={card.handSize} size={20} />
+              <UFSStatSymbols type="handsize" value={card.handSize} size={24} />
             </div>
             <div class="character-vitality">
-              <UFSStatSymbols type="vitality" value={card.maxVitality} size={20} />
+              <UFSStatSymbols type="vitality" value={card.maxVitality} size={24} />
             </div>
             <div class="character-vital-stats">
               <div class="vital-stat-item">
@@ -119,7 +121,7 @@
         {#if card.resourceSymbols.length > 0}
           <div class="resource-symbols" class:character-symbols={card.cardType === 'character'}>
             {#each card.resourceSymbols as symbol}
-              <SymbolIcon {symbol} size={16} />
+              <SymbolIcon {symbol} size={20} />
             {/each}
           </div>
         {/if}
@@ -179,6 +181,8 @@
     transform: translateZ(0);
     backface-visibility: hidden;
     box-sizing: border-box;
+    /* Set base font size relative to card width for fluid scaling */
+    font-size: min(4vw, 1em);
   }
 
   .card-content {
@@ -274,7 +278,7 @@
     align-items: center;
     justify-content: center;
     color: white;
-    font-size: 14px;
+    font-size: 0.875em;
     font-weight: bold;
   }
 
@@ -368,29 +372,29 @@
   /* Updated positioning for official UFS layout */
   .difficulty-circle {
     position: absolute;
-    top: 0.5em; /* 8px */
-    left: 0.5em; /* 8px */
-    width: 1.5em; /* 24px */
-    height: 1.5em; /* 24px */
+    top: 0.5em;
+    left: 0.5em;
+    width: 2em; /* Increased from 1.5em */
+    height: 2em; /* Increased from 1.5em */
     background: white;
     color: black;
-    border: 0.125em solid var(--frame-color); /* 2px */
+    border: 0.125em solid var(--frame-color);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 0.75em; /* 12px */
+    font-size: 1em; /* Increased from 0.75em */
     font-weight: bold;
     z-index: 20;
-    box-shadow: 0 0.125em 0.25em rgba(0,0,0,0.2); /* 0 2px 4px */
+    box-shadow: 0 0.125em 0.25em rgba(0,0,0,0.2);
   }
 
   .card-name-vertical {
     position: absolute;
-    top: 2.5em; /* 40px */
-    left: 0.25em; /* 4px */
-    bottom: 6.25em; /* 100px */
-    width: 1.25em; /* 20px */
+    top: 2.5em;
+    left: 0.25em;
+    bottom: 40%; /* Stop at 60% mark to align with art area */
+    width: 1.25em;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -402,7 +406,7 @@
     writing-mode: vertical-lr;
     text-orientation: mixed;
     color: white;
-    font-size: 0.625em; /* 10px */
+    font-size: 1em; /* Increased from 0.625em */
     font-weight: bold;
     text-shadow: 0.0625em 0.0625em 0.125em rgba(0,0,0,0.8); /* 1px 1px 2px */
     letter-spacing: 0.0625em; /* 1px */
@@ -429,7 +433,7 @@
     writing-mode: initial;
     text-orientation: initial;
     color: white;
-    font-size: 0.75em; /* 12px */
+    font-size: 1.2em; /* Increased from 0.75em */
     font-weight: bold;
     text-shadow: 0.0625em 0.0625em 0.125em rgba(0,0,0,0.8); /* 1px 1px 2px */
     letter-spacing: 0.0625em; /* 1px */
@@ -441,26 +445,26 @@
 
   .block-modifier-corner {
     position: absolute;
-    top: 0.5em; /* 8px */
-    right: 0.5em; /* 8px */
-    width: 1.5em; /* 24px */
-    height: 2em; /* 32px */
+    top: 0.5em;
+    right: 0.5em;
+    width: 2em; /* Increased from 1.5em */
+    height: 2.5em; /* Increased from 2em */
     background: white;
-    border: 0.125em solid var(--frame-color); /* 2px */
-    border-radius: 0.25em; /* 4px */
+    border: 0.125em solid var(--frame-color);
+    border-radius: 0.25em;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    font-size: 0.5em; /* 8px */
+    font-size: 0.7em; /* Increased from 0.5em */
     font-weight: bold;
-    gap: 0.0625em; /* 1px */
+    gap: 0.0625em;
     z-index: 20;
-    box-shadow: 0 0.125em 0.25em rgba(0,0,0,0.2); /* 0 2px 4px */
+    box-shadow: 0 0.125em 0.25em rgba(0,0,0,0.2);
   }
 
   .block-number {
-    font-size: 8px;
+    font-size: 0.5em;
     line-height: 1;
     color: var(--frame-color);
   }
@@ -485,22 +489,22 @@
   }
 
   .zone-speed-circle, .damage-value-circle {
-    width: 1.75em; /* 28px */
-    height: 1.75em; /* 28px */
+    width: 2.25em; /* Increased from 1.75em */
+    height: 2.25em; /* Increased from 1.75em */
     background: rgba(255, 255, 255, 0.95);
-    border: 0.125em solid var(--frame-color); /* 2px */
+    border: 0.125em solid var(--frame-color);
     border-radius: 50%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     font-weight: bold;
-    font-size: 0.625em; /* 10px */
-    box-shadow: 0 0.125em 0.25em rgba(0,0,0,0.3); /* 0 2px 4px */
+    font-size: 0.8em; /* Increased from 0.625em */
+    box-shadow: 0 0.125em 0.25em rgba(0,0,0,0.3);
   }
 
   .speed-value, .damage-value {
-    font-size: 12px;
+    font-size: 0.75em;
     line-height: 1;
     color: var(--frame-color);
   }
@@ -518,34 +522,34 @@
   .character-hand-size,
   .character-vitality {
     background: rgba(255, 255, 255, 0.95);
-    border: 0.125em solid var(--frame-color); /* 2px */
+    border: 0.125em solid var(--frame-color);
     border-radius: 50%;
-    width: 1.75em; /* 28px */
-    height: 1.75em; /* 28px */
+    width: 2.25em; /* Increased from 1.75em */
+    height: 2.25em; /* Increased from 1.75em */
     display: flex;
     align-items: center;
     justify-content: center;
     font-weight: bold;
-    font-size: 0.625em; /* 10px */
-    box-shadow: 0 0.125em 0.25em rgba(0,0,0,0.2); /* 0 2px 4px */
+    font-size: 0.8em; /* Increased from 0.625em */
+    box-shadow: 0 0.125em 0.25em rgba(0,0,0,0.2);
   }
 
   .character-vital-stats {
     background: rgba(255, 255, 255, 0.95);
-    border: 2px solid var(--frame-color);
-    border-radius: 6px;
-    padding: 6px 8px;
-    backdrop-filter: blur(2px);
-    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    border: 0.125em solid var(--frame-color);
+    border-radius: 0.375em;
+    padding: 0.375em 0.5em;
+    backdrop-filter: blur(0.125em);
+    box-shadow: 0 0.125em 0.25em rgba(0,0,0,0.2);
   }
 
   .vital-stat-item {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-size: 7px;
+    font-size: 0.4em;
     line-height: 1.2;
-    margin-bottom: 2px;
+    margin-bottom: 0.125em;
   }
 
   .vital-stat-item:last-child {
@@ -555,7 +559,7 @@
   .vital-label {
     font-weight: bold;
     color: var(--frame-color);
-    min-width: 12px;
+    min-width: 0.75em;
   }
 
   .vital-value {
@@ -565,33 +569,33 @@
 
   .universe-set-corner {
     position: absolute;
-    bottom: 8px;
-    left: 8px;
-    font-size: 8px;
+    bottom: 0.5em;
+    left: 0.5em;
+    font-size: 0.5em;
     color: white;
     background: var(--frame-color);
-    padding: 2px 4px;
-    border-radius: 3px;
+    padding: 0.125em 0.25em;
+    border-radius: 0.1875em;
     z-index: 20;
   }
 
   .control-value-corner {
     position: absolute;
-    bottom: 0.5em; /* 8px */
-    right: 0.5em; /* 8px */
-    width: 1.5em; /* 24px */
-    height: 1.5em; /* 24px */
+    bottom: 0.5em;
+    right: 0.5em;
+    width: 2em; /* Increased from 1.5em */
+    height: 2em; /* Increased from 1.5em */
     background: white;
     color: black;
-    border: 0.125em solid var(--frame-color); /* 2px */
+    border: 0.125em solid var(--frame-color);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 0.625em; /* 10px */
+    font-size: 0.8em; /* Increased from 0.625em */
     font-weight: bold;
     z-index: 20;
-    box-shadow: 0 0.125em 0.25em rgba(0,0,0,0.2); /* 0 2px 4px */
+    box-shadow: 0 0.125em 0.25em rgba(0,0,0,0.2);
   }
 
   .card-type-label {
@@ -656,8 +660,8 @@
   .info-text-area {
     flex: 1;
     overflow-y: auto;
-    font-size: 0.5em;
-    line-height: 1.2;
+    font-size: 0.6em; /* Slightly bigger for better readability */
+    line-height: 1.3;
   }
 
   .keywords-line {

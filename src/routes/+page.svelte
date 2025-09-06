@@ -137,9 +137,6 @@
 
 
   .export-controls {
-    position: absolute;
-    bottom: 2em;
-    right: 2em;
     display: flex;
     gap: 8px;
     flex-wrap: wrap;
@@ -148,7 +145,8 @@
     border: 1px solid #e9ecef;
     border-radius: 8px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    z-index: 100;
+    margin-top: 1.25em;
+    justify-content: center;
   }
 
   .edit-btn, .print-btn, .export-btn {
