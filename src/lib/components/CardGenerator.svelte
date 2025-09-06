@@ -78,6 +78,22 @@
     cardData.set(card);
   }
 
+  // Custom keyword functionality
+  let customKeyword = $state('');
+  
+  function addCustomKeyword() {
+    if (customKeyword.trim() && !card.keywords.includes(customKeyword.trim())) {
+      card.keywords = [...card.keywords, customKeyword.trim()];
+      customKeyword = '';
+      cardData.set(card);
+    }
+  }
+
+  function removeKeyword(keyword) {
+    card.keywords = card.keywords.filter(k => k !== keyword);
+    cardData.set(card);
+  }
+
   // Add/remove resource symbols
   function toggleResourceSymbol(symbol) {
     if (!Array.isArray(card.resourceSymbols)) {
@@ -343,6 +359,53 @@
   <!-- Keywords -->
   <fieldset class="form-section">
     <legend>Keywords</legend>
+    
+    <!-- Custom keyword input -->
+    <div class="form-group">
+      <label for="custom-keyword">Add Custom Keyword</label>
+      <div class="custom-keyword-input">
+        <input 
+          id="custom-keyword"
+          type="text" 
+          class="form-input"
+          bind:value={customKeyword}
+          placeholder="Enter custom keyword"
+          onkeydown={(e) => e.key === 'Enter' && addCustomKeyword()}
+        />
+        <button 
+          type="button"
+          class="add-keyword-btn"
+          onclick={addCustomKeyword}
+          disabled={!customKeyword.trim()}
+        >
+          Add
+        </button>
+      </div>
+    </div>
+
+    <!-- Current keywords with remove buttons -->
+    {#if card.keywords.length > 0}
+      <div class="current-keywords">
+        <label>Current Keywords</label>
+        <div class="keyword-tags">
+          {#each card.keywords as keyword}
+            <div class="keyword-tag">
+              <span>{keyword}</span>
+              <button 
+                type="button"
+                class="remove-keyword-btn"
+                onclick={() => removeKeyword(keyword)}
+                title="Remove keyword"
+              >
+                ×
+              </button>
+            </div>
+          {/each}
+        </div>
+      </div>
+    {/if}
+
+    <!-- Preset keywords -->
     <div class="keyword-grid">
       {#each KEYWORDS as keyword}
         <label class="keyword-option">
@@ -683,5 +746,93 @@
 
   .form-select::-ms-expand {
     display: none;
+  }
+
+  /* Custom keyword styles */
+  .custom-keyword-input {
+    display: flex;
+    gap: 0.5em;
+  }
+
+  .custom-keyword-input .form-input {
+    flex: 1;
+  }
+
+  .add-keyword-btn {
+    padding: 0.75em 1.5em;
+    background: #3498db;
+    color: white;
+    border: none;
+    border-radius: 0.375em;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+  }
+
+  .add-keyword-btn:hover:not(:disabled) {
+    background: #2980b9;
+    transform: translateY(-1px);
+  }
+
+  .add-keyword-btn:disabled {
+    background: #bdc3c7;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  .current-keywords {
+    margin-bottom: 1.25em;
+  }
+
+  .current-keywords label {
+    display: block;
+    margin-bottom: 0.5em;
+    font-weight: 500;
+    color: #34495e;
+    font-size: 0.875em;
+    text-transform: uppercase;
+    letter-spacing: 0.025em;
+  }
+
+  .keyword-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5em;
+  }
+
+  .keyword-tag {
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    padding: 0.375em 0.75em;
+    background: #e3f2fd;
+    border: 1px solid #3498db;
+    border-radius: 1.25em;
+    font-size: 0.875em;
+    font-weight: 500;
+    color: #2c3e50;
+  }
+
+  .remove-keyword-btn {
+    background: none;
+    border: none;
+    color: #e74c3c;
+    cursor: pointer;
+    font-size: 1.2em;
+    font-weight: bold;
+    padding: 0;
+    width: 1.25em;
+    height: 1.25em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.2s ease;
+  }
+
+  .remove-keyword-btn:hover {
+    background: #e74c3c;
+    color: white;
   }
 </style>

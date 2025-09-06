@@ -1,8 +1,8 @@
 <script>
-  let { value = 6, size = 24, color = '#333', backgroundColor = 'white' } = $props();
+  let { value = 6, size = '1.5em', color = '#333', backgroundColor = 'white' } = $props();
 </script>
 
-<svg width={size} height={size} viewBox="0 0 24 24" style="display: inline-block; vertical-align: middle;">
+<svg viewBox="0 0 24 24" style="width: {size}; height: {size}; display: inline-block; vertical-align: middle;">
   <!-- Diamond/rhomboid shape for control symbol -->
   <path 
     d="M12 2 L20 8 L20 16 L12 22 L4 16 L4 8 Z" 

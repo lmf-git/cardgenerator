@@ -20,7 +20,7 @@
     <!-- C: Block modifier (top-right corner) -->
     {#if card.hasBlock === true}
       <div class="block-modifier-corner">
-        <ZoneSymbol zone={card.blockZone} size={16} color="#333" />
+        <ZoneSymbol zone={card.blockZone} size="1em" color="#333" />
         <span class="block-number">+{card.blockModifier}</span>
       </div>
     {/if}
@@ -43,7 +43,7 @@
 
     <!-- J: Control Value (bottom-right corner) -->
     <div class="control-value-corner">
-      <ControlSymbol value={card.controlValue} size={20} color="black" backgroundColor="white" />
+      <ControlSymbol value={card.controlValue} size="1.25em" color="black" backgroundColor="white" />
     </div>
 
     <!-- Card Type Label (not shown for character cards) -->
@@ -71,7 +71,7 @@
           <div class="attack-stats-group">
             <div class="attack-zone-stat">
               <div class="zone-speed-circle">
-                <ZoneSymbol zone={card.attackZone} size={14} color="#333" />
+                <ZoneSymbol zone={card.attackZone} size="0.875em" color="#333" />
                 <span class="speed-value">{card.speed}</span>
               </div>
             </div>
@@ -87,10 +87,10 @@
         {#if card.cardType === 'character'}
           <div class="character-stats-group">
             <div class="character-hand-size">
-              <UFSStatSymbols type="handsize" value={card.handSize} size={24} />
+              <UFSStatSymbols type="handsize" value={card.handSize} size="1.5em" />
             </div>
             <div class="character-vitality">
-              <UFSStatSymbols type="vitality" value={card.maxVitality} size={24} />
+              <UFSStatSymbols type="vitality" value={card.maxVitality} size="1.5em" />
             </div>
             <div class="character-vital-stats">
               <div class="vital-stat-item">
@@ -121,7 +121,7 @@
         {#if card.resourceSymbols.length > 0}
           <div class="resource-symbols" class:character-symbols={card.cardType === 'character'}>
             {#each card.resourceSymbols as symbol}
-              <SymbolIcon {symbol} size={20} />
+              <SymbolIcon {symbol} size="1.25em" />
             {/each}
           </div>
         {/if}
@@ -131,7 +131,11 @@
           <!-- Keywords -->
           {#if card.keywords.length > 0}
             <div class="keywords-line">
-              <strong>{card.keywords.join(', ')}</strong>
+              <strong>
+                {#each card.keywords as keyword, i}
+                  {keyword}{#if i < card.keywords.length - 1} • {/if}
+                {/each}
+              </strong>
             </div>
           {/if}
           
@@ -392,21 +396,22 @@
   .card-name-vertical {
     position: absolute;
     top: 2.5em;
-    left: 0.25em;
+    left: 0;
     bottom: 40%; /* Stop at 60% mark to align with art area */
-    width: 1.25em;
+    width: 1.5em; /* Increased width for padding */
     display: flex;
     align-items: center;
     justify-content: center;
     background: linear-gradient(to bottom, var(--frame-color), var(--frame-secondary));
     z-index: 20;
+    padding: 0.25em; /* Added padding */
   }
 
   .vertical-name {
     writing-mode: vertical-lr;
     text-orientation: mixed;
     color: white;
-    font-size: 1em; /* Increased from 0.625em */
+    font-size: 1.2em; /* Increased font size */
     font-weight: bold;
     text-shadow: 0.0625em 0.0625em 0.125em rgba(0,0,0,0.8); /* 1px 1px 2px */
     letter-spacing: 0.0625em; /* 1px */
@@ -601,13 +606,12 @@
 
   .card-type-label {
     position: absolute;
-    top: 50%;
+    bottom: 40%; /* Align with bottom of vertical name */
     left: 0;
-    transform: translateY(-50%);
     background: rgba(255, 255, 255, 0.95);
     padding: 0.25em 0.5em;
     border-radius: 0 0.375em 0.375em 0;
-    z-index: 16;
+    z-index: 21;
     font-weight: bold;
     font-size: 0.6em;
     color: var(--frame-color);
@@ -677,7 +681,7 @@
   }
 
   .inline-symbol {
-    height: 0.75em;
+    height: 1em; /* Increased to match text better */
     display: inline;
     vertical-align: middle;
   }

@@ -1,8 +1,8 @@
 <script>
-  let { type = 'handsize', value = 6, size = 24, color = '#333' } = $props();
+  let { type = 'handsize', value = 6, size = '1.5em', color = '#333' } = $props();
 </script>
 
-<svg width={size} height={size} viewBox="0 0 24 24" style="display: inline-block; vertical-align: middle;">
+<svg viewBox="0 0 24 24" style="width: {size}; height: {size}; display: inline-block; vertical-align: middle;">
   {#if type === 'handsize'}
     <!-- Hand size: playing card symbol -->
     <rect x="6" y="4" width="8" height="12" rx="1" fill="white" stroke={color} stroke-width="1.5"/>

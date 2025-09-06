@@ -1,5 +1,5 @@
 <script>
-  let { zone = 'mid', size = 20, color = '#333' } = $props();
+  let { zone = 'mid', size = '1.25em', color = '#333' } = $props();
   
   const strokeWidth = 1.5;
   // Main circle for the zone symbol - matches UFS design
@@ -8,7 +8,7 @@
   const smallCircleRadius = 2.5;
 </script>
 
-<svg width={size} height={size} viewBox="0 0 24 24" style="display: inline-block; vertical-align: middle;">
+<svg viewBox="0 0 24 24" style="width: {size}; height: {size}; display: inline-block; vertical-align: middle;">
   <!-- Main large circle (gray background like official UFS) -->
   <circle cx="15" cy="12" r={mainCircleRadius} fill="#999" stroke={color} stroke-width={strokeWidth} />
   
