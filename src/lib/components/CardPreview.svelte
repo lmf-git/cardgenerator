@@ -411,6 +411,7 @@
     text-shadow: 0.0625em 0.0625em 0.125em rgba(0,0,0,0.8); /* 1px 1px 2px */
     letter-spacing: 0.0625em; /* 1px */
     text-align: center;
+    transform: rotate(180deg); /* Flip the text to read correctly */
   }
 
   /* Character card name - horizontal across top */
