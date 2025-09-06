@@ -55,9 +55,7 @@
     </div>
 
     <div bind:this={cardPreviewRef} class="preview-panel">
-      <div class="card-container">
-        <CardPreview />
-      </div>
+      <CardPreview />
     </div>
   </div>
 
@@ -76,20 +74,20 @@
 
 <style>
   .container {
-    max-width: 1200px;
+    max-width: 75em;
     margin: 0 auto;
-    padding: 20px;
+    padding: 1.25em;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   }
 
   header {
     text-align: center;
-    margin-bottom: 30px;
+    margin-bottom: 1.875em;
   }
 
   header h1 {
     color: #2c3e50;
-    margin-bottom: 10px;
+    margin-bottom: 0.625em;
   }
 
   .title-mobile {
@@ -107,17 +105,14 @@
 
   .app-layout {
     display: flex;
-    gap: 20px;
-    min-height: 600px;
+    gap: 1.25em;
+    min-height: 37.5em;
     align-items: start;
   }
 
   .generator-panel {
     flex: 1;
-    background: #f8f9fa;
-    padding: 20px;
-    border-radius: 10px;
-    border: 1px solid #e9ecef;
+    padding: 1.25em;
     height: fit-content;
     max-height: 80vh;
     overflow-y: auto;
@@ -131,24 +126,14 @@
 
   .preview-panel {
     flex: 1;
-    background: #ffffff;
-    padding: 20px;
-    border-radius: 10px;
-    border: 1px solid #e9ecef;
     position: sticky;
-    top: 20px;
+    top: 1.25em;
     position: relative; /* For absolute positioned export controls */
     display: flex;
     justify-content: center;
     align-items: center;
   }
 
-  .card-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-  }
 
 
   .export-controls {
