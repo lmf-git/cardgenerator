@@ -11,6 +11,39 @@
   $effect(() => {
     card = $cardData;
   });
+
+  function formatVersionedCardName(name, version = 1) {
+    if (!name || version < 1) {
+      return name || '';
+    }
+
+    if (version === 1) {
+      return name;
+    }
+
+    if (version === 2) {
+      return `●${name}●`;
+    }
+    
+    if (version === 3) {
+      return `●●${name}●●`;
+    }
+
+    if (version === 4) {
+      return `::${name}::`;
+    }
+
+    if (version === 5) {
+      return `●::${name}::●`;
+    }
+
+    if (version >= 6) {
+      const extraColons = ':'.repeat(version - 3);
+      return `${extraColons}${name}${extraColons}`;
+    }
+
+    return name;
+  }
 </script>
 
 <div class="ufs-card" class:character-card={card.cardType === 'character'} class:attack-card={card.cardType === 'attack'} class:action-card={card.cardType === 'action'} class:foundation-card={card.cardType === 'foundation'} class:asset-card={card.cardType === 'asset'}>
@@ -27,7 +60,7 @@
 
     <!-- B: Card name (vertical text on left side for non-character, horizontal on top for character) -->
     <div class="card-name-vertical" class:character-name={card.cardType === 'character'}>
-      <span class="vertical-name" class:horizontal-name={card.cardType === 'character'}>{card.name || 'CARD NAME'}</span>
+      <span class="vertical-name" class:horizontal-name={card.cardType === 'character'}>{formatVersionedCardName(card.name, card.version) || 'CARD NAME'}</span>
     </div>
 
 
@@ -143,6 +176,8 @@
           <div class="card-text">
             {#if card.textBox}
               {@html card.textBox
+                .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                .replace(/\*(.*?)\*/g, '<em>$1</em>')
                 .replace(/\n/g, '<br>')
                 .replace(/\{([^}]+)\}/g, '<img src="/symbols/$1.png" alt="$1 symbol" class="inline-symbol">')
               }
@@ -447,6 +482,7 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    transform: none; /* Remove rotation for horizontal text */
   }
 
   .block-modifier-corner {
@@ -682,6 +718,7 @@
 
   .inline-symbol {
     height: 1em; /* Increased to match text better */
+    width: 1em;
     display: inline;
     vertical-align: middle;
   }

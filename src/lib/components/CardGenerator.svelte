@@ -1,5 +1,6 @@
 <script>
   import { cardData } from '../stores.js';
+  import RichTextEditor from './RichTextEditor.svelte';
 
   const CARD_TYPES = {
     CHARACTER: 'character',
@@ -66,6 +67,17 @@
     { value: 'starter', label: 'Starter' }
   ];
 
+  const versionOptions = [
+    { value: 1, label: 'Version 1' },
+    { value: 2, label: 'Version 2 (●Name●)' },
+    { value: 3, label: 'Version 3 (●●Name●●)' },
+    { value: 4, label: 'Version 4 (::Name::)' },
+    { value: 5, label: 'Version 5 (●::Name::●)' },
+    { value: 6, label: 'Version 6 (:::Name:::)' },
+    { value: 7, label: 'Version 7 (::::Name::::)' },
+    { value: 8, label: 'Version 8 (:::::Name:::::)' }
+  ];
+
 
 
   // Add/remove keywords
@@ -127,6 +139,16 @@
         bind:value={card.name} 
         placeholder="Enter card name"
       />
+    </div>
+
+    <div class="form-group">
+      <label for="card-version">Card Version</label>
+      <select class="form-select" bind:value={card.version}>
+        {#each versionOptions as option}
+          <option value={option.value}>{option.label}</option>
+        {/each}
+      </select>
+      <small class="form-helper">Different versions of the same character use dot notation around the name</small>
     </div>
 
     <div class="form-row">
@@ -426,14 +448,10 @@
     <legend>Card Text</legend>
     <div class="form-group">
       <label for="text-box">Card Text / Abilities</label>
-      <textarea 
-        id="text-box" 
-        rows="4" 
-        class="form-textarea"
+      <RichTextEditor 
         bind:value={card.textBox}
         placeholder="Enter card text and abilities..."
-      ></textarea>
-      <small class="form-helper">Use {`{symbolname}`} shortcodes for symbols (e.g., {`{fire}`}, {`{water}`}, {`{all}`})</small>
+      />
     </div>
   </fieldset>
 

@@ -3,6 +3,7 @@ import { writable } from 'svelte/store';
 // Main card data store
 export const cardData = writable({
   name: '',
+  version: 1,
   difficulty: 0,
   cardType: 'character',
   controlValue: 0,
