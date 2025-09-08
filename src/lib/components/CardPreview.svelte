@@ -458,16 +458,16 @@
   /* Character card name - horizontal across top */
   .card-name-vertical.character-name {
     position: absolute;
-    top: 3%; /* 3% from top of card */
-    left: 10%; /* 10% from left edge */
-    right: 10%; /* 10% from right edge */
-    height: 8%; /* 8% of card height */
+    top: 3%;
+    left: 10%;
+    right: 10%;
+    height: 8%;
     width: auto;
     display: flex;
     align-items: center;
     justify-content: center;
     background: linear-gradient(to right, var(--frame-color), var(--frame-secondary));
-    border-radius: 4%; /* 4% of card width */
+    border-radius: 4%;
     z-index: 20;
   }
 
@@ -475,10 +475,10 @@
     writing-mode: initial;
     text-orientation: initial;
     color: white;
-    font-size: 1.9%; /* 1.9% of card width (1.2 * 1.6% base) */
+    font-size: 1.9%;
     font-weight: bold;
-    text-shadow: 0.3% 0.3% 0.6% rgba(0,0,0,0.8); /* Percentage-based shadow */
-    letter-spacing: 0.3%; /* 0.3% of card width */
+    text-shadow: 0.3% 0.3% 0.6% rgba(0,0,0,0.8);
+    letter-spacing: 0.3%;
     text-align: center;
     white-space: nowrap;
     overflow: hidden;
@@ -554,45 +554,45 @@
 
   .character-stats-group {
     position: absolute;
-    top: 3.5em;
-    right: 0.5em;
+    top: 22%;
+    right: 3%;
     display: flex;
     flex-direction: column;
-    gap: 0.375em;
+    gap: 2%;
     z-index: 20;
   }
 
   .character-hand-size,
   .character-vitality {
     background: rgba(255, 255, 255, 0.95);
-    border: 0.125em solid var(--frame-color);
+    border: 0.8% solid var(--frame-color);
     border-radius: 50%;
-    height: 6.4em; /* 6.4em relative to card's 1.6% base font */
-    aspect-ratio: 1;
+    width: 14%;
+    height: 10%;
     display: flex;
     align-items: center;
     justify-content: center;
     font-weight: bold;
-    font-size: 0.8em;
-    box-shadow: 0 0.125em 0.25em rgba(0,0,0,0.2);
+    font-size: 0.8%;
+    box-shadow: 0 0.5% 1% rgba(0,0,0,0.2);
   }
 
   .character-vital-stats {
     background: rgba(255, 255, 255, 0.95);
-    border: 0.125em solid var(--frame-color);
-    border-radius: 0.375em;
-    padding: 0.375em 0.5em;
-    backdrop-filter: blur(0.125em);
-    box-shadow: 0 0.125em 0.25em rgba(0,0,0,0.2);
+    border: 0.8% solid var(--frame-color);
+    border-radius: 2%;
+    padding: 2% 3%;
+    backdrop-filter: blur(0.5%);
+    box-shadow: 0 0.5% 1% rgba(0,0,0,0.2);
   }
 
   .vital-stat-item {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-size: 0.4em;
+    font-size: 0.4%;
     line-height: 1.2;
-    margin-bottom: 0.125em;
+    margin-bottom: 0.8%;
   }
 
   .vital-stat-item:last-child {
