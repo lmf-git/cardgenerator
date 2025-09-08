@@ -207,10 +207,10 @@
     width: 100%;
     aspect-ratio: 5/7; /* UFS card aspect ratio */
     background: var(--frame-color);
-    border: 0.3% solid var(--frame-color);
-    border-radius: 1.2%;
+    border: 0.3% solid var(--frame-color); /* Percentage of card width */
+    border-radius: 1.2%; /* Percentage of card width */
     position: relative;
-    box-shadow: 0 0.6% 2% rgba(0, 0, 0, 0.4);
+    box-shadow: 0 0.6% 2% rgba(0, 0, 0, 0.4); /* Percentage-based shadow */
     font-family: 'Arial Black', Arial, sans-serif;
     overflow: hidden;
     display: flex;
@@ -220,40 +220,8 @@
     transform: translateZ(0);
     backface-visibility: hidden;
     box-sizing: border-box;
-    /* Set base font size to scale with card width */
-    font-size: 1rem; /* Base font size, everything else uses em to scale */
-  }
-
-  /* Container-based responsive font sizes */
-  @container (max-width: 300px) {
-    .ufs-card {
-      font-size: 0.7rem;
-    }
-  }
-
-  @container (min-width: 301px) and (max-width: 400px) {
-    .ufs-card {
-      font-size: 0.9rem;
-    }
-  }
-
-  @container (min-width: 401px) and (max-width: 500px) {
-    .ufs-card {
-      font-size: 1.1rem;
-    }
-  }
-
-  @container (min-width: 501px) {
-    .ufs-card {
-      font-size: 1.3rem;
-    }
-  }
-
-  /* Fallback for browsers without container query support */
-  @supports not (container-type: inline-size) {
-    .ufs-card {
-      font-size: clamp(0.7rem, 2.5vw, 1.3rem);
-    }
+    /* Base font size as percentage of card width - scales consistently */
+    font-size: 1.6%; /* 1.6% of card width */
   }
 
   .card-content {
@@ -443,45 +411,45 @@
   /* Updated positioning for official UFS layout */
   .difficulty-circle {
     position: absolute;
-    top: 0.5em;
-    left: 0.5em;
-    width: 2em;
-    height: 2em;
+    top: 3%; /* 3% from top of card */
+    left: 3%; /* 3% from left of card */
+    width: 12%; /* 12% of card width */
+    height: 8.5%; /* Maintains circle with 5:7 aspect ratio (12% * 7/5 = 16.8%, so 8.5% for circle) */
     background: white;
     color: black;
-    border: 0.125em solid var(--frame-color);
+    border: 0.2% solid var(--frame-color); /* 0.2% of card width */
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1em;
+    font-size: 1.6%; /* 1.6% of card width - same as card base */
     font-weight: bold;
     z-index: 20;
-    box-shadow: 0 0.125em 0.25em rgba(0,0,0,0.2);
+    box-shadow: 0 0.2% 0.5% rgba(0,0,0,0.2);
   }
 
   .card-name-vertical {
     position: absolute;
-    top: 2.5em;
+    top: 15%; /* 15% from top of card */
     left: 0;
     bottom: 40%; /* Stop at 60% mark to align with art area */
-    width: 1.5em;
+    width: 9%; /* 9% of card width */
     display: flex;
     align-items: center;
     justify-content: center;
     background: linear-gradient(to bottom, var(--frame-color), var(--frame-secondary));
     z-index: 20;
-    padding: 0.25em;
+    padding: 1.5%; /* 1.5% of card width */
   }
 
   .vertical-name {
     writing-mode: vertical-lr;
     text-orientation: mixed;
     color: white;
-    font-size: 1.2em;
+    font-size: 1.9%; /* 1.9% of card width (1.2 * 1.6% base) */
     font-weight: bold;
-    text-shadow: 0.0625em 0.0625em 0.125em rgba(0,0,0,0.8);
-    letter-spacing: 0.0625em;
+    text-shadow: 0.3% 0.3% 0.6% rgba(0,0,0,0.8); /* Percentage-based shadow */
+    letter-spacing: 0.3%; /* 0.3% of card width */
     text-align: center;
     transform: rotate(180deg); /* Flip the text to read correctly */
   }
@@ -489,16 +457,16 @@
   /* Character card name - horizontal across top */
   .card-name-vertical.character-name {
     position: absolute;
-    top: 0.5em; /* 8px */
-    left: 2.5em; /* 40px */
-    right: 2.5em; /* 40px */
-    height: 1.5em; /* 24px */
+    top: 3%; /* 3% from top of card */
+    left: 10%; /* 10% from left edge */
+    right: 10%; /* 10% from right edge */
+    height: 8%; /* 8% of card height */
     width: auto;
     display: flex;
     align-items: center;
     justify-content: center;
     background: linear-gradient(to right, var(--frame-color), var(--frame-secondary));
-    border-radius: 0.75em; /* 12px */
+    border-radius: 4%; /* 4% of card width */
     z-index: 20;
   }
 
@@ -506,10 +474,10 @@
     writing-mode: initial;
     text-orientation: initial;
     color: white;
-    font-size: 1.2em; /* Increased from 0.75em */
+    font-size: 1.9%; /* 1.9% of card width (1.2 * 1.6% base) */
     font-weight: bold;
-    text-shadow: 0.0625em 0.0625em 0.125em rgba(0,0,0,0.8); /* 1px 1px 2px */
-    letter-spacing: 0.0625em; /* 1px */
+    text-shadow: 0.3% 0.3% 0.6% rgba(0,0,0,0.8); /* Percentage-based shadow */
+    letter-spacing: 0.3%; /* 0.3% of card width */
     text-align: center;
     white-space: nowrap;
     overflow: hidden;
@@ -519,26 +487,26 @@
 
   .block-modifier-corner {
     position: absolute;
-    top: 0.5em;
-    right: 0.5em;
-    width: 2em; /* Increased from 1.5em */
-    height: 2.5em; /* Increased from 2em */
+    top: 3%; /* 3% from top of card */
+    right: 3%; /* 3% from right of card */
+    width: 12%; /* 12% of card width */
+    height: 16%; /* 16% of card height for rectangular shape */
     background: white;
-    border: 0.125em solid var(--frame-color);
-    border-radius: 0.25em;
+    border: 0.2% solid var(--frame-color); /* 0.2% of card width */
+    border-radius: 1.5%; /* 1.5% of card width */
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    font-size: 0.7em; /* Increased from 0.5em */
+    font-size: 1.1%; /* 1.1% of card width (0.7 * 1.6% base) */
     font-weight: bold;
-    gap: 0.0625em;
+    gap: 0.3%; /* 0.3% of card width */
     z-index: 20;
-    box-shadow: 0 0.125em 0.25em rgba(0,0,0,0.2);
+    box-shadow: 0 0.2% 0.5% rgba(0,0,0,0.2);
   }
 
   .block-number {
-    font-size: 0.5em;
+    font-size: 0.8%; /* 0.8% of card width (0.5 * 1.6% base) */
     line-height: 1;
     color: var(--frame-color);
   }
@@ -693,15 +661,15 @@
   .card-info-section {
     flex: 1;
     background: rgba(255, 255, 255, 0.9);
-    backdrop-filter: blur(0.125em);
-    border-radius: 0.375em 0.375em 0 0;
-    margin: 0 0.125em 0 1.5em;
-    padding: 0.375em 0.5em 0.25em;
+    backdrop-filter: blur(0.5%); /* Percentage-based blur */
+    border-radius: 2% 2% 0 0; /* Percentage-based radius */
+    margin: 0 0.5% 0 11%; /* Increased left margin from 9% to 11% to clear name bar */
+    padding: 2% 3% 1.5%; /* Percentage-based padding */
     z-index: 15;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
-    gap: 0.25em;
+    gap: 1%; /* Percentage-based gap */
     overflow: hidden;
     position: relative;
   }
@@ -733,7 +701,7 @@
   .info-text-area {
     flex: 1;
     overflow-y: auto;
-    font-size: 0.6em; /* Slightly bigger for better readability */
+    font-size: 1.0%; /* 1.0% of card width (0.6 * 1.6% base) */
     line-height: 1.3;
   }
 
@@ -766,12 +734,12 @@
 
   .info-text {
     color: black;
-    font-size: 0.4em; /* Increased from 0.25em for better readability */
+    font-size: 0.64%; /* 0.64% of card width (0.4 * 1.6% base) */
     font-weight: 500;
     text-shadow: 
-      0 0 0.125em white,
-      0 0 0.25em white,
-      0 0 0.375em white;
+      0 0 0.2% white,
+      0 0 0.4% white,
+      0 0 0.6% white;
     white-space: nowrap;
   }
 

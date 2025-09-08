@@ -4,13 +4,20 @@ import jsPDF from 'jspdf';
 // Export card as PDF
 export async function exportCardToPDF(cardElement, filename = 'ufs-card.pdf') {
   try {
-    // Create high-quality canvas from the card element
+    // Get the exact bounds of the card element
+    const rect = cardElement.getBoundingClientRect();
+    
+    // Create high-quality canvas from the card element with precise cropping
     const canvas = await html2canvas(cardElement, {
       scale: 3, // High DPI for print quality
       useCORS: true,
       backgroundColor: '#ffffff',
-      width: 750, // 2.5 inches * 300 DPI
-      height: 1050, // 3.5 inches * 300 DPI
+      x: 0,
+      y: 0,
+      width: rect.width,
+      height: rect.height,
+      scrollX: 0,
+      scrollY: 0
     });
 
     // Calculate dimensions for PDF (2.5" x 3.5" card)
@@ -76,12 +83,19 @@ function addCropMarks(pdf, x, y, width, height) {
 // Export card as high-resolution PNG image
 export async function exportCardToPNG(cardElement, filename = 'ufs-card.png') {
   try {
+    // Get the exact bounds of the card element
+    const rect = cardElement.getBoundingClientRect();
+
     const canvas = await html2canvas(cardElement, {
       scale: 3, // 300 DPI equivalent
       useCORS: true,
       backgroundColor: '#ffffff',
-      width: 750, // 2.5 inches * 300 DPI  
-      height: 1050, // 3.5 inches * 300 DPI
+      x: 0,
+      y: 0,
+      width: rect.width,
+      height: rect.height,
+      scrollX: 0,
+      scrollY: 0
     });
 
     // Convert to blob and download

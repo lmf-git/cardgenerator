@@ -140,7 +140,6 @@
 
     .card-container {
       flex: none;
-      width: 100%;
       position: static;
       order: -1; /* Show card above form on mobile */
     }
@@ -341,6 +340,45 @@
       background: white;
       border: none;
       padding: 0;
+    }
+  }
+
+  /* Print Styles - Only show the card */
+  @media print {
+    /* Hide everything except the card */
+    header,
+    .generator-panel,
+    .export-controls {
+      display: none !important;
+    }
+
+    /* Make the card container fill the page */
+    .container {
+      margin: 0;
+      padding: 0;
+      max-width: none;
+    }
+
+    .app-layout {
+      display: block;
+      margin: 0;
+      padding: 0;
+    }
+
+    .card-container {
+      position: static;
+      width: auto;
+      height: auto;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    /* Ensure colors print correctly */
+    * {
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
     }
   }
 </style>
