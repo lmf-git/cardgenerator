@@ -53,13 +53,13 @@
     <!-- C: Block modifier (top-right corner) -->
     {#if card.hasBlock === true}
       <div class="block-modifier-corner">
-        <ZoneSymbol zone={card.blockZone} size="1em" color="#333" />
+        <ZoneSymbol zone={card.blockZone} size="1em" color="#333" extraClass="block-zone-icon" />
         <span class="block-number">+{card.blockModifier}</span>
       </div>
     {/if}
 
     <!-- B: Card name (vertical text on left side for non-character, horizontal on top for character) -->
-    <div class="card-name-vertical" class:character-name={card.cardType === 'character'}>
+    <div class="card-name-container" class:character-name={card.cardType === 'character'}>
       <span class="vertical-name" class:horizontal-name={card.cardType === 'character'}>{formatVersionedCardName(card.name, card.version) || 'CARD NAME'}</span>
     </div>
 
@@ -76,7 +76,7 @@
 
     <!-- J: Control Value (bottom-right corner) -->
     <div class="control-value-corner">
-      <ControlSymbol value={card.controlValue} size="1.25em" color="black" backgroundColor="white" />
+      <ControlSymbol value={card.controlValue} size="1.25em" color="black" backgroundColor="white" extraClass="control-value-icon" />
     </div>
 
     <!-- Card Type Label (not shown for character cards) -->
@@ -104,7 +104,7 @@
           <div class="attack-stats-group">
             <div class="attack-zone-stat">
               <div class="zone-speed-circle">
-                <ZoneSymbol zone={card.attackZone} size="0.875em" color="#333" />
+                <ZoneSymbol zone={card.attackZone} size="0.875em" color="#333" extraClass="attack-zone-icon" />
                 <span class="speed-value">{card.speed}</span>
               </div>
             </div>
@@ -120,10 +120,10 @@
         {#if card.cardType === 'character'}
           <div class="character-stats-group">
             <div class="character-hand-size">
-              <UFSStatSymbols type="handsize" value={card.handSize} size="1.5em" />
+              <UFSStatSymbols type="handsize" value={card.handSize} size="1.5em" extraClass="character-handsize-icon" />
             </div>
             <div class="character-vitality">
-              <UFSStatSymbols type="vitality" value={card.maxVitality} size="1.5em" />
+              <UFSStatSymbols type="vitality" value={card.maxVitality} size="1.5em" extraClass="character-vitality-icon" />
             </div>
             <div class="character-vital-stats">
               <div class="vital-stat-item">
@@ -154,7 +154,7 @@
         {#if card.resourceSymbols.length > 0}
           <div class="resource-symbols" class:character-symbols={card.cardType === 'character'}>
             {#each card.resourceSymbols as symbol}
-              <SymbolIcon {symbol} size="1.25em" />
+              <SymbolIcon {symbol} size="1.25em" extraClass="resource-symbol-icon" />
             {/each}
           </div>
         {/if}
@@ -207,14 +207,13 @@
     width: 100%;
     aspect-ratio: 5/7; /* UFS card aspect ratio */
     background: var(--frame-color);
-    border: 0.3% solid var(--frame-color); /* Percentage of card width */
-    border-radius: 1.2%; /* Percentage of card width */
+    border: 0.3% solid var(--frame-color);
+    border-radius: 1.2%;
     position: relative;
-    box-shadow: 0 0.6% 2% rgba(0, 0, 0, 0.4); /* Percentage-based shadow */
+    box-shadow: 0 0.6% 2% rgba(0, 0, 0, 0.4);
     font-family: 'Arial Black', Arial, sans-serif;
     overflow: hidden;
-    display: flex;
-    flex-direction: column;
+    position: relative;
     /* Ensure consistent anti-aliasing */
     -webkit-transform: translateZ(0);
     transform: translateZ(0);
@@ -226,32 +225,38 @@
 
 
   .card-content {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow: hidden;
   }
 
   .card-art-section {
-    flex-basis: 60%;
-    position: relative;
+    position: absolute;
+    top: 0.8%;
+    left: 0.8%;
+    right: 0.8%;
+    height: 60%;
     background: var(--frame-color);
-    margin: 0.125em;
     overflow: hidden;
-    clip-path: polygon(1em 0, 100% 0, 100% 100%, 0 100%, 0 1em);
+    clip-path: polygon(6% 0, 100% 0, 100% 100%, 0 100%, 0 6%);
   }
 
   /* Removed old header styles - now using absolute positioning */
 
   /* Art Area */
   .card-art-area {
-    flex: 1;
-    position: relative;
+    position: absolute;
+    top: 0.8%;
+    left: 0.8%;
+    right: 0.8%;
+    height: 60%;
     background: var(--frame-color);
-    margin: 0.125em; /* 2px */
     overflow: hidden;
     /* UFS style angled cut - only top-left corner */
-    clip-path: polygon(1em 0, 100% 0, 100% 100%, 0 100%, 0 1em);
+    clip-path: polygon(6% 0, 100% 0, 100% 100%, 0 100%, 0 6%);
   }
 
   .card-art {
@@ -277,23 +282,17 @@
     opacity: 0.9;
   }
 
-  /* Non-character cards have smaller contained image areas - fixed at 40% for info section */
-  .card-art-area:not(.character-art) {
-    flex: 1;
-    max-height: 60%; /* Ensure info section gets 40% */
-    margin: 0.5em; /* 8px */
-    margin-bottom: 0.25em; /* 4px */
-  }
-
-  .card-art-area.attack-art,
-  .card-art-area.action-art,
-  .card-art-area.foundation-art,
-  .card-art-area.asset-art {
-    flex: 1;
-    max-height: 60%; /* Art stops at 60%, leaving 40% for text and info */
-    margin: 0.5em; /* 8px */
-    margin-bottom: 0.25em; /* 4px */
-    min-height: 0; /* Allow flex shrinking */
+  /* Info section positioned at bottom 40% of card */
+  .card-info-section {
+    position: absolute;
+    bottom: 3%;
+    left: 12%; /* Significant left margin - clear of vertical name */
+    right: 4%;
+    height: 35%; /* Fixed percentage height for consistent aspect ratio */
+    background: rgba(255, 255, 255, 0.95);
+    border: 0.8% solid #ccc;
+    border-radius: 6% 6% 0 0;
+    overflow: hidden;
   }
 
   /* Ensure character stats are visible over full image */
@@ -328,42 +327,42 @@
   /* Text Box */
   .text-box-area {
     background: rgba(255, 255, 255, 0.95);
-    border: 0.0625em solid #ccc; /* 1px */
-    margin: 0.125em 0.5em; /* 2px 8px */
-    padding: 0.375em; /* 6px */
-    border-radius: 0.25em; /* 4px */
-    font-size: 0.5em; /* 8px */
+    border: 0.25em solid #ccc;
+    margin: 0.5em 1.875em;
+    padding: 1.5em;
+    border-radius: 1em;
+    font-size: 0.1875em;
     line-height: 1.2;
-    max-height: 3.75em; /* 60px */
+    height: 15em;
     overflow: hidden;
   }
 
   /* Character cards have a swooping text box positioned over full image */
   .text-box-area.character-textbox {
     background: rgba(255, 255, 255, 0.98);
-    border: 0.125em solid rgba(139, 69, 19, 0.8);
+    border: 0.5em solid rgba(139, 69, 19, 0.8);
     margin: 0;
-    padding: 0.5em;
-    border-radius: 0.75em 0.75em 0.75em 0.25em;
+    padding: 1.875em;
+    border-radius: 3em 3em 3em 1em;
     position: absolute;
-    bottom: 2.8em;
-    left: 1.9em;
-    right: 0.5em;
-    max-height: 3.75em;
-    backdrop-filter: blur(0.25em);
+    bottom: 11.25em; /* 18% converted to em */
+    left: 7.5em; /* 12% converted to em */
+    right: 1.875em; /* 3% converted to em */
+    height: 15em; /* 24% converted to em */
+    backdrop-filter: blur(1em);
     z-index: 15;
-    box-shadow: 0 0.125em 0.5em rgba(0,0,0,0.3);
+    box-shadow: 0 0.5em 2em rgba(0,0,0,0.3);
   }
 
   .text-box-area.character-textbox::before {
     content: '';
     position: absolute;
-    top: -0.125em;
-    left: -0.125em;
-    right: -0.125em;
-    bottom: -0.125em;
+    top: -0.5em;
+    left: -0.5em;
+    right: -0.5em;
+    bottom: -0.5em;
     background: linear-gradient(135deg, var(--frame-color), transparent);
-    border-radius: 0.75em 0.75em 0.75em 0.25em;
+    border-radius: 3em 3em 3em 1em;
     z-index: -1;
     opacity: 0.3;
   }
@@ -412,62 +411,62 @@
   /* Updated positioning for official UFS layout */
   .difficulty-circle {
     position: absolute;
-    top: 3%; /* 3% from top of card */
-    left: 3%; /* 3% from left of card */
-    width: 12%; /* 12% of card width */
-    height: 8.5%; /* Maintains circle with 5:7 aspect ratio (12% * 7/5 = 16.8%, so 8.5% for circle) */
+    top: 3%;
+    left: 3%;
+    width: 12%;
+    height: 8.5%;
     background: white;
     color: black;
-    border: 0.2% solid var(--frame-color); /* 0.2% of card width */
+    border: 0.2% solid var(--frame-color);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.6%; /* 1.6% of card width - same as card base */
+    font-size: 1.6%;
     font-weight: bold;
     z-index: 20;
     box-shadow: 0 0.2% 0.5% rgba(0,0,0,0.2);
   }
 
-  .card-name-vertical {
+  .card-name-container {
     position: absolute;
-    top: 15%; /* 15% from top of card */
+    top: 15%;
     left: 0;
-    bottom: 40%; /* Stop at 60% mark to align with art area */
-    width: 9%; /* 9% of card width */
+    bottom: 40%;
+    width: 9%;
     display: flex;
     align-items: center;
     justify-content: center;
     background: linear-gradient(to bottom, var(--frame-color), var(--frame-secondary));
     z-index: 20;
-    padding: 1.5%; /* 1.5% of card width */
+    padding: 1.5%;
   }
 
   .vertical-name {
     writing-mode: vertical-lr;
     text-orientation: mixed;
     color: white;
-    font-size: 1.9%; /* 1.9% of card width (1.2 * 1.6% base) */
+    font-size: 3.2%; /* Direct percentage of card width for fluid scaling */
     font-weight: bold;
-    text-shadow: 0.3% 0.3% 0.6% rgba(0,0,0,0.8); /* Percentage-based shadow */
-    letter-spacing: 0.3%; /* 0.3% of card width */
+    text-shadow: 0.3% 0.3% 0.6% rgba(0,0,0,0.8);
+    letter-spacing: 0.3%;
     text-align: center;
     transform: rotate(180deg); /* Flip the text to read correctly */
   }
 
   /* Character card name - horizontal across top */
-  .card-name-vertical.character-name {
+  .card-name-container.character-name {
     position: absolute;
-    top: 3%;
-    left: 10%;
-    right: 10%;
-    height: 8%;
-    width: auto;
+    top: 3%; /* Percentage-based positioning */
+    left: 50%; /* Center horizontally */
+    transform: translateX(-50%); /* Center horizontally */
+    height: 8%; /* Percentage-based height */
+    width: 80%; /* Percentage-based width */
     display: flex;
     align-items: center;
     justify-content: center;
     background: linear-gradient(to right, var(--frame-color), var(--frame-secondary));
-    border-radius: 4%;
+    border-radius: 4%; /* Percentage-based radius */
     z-index: 20;
   }
 
@@ -475,7 +474,7 @@
     writing-mode: initial;
     text-orientation: initial;
     color: white;
-    font-size: 1.9%;
+    font-size: 2.4%; /* Direct percentage of card width for fluid scaling */
     font-weight: bold;
     text-shadow: 0.3% 0.3% 0.6% rgba(0,0,0,0.8);
     letter-spacing: 0.3%;
@@ -488,26 +487,26 @@
 
   .block-modifier-corner {
     position: absolute;
-    top: 3%; /* 3% from top of card */
-    right: 3%; /* 3% from right of card */
-    width: 12%; /* 12% of card width */
-    height: 16%; /* 16% of card height for rectangular shape */
+    top: 3%;
+    right: 3%;
+    width: 12%;
+    height: 16%;
     background: white;
-    border: 0.2% solid var(--frame-color); /* 0.2% of card width */
-    border-radius: 1.5%; /* 1.5% of card width */
+    border: 0.2% solid var(--frame-color);
+    border-radius: 1.5%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    font-size: 1.1%; /* 1.1% of card width (0.7 * 1.6% base) */
+    font-size: 1.1%;
     font-weight: bold;
-    gap: 0.3%; /* 0.3% of card width */
+    gap: 0.3%;
     z-index: 20;
     box-shadow: 0 0.2% 0.5% rgba(0,0,0,0.2);
   }
 
   .block-number {
-    font-size: 0.8%; /* 0.8% of card width (0.5 * 1.6% base) */
+    font-size: 0.8%;
     line-height: 1;
     color: var(--frame-color);
   }
@@ -515,11 +514,11 @@
   .attack-stats-group {
     position: absolute;
     top: 50%;
-    right: 0.5em; /* 8px */
+    right: 2%; /* Percentage-based positioning */
     transform: translateY(-50%);
     display: flex;
     flex-direction: column;
-    gap: 0.5em; /* 8px */
+    gap: 2%; /* Percentage-based gap */
     z-index: 20;
   }
 
@@ -532,33 +531,33 @@
   }
 
   .zone-speed-circle, .damage-value-circle {
-    width: 2.25em; /* Increased from 1.75em */
-    height: 2.25em; /* Increased from 1.75em */
+    width: 9%; /* Percentage-based sizing */
+    height: 6.5%; /* Percentage-based sizing maintaining aspect ratio */
     background: rgba(255, 255, 255, 0.95);
-    border: 0.125em solid var(--frame-color);
+    border: 0.3% solid var(--frame-color);
     border-radius: 50%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     font-weight: bold;
-    font-size: 0.8em; /* Increased from 0.625em */
-    box-shadow: 0 0.125em 0.25em rgba(0,0,0,0.3);
+    font-size: 1.3%; /* Percentage-based font size */
+    box-shadow: 0 0.3% 0.6% rgba(0,0,0,0.3);
   }
 
   .speed-value, .damage-value {
-    font-size: 0.75em;
+    font-size: 1%; /* Percentage-based font size */
     line-height: 1;
     color: var(--frame-color);
   }
 
   .character-stats-group {
     position: absolute;
-    top: 22%;
-    right: 3%;
+    top: 22%; /* Percentage-based positioning */
+    right: 3%; /* Percentage-based positioning */
     display: flex;
     flex-direction: column;
-    gap: 2%;
+    gap: 2%; /* Percentage-based gap */
     z-index: 20;
   }
 
@@ -573,7 +572,7 @@
     align-items: center;
     justify-content: center;
     font-weight: bold;
-    font-size: 0.8%;
+    font-size: 1.2%; /* Direct percentage of card width for fluid scaling */
     box-shadow: 0 0.5% 1% rgba(0,0,0,0.2);
   }
 
@@ -590,7 +589,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-size: 0.4%;
+    font-size: 0.6%; /* Direct percentage of card width for fluid scaling */
     line-height: 1.2;
     margin-bottom: 0.8%;
   }
@@ -612,33 +611,33 @@
 
   .universe-set-corner {
     position: absolute;
-    bottom: 0.5em;
-    left: 0.5em;
-    font-size: 0.5em;
+    bottom: 2%;
+    left: 2%;
+    font-size: 0.8%; /* Percentage-based font size */
     color: white;
     background: var(--frame-color);
-    padding: 0.125em 0.25em;
-    border-radius: 0.1875em;
+    padding: 0.3% 0.5%;
+    border-radius: 0.5%;
     z-index: 20;
   }
 
   .control-value-corner {
     position: absolute;
-    bottom: 0.5em;
-    right: 0.5em;
-    width: 2em; /* Increased from 1.5em */
-    height: 2em; /* Increased from 1.5em */
+    bottom: 2%;
+    right: 2%;
+    width: 8%; /* Percentage-based sizing */
+    height: 5.5%; /* Percentage-based sizing maintaining aspect ratio */
     background: white;
     color: black;
-    border: 0.125em solid var(--frame-color);
+    border: 0.3% solid var(--frame-color);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 0.8em; /* Increased from 0.625em */
+    font-size: 1.3%; /* Percentage-based font size */
     font-weight: bold;
     z-index: 20;
-    box-shadow: 0 0.125em 0.25em rgba(0,0,0,0.2);
+    box-shadow: 0 0.3% 0.6% rgba(0,0,0,0.2);
   }
 
   .card-type-label {
@@ -646,46 +645,35 @@
     bottom: 40%; /* Align with bottom of vertical name */
     left: 0;
     background: rgba(255, 255, 255, 0.95);
-    padding: 0.25em 0.5em;
-    border-radius: 0 0.375em 0.375em 0;
+    padding: 0.8% 1.5%;
+    border-radius: 0 1% 1% 0;
     z-index: 21;
     font-weight: bold;
-    font-size: 0.6em;
+    font-size: 1%; /* Percentage-based font size */
     color: var(--frame-color);
     text-transform: uppercase;
-    letter-spacing: 0.05em;
-    border-right: 0.125em solid var(--frame-color);
-    border-top: 0.125em solid var(--frame-color);
-    border-bottom: 0.125em solid var(--frame-color);
+    letter-spacing: 0.1%;
+    border-right: 0.3% solid var(--frame-color);
+    border-top: 0.3% solid var(--frame-color);
+    border-bottom: 0.3% solid var(--frame-color);
   }
 
-  .card-info-section {
-    flex: 1;
-    background: rgba(255, 255, 255, 0.9);
-    backdrop-filter: blur(0.5%); /* Percentage-based blur */
-    border-radius: 2% 2% 0 0; /* Percentage-based radius */
-    margin: 0 0.5% 0 11%; /* Increased left margin from 9% to 11% to clear name bar */
-    padding: 2% 3% 1.5%; /* Percentage-based padding */
-    z-index: 15;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    gap: 1%; /* Percentage-based gap */
-    overflow: hidden;
-    position: relative;
-  }
+  /* Remove duplicate card-info-section - using the absolute positioned one above */
 
   .resource-symbols {
+    position: absolute;
+    top: 2%;
+    left: 2%;
+    right: 2%;
     display: flex;
     align-items: center;
-    gap: 0.25em;
+    gap: 1%; /* Percentage-based gap */
     justify-content: flex-start;
     background: rgba(255, 255, 255, 0.8);
-    border: 0.0625em solid var(--frame-color);
-    border-radius: 0.25em;
-    padding: 0.25em 0.375em;
-    width: fit-content;
-    margin-bottom: 0.25em;
+    border: 0.2% solid var(--frame-color);
+    border-radius: 1%;
+    padding: 1% 1.5%;
+    height: 8%; /* Percentage-based height */
   }
 
   .resource-symbols.character-symbols {
@@ -693,21 +681,23 @@
     background: transparent;
     border: none;
     border-radius: 0;
-    padding: 0.125em 0;
-    width: 100%;
-    margin-bottom: 0.125em;
-    border-bottom: 0.0625em solid rgba(var(--frame-color), 0.3);
+    padding: 0.5% 0;
+    border-bottom: 0.2% solid rgba(var(--frame-color), 0.3);
   }
 
   .info-text-area {
-    flex: 1;
+    position: absolute;
+    top: 12%; /* Percentage-based positioning below resource symbols */
+    left: 2%;
+    right: 2%;
+    bottom: 2%;
     overflow-y: auto;
-    font-size: 1.0%; /* 1.0% of card width (0.6 * 1.6% base) */
+    font-size: 1%; /* Percentage-based font size */
     line-height: 1.3;
   }
 
   .keywords-line {
-    margin-bottom: 0.25em;
+    margin-bottom: 1%; /* Percentage-based margin */
     color: var(--frame-color);
     font-weight: 500;
   }
@@ -718,8 +708,8 @@
   }
 
   .inline-symbol {
-    height: 1em; /* Increased to match text better */
-    width: 1em;
+    height: 1.6%; /* Percentage-based size to match text scaling */
+    width: 1.6%; /* Percentage-based size to match text scaling */
     display: inline;
     vertical-align: middle;
   }
