@@ -17,9 +17,8 @@
   };
 
   const KEYWORDS = [
-    'Combo', 'Ranged', 'Throw', 'Unique', 'Terrain', 'Kick',
-    'Punch', 'Weapon', 'Breaker', 'Multiple', 'Powerful', 
-    'Reversal', 'Stun', 'Desperation'
+    'Ranged', 'Throw', 'Unique', 'Terrain', 'Kick',
+    'Punch', 'Weapon', 'Reversal'
   ];
 
   const RESOURCE_SYMBOLS = [
