@@ -224,6 +224,7 @@
     font-size: 1.6%; /* 1.6% of card width */
   }
 
+
   .card-content {
     flex: 1;
     display: flex;
@@ -340,35 +341,35 @@
   /* Character cards have a swooping text box positioned over full image */
   .text-box-area.character-textbox {
     background: rgba(255, 255, 255, 0.98);
-    border: 2px solid rgba(139, 69, 19, 0.8);
+    border: 0.125em solid rgba(139, 69, 19, 0.8);
     margin: 0;
-    padding: 8px;
-    border-radius: 12px 12px 12px 4px;
+    padding: 0.5em;
+    border-radius: 0.75em 0.75em 0.75em 0.25em;
     position: absolute;
-    bottom: 45px;
-    left: 30px;
-    right: 8px;
-    max-height: 60px;
-    backdrop-filter: blur(4px);
+    bottom: 2.8em;
+    left: 1.9em;
+    right: 0.5em;
+    max-height: 3.75em;
+    backdrop-filter: blur(0.25em);
     z-index: 15;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    box-shadow: 0 0.125em 0.5em rgba(0,0,0,0.3);
   }
 
   .text-box-area.character-textbox::before {
     content: '';
     position: absolute;
-    top: -2px;
-    left: -2px;
-    right: -2px;
-    bottom: -2px;
+    top: -0.125em;
+    left: -0.125em;
+    right: -0.125em;
+    bottom: -0.125em;
     background: linear-gradient(135deg, var(--frame-color), transparent);
-    border-radius: 12px 12px 12px 4px;
+    border-radius: 0.75em 0.75em 0.75em 0.25em;
     z-index: -1;
     opacity: 0.3;
   }
 
   .keywords-line {
-    margin-bottom: 4px;
+    margin-bottom: 0.25em;
     color: var(--frame-color);
   }
 
@@ -382,12 +383,12 @@
   /* Card Type Indicator */
   .card-type-indicator {
     position: absolute;
-    bottom: 25px;
-    left: 8px;
-    font-size: 6px;
+    bottom: 1.56em;
+    left: 0.5em;
+    font-size: 0.375em;
     color: rgba(255, 255, 255, 0.7);
     text-transform: uppercase;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.03em;
   }
 
   /* Print Styles */
@@ -553,11 +554,11 @@
 
   .character-stats-group {
     position: absolute;
-    top: 3.5em; /* 56px - slightly lower than before */
-    right: 0.5em; /* 8px */
+    top: 3.5em;
+    right: 0.5em;
     display: flex;
     flex-direction: column;
-    gap: 0.375em; /* 6px */
+    gap: 0.375em;
     z-index: 20;
   }
 
@@ -566,13 +567,13 @@
     background: rgba(255, 255, 255, 0.95);
     border: 0.125em solid var(--frame-color);
     border-radius: 50%;
-    width: 2.25em; /* Increased from 1.75em */
-    height: 2.25em; /* Increased from 1.75em */
+    height: 6.4em; /* 6.4em relative to card's 1.6% base font */
+    aspect-ratio: 1;
     display: flex;
     align-items: center;
     justify-content: center;
     font-weight: bold;
-    font-size: 0.8em; /* Increased from 0.625em */
+    font-size: 0.8em;
     box-shadow: 0 0.125em 0.25em rgba(0,0,0,0.2);
   }
 

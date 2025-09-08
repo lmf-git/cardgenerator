@@ -142,6 +142,9 @@
       flex: none;
       position: static;
       order: -1; /* Show card above form on mobile */
+      display: block; /* Ensure it displays */
+      width: 100%; /* Take full width */
+      min-height: 300px; /* Minimum height for visibility */
     }
 
     .generator-panel {
@@ -226,7 +229,6 @@
       order: 2;
       max-height: none;
       overflow: visible;
-      width: 100%;
       margin: 0;
     }
 
