@@ -110,7 +110,7 @@
             alt="{symbol} symbol" 
             width="16" 
             height="16"
-            on:error={(e) => e.target.style.display = 'none'}
+            onerror={(e) => e.target.style.display = 'none'}
           />
         </button>
       {/each}

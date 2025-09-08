@@ -207,10 +207,10 @@
     width: 100%;
     aspect-ratio: 5/7; /* UFS card aspect ratio */
     background: var(--frame-color);
-    border: 0.1875em solid var(--frame-color); /* 3px */
-    border-radius: 0.75em; /* 12px */
+    border: 0.3% solid var(--frame-color);
+    border-radius: 1.2%;
     position: relative;
-    box-shadow: 0 0.375em 1.25em rgba(0, 0, 0, 0.4); /* 0 6px 20px */
+    box-shadow: 0 0.6% 2% rgba(0, 0, 0, 0.4);
     font-family: 'Arial Black', Arial, sans-serif;
     overflow: hidden;
     display: flex;
@@ -220,8 +220,40 @@
     transform: translateZ(0);
     backface-visibility: hidden;
     box-sizing: border-box;
-    /* Set base font size relative to card width for fluid scaling */
-    font-size: min(4vw, 1em);
+    /* Set base font size to scale with card width */
+    font-size: 1rem; /* Base font size, everything else uses em to scale */
+  }
+
+  /* Container-based responsive font sizes */
+  @container (max-width: 300px) {
+    .ufs-card {
+      font-size: 0.7rem;
+    }
+  }
+
+  @container (min-width: 301px) and (max-width: 400px) {
+    .ufs-card {
+      font-size: 0.9rem;
+    }
+  }
+
+  @container (min-width: 401px) and (max-width: 500px) {
+    .ufs-card {
+      font-size: 1.1rem;
+    }
+  }
+
+  @container (min-width: 501px) {
+    .ufs-card {
+      font-size: 1.3rem;
+    }
+  }
+
+  /* Fallback for browsers without container query support */
+  @supports not (container-type: inline-size) {
+    .ufs-card {
+      font-size: clamp(0.7rem, 2.5vw, 1.3rem);
+    }
   }
 
   .card-content {
@@ -413,8 +445,8 @@
     position: absolute;
     top: 0.5em;
     left: 0.5em;
-    width: 2em; /* Increased from 1.5em */
-    height: 2em; /* Increased from 1.5em */
+    width: 2em;
+    height: 2em;
     background: white;
     color: black;
     border: 0.125em solid var(--frame-color);
@@ -422,7 +454,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1em; /* Increased from 0.75em */
+    font-size: 1em;
     font-weight: bold;
     z-index: 20;
     box-shadow: 0 0.125em 0.25em rgba(0,0,0,0.2);
@@ -433,23 +465,23 @@
     top: 2.5em;
     left: 0;
     bottom: 40%; /* Stop at 60% mark to align with art area */
-    width: 1.5em; /* Increased width for padding */
+    width: 1.5em;
     display: flex;
     align-items: center;
     justify-content: center;
     background: linear-gradient(to bottom, var(--frame-color), var(--frame-secondary));
     z-index: 20;
-    padding: 0.25em; /* Added padding */
+    padding: 0.25em;
   }
 
   .vertical-name {
     writing-mode: vertical-lr;
     text-orientation: mixed;
     color: white;
-    font-size: 1.2em; /* Increased font size */
+    font-size: 1.2em;
     font-weight: bold;
-    text-shadow: 0.0625em 0.0625em 0.125em rgba(0,0,0,0.8); /* 1px 1px 2px */
-    letter-spacing: 0.0625em; /* 1px */
+    text-shadow: 0.0625em 0.0625em 0.125em rgba(0,0,0,0.8);
+    letter-spacing: 0.0625em;
     text-align: center;
     transform: rotate(180deg); /* Flip the text to read correctly */
   }
@@ -734,7 +766,7 @@
 
   .info-text {
     color: black;
-    font-size: 0.25em; /* 4px */
+    font-size: 0.4em; /* Increased from 0.25em for better readability */
     font-weight: 500;
     text-shadow: 
       0 0 0.125em white,

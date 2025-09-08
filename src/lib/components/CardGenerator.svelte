@@ -17,8 +17,20 @@
   };
 
   const KEYWORDS = [
-    'Ranged', 'Throw', 'Unique', 'Terrain', 'Kick',
-    'Punch', 'Weapon', 'Reversal'
+    { name: 'Ranged', type: 'simple' },
+    { name: 'Throw', type: 'simple' },
+    { name: 'Unique', type: 'simple' },
+    { name: 'Terrain', type: 'simple' },
+    { name: 'Kick', type: 'simple' },
+    { name: 'Punch', type: 'simple' },
+    { name: 'Weapon', type: 'simple' },
+    { name: 'Reversal', type: 'simple' },
+    { name: 'Stun', type: 'numeric' },
+    { name: 'Breaker', type: 'numeric' },
+    { name: 'Multiple', type: 'numeric' },
+    { name: 'Powerful', type: 'numeric' },
+    { name: 'Desperation', type: 'numeric' },
+    { name: 'Combo', type: 'combo' }
   ];
 
   const RESOURCE_SYMBOLS = [
@@ -79,14 +91,65 @@
 
 
 
+  // State for keyword modifiers
+  let keywordModifiers = $state({});
+  let showModifierPrompt = $state(null);
+
   // Add/remove keywords
-  function toggleKeyword(keyword) {
-    if (card.keywords.includes(keyword)) {
-      card.keywords = card.keywords.filter(k => k !== keyword);
+  function toggleKeyword(keywordObj) {
+    const keywordName = keywordObj.name;
+    
+    if (keywordObj.type === 'simple') {
+      // Simple keywords work as before
+      if (card.keywords.includes(keywordName)) {
+        card.keywords = card.keywords.filter(k => k !== keywordName);
+      } else {
+        card.keywords.push(keywordName);
+      }
+      cardData.set(card);
     } else {
-      card.keywords.push(keyword);
+      // Complex keywords need modifiers
+      showModifierPrompt = keywordObj;
+      if (keywordObj.type === 'numeric') {
+        keywordModifiers[keywordName] = keywordModifiers[keywordName] || 1;
+      } else if (keywordObj.type === 'combo') {
+        keywordModifiers[keywordName] = keywordModifiers[keywordName] || 'Throw';
+      }
     }
-    cardData.set(card);
+  }
+
+  function addKeywordWithModifier() {
+    if (!showModifierPrompt) return;
+    
+    const keywordName = showModifierPrompt.name;
+    const modifier = keywordModifiers[keywordName];
+    
+    let fullKeyword;
+    if (showModifierPrompt.type === 'numeric') {
+      fullKeyword = `${keywordName} ${modifier}`;
+    } else if (showModifierPrompt.type === 'combo') {
+      fullKeyword = `${keywordName} (${modifier})`;
+    }
+    
+    if (fullKeyword && !card.keywords.includes(fullKeyword)) {
+      card.keywords = [...card.keywords, fullKeyword];
+      cardData.set(card);
+    }
+    
+    showModifierPrompt = null;
+  }
+
+  function cancelKeywordModifier() {
+    showModifierPrompt = null;
+  }
+
+  function isKeywordActive(keywordObj) {
+    if (keywordObj.type === 'simple') {
+      return card.keywords.includes(keywordObj.name);
+    } else {
+      // Check if any keyword starts with this keyword name
+      return card.keywords.some(k => k.startsWith(keywordObj.name + ' ') || k.startsWith(keywordObj.name + ' ('));
+    }
   }
 
   // Custom keyword functionality
@@ -428,18 +491,66 @@
 
     <!-- Preset keywords -->
     <div class="keyword-grid">
-      {#each KEYWORDS as keyword}
+      {#each KEYWORDS as keywordObj}
         <label class="keyword-option">
           <input 
             type="checkbox" 
             class="form-checkbox"
-            checked={card.keywords.includes(keyword)}
-            onchange={() => toggleKeyword(keyword)}
+            checked={isKeywordActive(keywordObj)}
+            onchange={() => toggleKeyword(keywordObj)}
           />
-          <span class="keyword-name">{keyword}</span>
+          <span class="keyword-name">
+            {keywordObj.name}
+            {#if keywordObj.type === 'numeric'}
+              <small class="keyword-type">(needs #)</small>
+            {:else if keywordObj.type === 'combo'}
+              <small class="keyword-type">(needs requirement)</small>
+            {/if}
+          </span>
         </label>
       {/each}
     </div>
+
+    <!-- Keyword Modifier Prompt -->
+    {#if showModifierPrompt}
+      <div class="modifier-prompt">
+        <div class="modifier-content">
+          <h4>Add {showModifierPrompt.name} Keyword</h4>
+          {#if showModifierPrompt.type === 'numeric'}
+            <div class="form-group">
+              <label for="numeric-modifier">Enter {showModifierPrompt.name} value:</label>
+              <input 
+                id="numeric-modifier"
+                type="number" 
+                class="form-input"
+                min="1" 
+                max="10" 
+                bind:value={keywordModifiers[showModifierPrompt.name]}
+              />
+            </div>
+          {:else if showModifierPrompt.type === 'combo'}
+            <div class="form-group">
+              <label for="combo-requirement">Enter {showModifierPrompt.name} requirement:</label>
+              <input 
+                id="combo-requirement"
+                type="text" 
+                class="form-input"
+                bind:value={keywordModifiers[showModifierPrompt.name]}
+                placeholder="e.g., Throw, Stun, Kick"
+              />
+            </div>
+          {/if}
+          <div class="modifier-buttons">
+            <button type="button" class="add-keyword-btn" onclick={addKeywordWithModifier}>
+              Add Keyword
+            </button>
+            <button type="button" class="cancel-btn" onclick={cancelKeywordModifier}>
+              Cancel
+            </button>
+          </div>
+        </div>
+      </div>
+    {/if}
   </fieldset>
 
   <!-- Text Box -->
@@ -851,5 +962,67 @@
   .remove-keyword-btn:hover {
     background: #e74c3c;
     color: white;
+  }
+
+  /* Keyword type hints */
+  .keyword-type {
+    color: #6c757d;
+    font-size: 0.7em;
+    font-style: italic;
+    display: block;
+    line-height: 1;
+    margin-top: 0.125em;
+  }
+
+  /* Modifier prompt modal */
+  .modifier-prompt {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+  }
+
+  .modifier-content {
+    background: white;
+    padding: 2em;
+    border-radius: 0.5em;
+    box-shadow: 0 0.25em 1em rgba(0, 0, 0, 0.3);
+    min-width: 20em;
+    max-width: 90vw;
+  }
+
+  .modifier-content h4 {
+    margin-top: 0;
+    margin-bottom: 1em;
+    color: #2c3e50;
+  }
+
+  .modifier-buttons {
+    display: flex;
+    gap: 1em;
+    justify-content: flex-end;
+    margin-top: 1.5em;
+  }
+
+  .cancel-btn {
+    padding: 0.75em 1.5em;
+    background: #6c757d;
+    color: white;
+    border: none;
+    border-radius: 0.375em;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.2s ease;
+  }
+
+  .cancel-btn:hover {
+    background: #5a6268;
+    transform: translateY(-1px);
   }
 </style>

@@ -54,7 +54,7 @@
       <CardGenerator />
     </div>
 
-    <div bind:this={cardPreviewRef} class="preview-panel">
+    <div bind:this={cardPreviewRef} class="card-container">
       <CardPreview />
     </div>
   </div>
@@ -124,14 +124,31 @@
     display: none; /* WebKit */
   }
 
-  .preview-panel {
-    flex: 1;
+  .card-container {
+    flex: 0 0 25em; /* Fixed width of 400px instead of flexible */
     position: sticky;
     top: 1.25em;
-    position: relative; /* For absolute positioned export controls */
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    container-type: inline-size; /* Enable container queries */
+  }
+
+  /* Mobile styles */
+  @media (max-width: 1024px) {
+    .app-layout {
+      flex-direction: column;
+      gap: 1em;
+    }
+
+    .card-container {
+      flex: none;
+      width: 100%;
+      position: static;
+      order: -1; /* Show card above form on mobile */
+    }
+
+    .generator-panel {
+      max-height: none;
+      overflow-y: visible;
+    }
   }
 
 
