@@ -712,20 +712,19 @@
     display: flex;
     justify-content: space-evenly;
     align-items: center;
-    height: 0.15in; /* Fixed height for consistent print spacing */
-    background: rgba(0, 0, 0, 0.8);
+    height: 0.08in; /* Reduced height for less padding */
     z-index: 5;
     box-sizing: border-box;
-    padding: 0 0.05in;
+    padding: 0 0.02in; /* Reduced padding */
   }
 
   .info-text {
-    color: white;
-    font-size: 0.016in; /* Physical unit for consistent print scaling */
-    font-weight: 500;
+    color: black;
+    font-size: 0.04in; /* Increased font size for better readability */
+    font-weight: 600;
     text-shadow: 
-      0 0 0.005in rgba(0,0,0,0.8),
-      0 0 0.01in rgba(0,0,0,0.6);
+      0 0 0.003in white,
+      0 0 0.006in white;
     white-space: nowrap;
   }
 
