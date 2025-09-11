@@ -125,10 +125,12 @@
   }
 
   .card-container {
-    flex: 0 0 25em; /* Fixed width of 400px instead of flexible */
+    flex: 0 0 2.6in; /* Fixed width to accommodate 2.5in card + margin */
     position: sticky;
     top: 1.25em;
-    container-type: inline-size; /* Enable container queries */
+    display: flex;
+    justify-content: center;
+    /* Container queries now handled by the card itself */
   }
 
   /* Mobile styles */

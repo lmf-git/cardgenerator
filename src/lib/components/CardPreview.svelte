@@ -1,9 +1,9 @@
 <script>
   import { cardData } from '../stores.js';
-  import SymbolIcon from './SymbolIcon.svelte';
-  import ZoneSymbol from './ZoneSymbol.svelte';
-  import ControlSymbol from './ControlSymbol.svelte';
-  import UFSStatSymbols from './UFSStatSymbols.svelte';
+  import SymbolIcon from './icons/SymbolIcon.svelte';
+  import ZoneSymbol from './icons/ZoneSymbol.svelte';
+  import ControlSymbol from './icons/ControlSymbol.svelte';
+  import UFSStatSymbols from './icons/UFSStatSymbols.svelte';
 
   let card = $state($cardData);
   
@@ -59,8 +59,8 @@
     {/if}
 
     <!-- B: Card name (vertical text on left side for non-character, horizontal on top for character) -->
-    <div class="card-name-container" class:character-name={card.cardType === 'character'}>
-      <span class="vertical-name" class:horizontal-name={card.cardType === 'character'}>{formatVersionedCardName(card.name, card.version) || 'CARD NAME'}</span>
+    <div class="card-name-container">
+      <span class="card-name">{formatVersionedCardName(card.name, card.version) || 'CARD NAME'}</span>
     </div>
 
 
@@ -204,23 +204,22 @@
     --frame-color: #666666;
     --frame-secondary: #888888;
     
-    width: 100%;
-    aspect-ratio: 5/7; /* UFS card aspect ratio */
+    width: 2.5in; /* Standard card width */
+    height: 3.5in; /* Standard card height */
     background: var(--frame-color);
-    border: 0.3% solid var(--frame-color);
-    border-radius: 1.2%;
+    border: 0.008in solid var(--frame-color);
+    border-radius: 0.03in;
     position: relative;
-    box-shadow: 0 0.6% 2% rgba(0, 0, 0, 0.4);
+    box-shadow: 0 0.015in 0.05in rgba(0, 0, 0, 0.4);
     font-family: 'Arial Black', Arial, sans-serif;
     overflow: hidden;
-    position: relative;
     /* Ensure consistent anti-aliasing */
     -webkit-transform: translateZ(0);
     transform: translateZ(0);
     backface-visibility: hidden;
     box-sizing: border-box;
-    /* Base font size as percentage of card width - scales consistently */
-    font-size: 1.6%; /* 1.6% of card width */
+    /* Base font size using physical units for consistent print output */
+    font-size: 0.04in; /* Base font size in inches */
   }
 
 
@@ -235,13 +234,13 @@
 
   .card-art-section {
     position: absolute;
-    top: 0.8%;
-    left: 0.8%;
-    right: 0.8%;
-    height: 60%;
+    top: 0.028in;
+    left: 0.02in;
+    right: 0.02in;
+    height: 2.1in; /* 60% of 3.5in */
     background: var(--frame-color);
     overflow: hidden;
-    clip-path: polygon(6% 0, 100% 0, 100% 100%, 0 100%, 0 6%);
+    clip-path: polygon(0.15in 0, 100% 0, 100% 100%, 0 100%, 0 0.21in);
   }
 
   /* Removed old header styles - now using absolute positioning */
@@ -285,13 +284,13 @@
   /* Info section positioned at bottom 40% of card */
   .card-info-section {
     position: absolute;
-    bottom: 3%;
-    left: 12%; /* Significant left margin - clear of vertical name */
-    right: 4%;
-    height: 35%; /* Fixed percentage height for consistent aspect ratio */
+    bottom: 0.105in; /* 3% of 3.5in */
+    left: 0.3in; /* Significant left margin - clear of vertical name */
+    right: 0.1in; /* 4% of 2.5in */
+    height: 1.225in; /* 35% of 3.5in */
     background: rgba(255, 255, 255, 0.95);
-    border: 0.8% solid #ccc;
-    border-radius: 6% 6% 0 0;
+    border: 0.02in solid #ccc;
+    border-radius: 0.06in 0.06in 0 0;
     overflow: hidden;
   }
 
@@ -317,7 +316,7 @@
     align-items: center;
     justify-content: center;
     color: white;
-    font-size: 0.875em;
+    font-size: 1.4%; /* Percentage-based font size for consistent scaling */
     font-weight: bold;
   }
 
@@ -327,48 +326,48 @@
   /* Text Box */
   .text-box-area {
     background: rgba(255, 255, 255, 0.95);
-    border: 0.25em solid #ccc;
-    margin: 0.5em 1.875em;
-    padding: 1.5em;
-    border-radius: 1em;
-    font-size: 0.1875em;
+    border: 0.4% solid #ccc;
+    margin: 0.8% 3%;
+    padding: 2.4%;
+    border-radius: 1.6%;
+    font-size: 0.3%; /* Percentage-based font size for consistent scaling */
     line-height: 1.2;
-    height: 15em;
+    height: 24%; /* Percentage-based height for consistent scaling */
     overflow: hidden;
   }
 
   /* Character cards have a swooping text box positioned over full image */
   .text-box-area.character-textbox {
     background: rgba(255, 255, 255, 0.98);
-    border: 0.5em solid rgba(139, 69, 19, 0.8);
+    border: 0.8% solid rgba(139, 69, 19, 0.8);
     margin: 0;
-    padding: 1.875em;
-    border-radius: 3em 3em 3em 1em;
+    padding: 3%;
+    border-radius: 4.8% 4.8% 4.8% 1.6%;
     position: absolute;
-    bottom: 11.25em; /* 18% converted to em */
-    left: 7.5em; /* 12% converted to em */
-    right: 1.875em; /* 3% converted to em */
-    height: 15em; /* 24% converted to em */
-    backdrop-filter: blur(1em);
+    bottom: 18%; /* Percentage-based positioning */
+    left: 12%; /* Percentage-based positioning */
+    right: 3%; /* Percentage-based positioning */
+    height: 24%; /* Percentage-based height */
+    backdrop-filter: blur(1.6%);
     z-index: 15;
-    box-shadow: 0 0.5em 2em rgba(0,0,0,0.3);
+    box-shadow: 0 0.8% 3.2% rgba(0,0,0,0.3);
   }
 
   .text-box-area.character-textbox::before {
     content: '';
     position: absolute;
-    top: -0.5em;
-    left: -0.5em;
-    right: -0.5em;
-    bottom: -0.5em;
+    top: -0.8%;
+    left: -0.8%;
+    right: -0.8%;
+    bottom: -0.8%;
     background: linear-gradient(135deg, var(--frame-color), transparent);
-    border-radius: 3em 3em 3em 1em;
+    border-radius: 4.8% 4.8% 4.8% 1.6%;
     z-index: -1;
     opacity: 0.3;
   }
 
   .keywords-line {
-    margin-bottom: 0.25em;
+    margin-bottom: 0.4%;
     color: var(--frame-color);
   }
 
@@ -382,24 +381,22 @@
   /* Card Type Indicator */
   .card-type-indicator {
     position: absolute;
-    bottom: 1.56em;
-    left: 0.5em;
-    font-size: 0.375em;
+    bottom: 2.5%; /* Percentage-based positioning */
+    left: 0.8%; /* Percentage-based positioning */
+    font-size: 0.6%; /* Percentage-based font size for consistent scaling */
     color: rgba(255, 255, 255, 0.7);
     text-transform: uppercase;
-    letter-spacing: 0.03em;
+    letter-spacing: 0.05%; /* Percentage-based letter spacing */
   }
 
   /* Print Styles */
   @media print {
-    .card-preview {
-      padding: 0;
-    }
-
     .ufs-card {
-      width: 2.5in;
-      height: 3.5in;
+      width: 2.5in; /* Standard trading card width */
+      height: 3.5in; /* Standard trading card height */
       box-shadow: none;
+      /* Ensure container queries work in print */
+      container-type: inline-size;
     }
 
     * {
@@ -411,102 +408,95 @@
   /* Updated positioning for official UFS layout */
   .difficulty-circle {
     position: absolute;
-    top: 3%;
-    left: 3%;
-    width: 12%;
-    height: 8.5%;
+    top: 0.1in;
+    left: 0.075in;
+    width: 0.3in;
+    height: 0.3in;
     background: white;
     color: black;
-    border: 0.2% solid var(--frame-color);
+    border: 0.005in solid var(--frame-color);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.6%;
+    font-size: 0.04in;
     font-weight: bold;
     z-index: 20;
-    box-shadow: 0 0.2% 0.5% rgba(0,0,0,0.2);
+    box-shadow: 0 0.005in 0.0125in rgba(0,0,0,0.2);
   }
 
   .card-name-container {
     position: absolute;
-    top: 15%;
+    top: 0.525in; /* 15% of 3.5in */
     left: 0;
-    bottom: 40%;
-    width: 9%;
+    bottom: 1.4in; /* 40% of 3.5in */
+    width: 0.225in; /* 9% of 2.5in */
     display: flex;
     align-items: center;
     justify-content: center;
     background: linear-gradient(to bottom, var(--frame-color), var(--frame-secondary));
     z-index: 20;
-    padding: 1.5%;
+    padding: 0.0375in; /* 1.5% of 2.5in */
   }
 
-  .vertical-name {
+  /* Character cards have horizontal name at top */
+  .character-card .card-name-container {
+    top: 0.105in; /* 3% of 3.5in */
+    left: 50%;
+    transform: translateX(-50%);
+    height: 0.28in; /* 8% of 3.5in */
+    width: 2in; /* 80% of 2.5in */
+    bottom: auto;
+    background: linear-gradient(to right, var(--frame-color), var(--frame-secondary));
+    border-radius: 0.1in; /* 4% converted to physical */
+  }
+
+  .card-name {
     writing-mode: vertical-lr;
     text-orientation: mixed;
     color: white;
-    font-size: 3.2%; /* Direct percentage of card width for fluid scaling */
+    font-size: 0.12in; /* Physical unit for consistent print scaling */
     font-weight: bold;
-    text-shadow: 0.3% 0.3% 0.6% rgba(0,0,0,0.8);
-    letter-spacing: 0.3%;
+    text-shadow: 0.008in 0.008in 0.015in rgba(0,0,0,0.8);
+    letter-spacing: 0.008in;
     text-align: center;
-    transform: rotate(180deg); /* Flip the text to read correctly */
+    transform: rotate(180deg);
   }
 
-  /* Character card name - horizontal across top */
-  .card-name-container.character-name {
-    position: absolute;
-    top: 3%; /* Percentage-based positioning */
-    left: 50%; /* Center horizontally */
-    transform: translateX(-50%); /* Center horizontally */
-    height: 8%; /* Percentage-based height */
-    width: 80%; /* Percentage-based width */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: linear-gradient(to right, var(--frame-color), var(--frame-secondary));
-    border-radius: 4%; /* Percentage-based radius */
-    z-index: 20;
-  }
-
-  .horizontal-name {
+  /* Character cards have horizontal name */
+  .character-card .card-name {
     writing-mode: initial;
     text-orientation: initial;
-    color: white;
-    font-size: 2.4%; /* Direct percentage of card width for fluid scaling */
-    font-weight: bold;
-    text-shadow: 0.3% 0.3% 0.6% rgba(0,0,0,0.8);
-    letter-spacing: 0.3%;
-    text-align: center;
+    font-size: 0.09in; /* Physical unit for consistent print scaling */
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    transform: none; /* Remove rotation for horizontal text */
+    transform: none;
   }
+
 
   .block-modifier-corner {
     position: absolute;
-    top: 3%;
-    right: 3%;
-    width: 12%;
-    height: 16%;
+    top: 0.105in; /* 3% of 3.5in */
+    right: 0.075in; /* 3% of 2.5in */
+    width: 0.3in; /* 12% of 2.5in */
+    height: 0.56in; /* 16% of 3.5in */
     background: white;
-    border: 0.2% solid var(--frame-color);
-    border-radius: 1.5%;
+    border: 0.005in solid var(--frame-color);
+    border-radius: 0.0375in; /* 1.5% converted to physical */
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    font-size: 1.1%;
+    font-size: 0.0275in; /* 1.1% converted to physical */
     font-weight: bold;
-    gap: 0.3%;
+    gap: 0.0075in; /* 0.3% converted to physical */
     z-index: 20;
-    box-shadow: 0 0.2% 0.5% rgba(0,0,0,0.2);
+    box-shadow: 0 0.005in 0.0125in rgba(0,0,0,0.2);
   }
 
   .block-number {
-    font-size: 0.8%;
+    font-size: 0.02in; /* 0.8% converted to physical */
     line-height: 1;
     color: var(--frame-color);
   }
@@ -514,11 +504,11 @@
   .attack-stats-group {
     position: absolute;
     top: 50%;
-    right: 2%; /* Percentage-based positioning */
+    right: 0.05in; /* 2% of 2.5in */
     transform: translateY(-50%);
     display: flex;
     flex-direction: column;
-    gap: 2%; /* Percentage-based gap */
+    gap: 0.07in; /* 2% of 3.5in for vertical gap */
     z-index: 20;
   }
 
@@ -531,67 +521,67 @@
   }
 
   .zone-speed-circle, .damage-value-circle {
-    width: 9%; /* Percentage-based sizing */
-    height: 6.5%; /* Percentage-based sizing maintaining aspect ratio */
+    width: 0.225in; /* 9% of 2.5in */
+    height: 0.225in; /* Make circular instead of oval */
     background: rgba(255, 255, 255, 0.95);
-    border: 0.3% solid var(--frame-color);
+    border: 0.0075in solid var(--frame-color);
     border-radius: 50%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     font-weight: bold;
-    font-size: 1.3%; /* Percentage-based font size */
-    box-shadow: 0 0.3% 0.6% rgba(0,0,0,0.3);
+    font-size: 0.0325in; /* 1.3% converted to physical */
+    box-shadow: 0 0.0075in 0.015in rgba(0,0,0,0.3);
   }
 
   .speed-value, .damage-value {
-    font-size: 1%; /* Percentage-based font size */
+    font-size: 0.025in; /* 1% converted to physical */
     line-height: 1;
     color: var(--frame-color);
   }
 
   .character-stats-group {
     position: absolute;
-    top: 22%; /* Percentage-based positioning */
-    right: 3%; /* Percentage-based positioning */
+    top: 0.77in; /* 22% of 3.5in */
+    right: 0.075in; /* 3% of 2.5in */
     display: flex;
     flex-direction: column;
-    gap: 2%; /* Percentage-based gap */
+    gap: 0.07in; /* 2% of 3.5in for vertical gap */
     z-index: 20;
   }
 
   .character-hand-size,
   .character-vitality {
     background: rgba(255, 255, 255, 0.95);
-    border: 0.8% solid var(--frame-color);
+    border: 0.02in solid var(--frame-color);
     border-radius: 50%;
-    width: 14%;
-    height: 10%;
+    width: 0.35in;
+    height: 0.35in;
     display: flex;
     align-items: center;
     justify-content: center;
     font-weight: bold;
-    font-size: 1.2%; /* Direct percentage of card width for fluid scaling */
-    box-shadow: 0 0.5% 1% rgba(0,0,0,0.2);
+    font-size: 0.03in; /* Physical unit for consistent print scaling */
+    box-shadow: 0 0.0125in 0.025in rgba(0,0,0,0.2);
   }
 
   .character-vital-stats {
     background: rgba(255, 255, 255, 0.95);
-    border: 0.8% solid var(--frame-color);
-    border-radius: 2%;
-    padding: 2% 3%;
-    backdrop-filter: blur(0.5%);
-    box-shadow: 0 0.5% 1% rgba(0,0,0,0.2);
+    border: 0.02in solid var(--frame-color);
+    border-radius: 0.05in; /* 2% converted to physical */
+    padding: 0.07in 0.075in; /* 2% and 3% converted to physical */
+    backdrop-filter: blur(0.0125in);
+    box-shadow: 0 0.0125in 0.025in rgba(0,0,0,0.2);
   }
 
   .vital-stat-item {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-size: 0.6%; /* Direct percentage of card width for fluid scaling */
+    font-size: 0.03in; /* Physical unit for consistent print scaling */
     line-height: 1.2;
-    margin-bottom: 0.8%;
+    margin-bottom: 0.02in;
   }
 
   .vital-stat-item:last-child {
@@ -601,7 +591,7 @@
   .vital-label {
     font-weight: bold;
     color: var(--frame-color);
-    min-width: 0.75em;
+    min-width: 0.06in; /* Physical unit for consistent print scaling */
   }
 
   .vital-value {
@@ -623,21 +613,21 @@
 
   .control-value-corner {
     position: absolute;
-    bottom: 2%;
-    right: 2%;
-    width: 8%; /* Percentage-based sizing */
-    height: 5.5%; /* Percentage-based sizing maintaining aspect ratio */
+    bottom: 0.07in;
+    right: 0.05in;
+    width: 0.2in;
+    height: 0.2in;
     background: white;
     color: black;
-    border: 0.3% solid var(--frame-color);
+    border: 0.008in solid var(--frame-color);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.3%; /* Percentage-based font size */
+    font-size: 0.032in; /* Physical unit for consistent print scaling */
     font-weight: bold;
     z-index: 20;
-    box-shadow: 0 0.3% 0.6% rgba(0,0,0,0.2);
+    box-shadow: 0 0.008in 0.015in rgba(0,0,0,0.2);
   }
 
   .card-type-label {
@@ -715,22 +705,27 @@
   }
 
   .card-meta {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
     display: flex;
     justify-content: space-evenly;
     align-items: center;
+    height: 0.15in; /* Fixed height for consistent print spacing */
+    background: rgba(0, 0, 0, 0.8);
     z-index: 5;
     box-sizing: border-box;
+    padding: 0 0.05in;
   }
 
-
   .info-text {
-    color: black;
-    font-size: 0.64%; /* 0.64% of card width (0.4 * 1.6% base) */
+    color: white;
+    font-size: 0.016in; /* Physical unit for consistent print scaling */
     font-weight: 500;
     text-shadow: 
-      0 0 0.2% white,
-      0 0 0.4% white,
-      0 0 0.6% white;
+      0 0 0.005in rgba(0,0,0,0.8),
+      0 0 0.01in rgba(0,0,0,0.6);
     white-space: nowrap;
   }
 
