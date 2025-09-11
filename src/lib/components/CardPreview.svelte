@@ -4,6 +4,14 @@
   import ZoneSymbol from './icons/ZoneSymbol.svelte';
   import ControlSymbol from './icons/ControlSymbol.svelte';
   import UFSStatSymbols from './icons/UFSStatSymbols.svelte';
+  // New SVG icons
+  import ControlIcon from './icons/ControlIcon.svelte';
+  import DamageIcon from './icons/DamageIcon.svelte';
+  import DifficultyIcon from './icons/DifficultyIcon.svelte';
+  import HandSizeSVGIcon from './icons/HandSizeSVGIcon.svelte';
+  import SpeedSVGIcon from './icons/SpeedSVGIcon.svelte';
+  import StatsSVGIcon from './icons/StatsSVGIcon.svelte';
+  import VitalitySVGIcon from './icons/VitalitySVGIcon.svelte';
 
   let card = $state($cardData);
   
@@ -48,7 +56,10 @@
 
 <div class="ufs-card" class:character-card={card.cardType === 'character'} class:attack-card={card.cardType === 'attack'} class:action-card={card.cardType === 'action'} class:foundation-card={card.cardType === 'foundation'} class:asset-card={card.cardType === 'asset'}>
     <!-- A: Difficulty circle (top-left corner) -->
-    <div class="difficulty-circle">{card.difficulty}</div>
+    <div class="difficulty-circle">
+      <DifficultyIcon size="2em" extraClass="difficulty-svg" />
+      <span class="difficulty-value">{card.difficulty}</span>
+    </div>
 
     <!-- C: Block modifier (top-right corner) -->
     {#if card.hasBlock === true}
@@ -76,7 +87,8 @@
 
     <!-- J: Control Value (bottom-right corner) -->
     <div class="control-value-corner">
-      <ControlSymbol value={card.controlValue} size="1.25em" color="black" backgroundColor="white" extraClass="control-value-icon" />
+      <ControlIcon size="1.5em" extraClass="control-svg" />
+      <span class="control-value">{card.controlValue}</span>
     </div>
 
     <!-- Card Type Label (not shown for character cards) -->
@@ -105,11 +117,13 @@
             <div class="attack-zone-stat">
               <div class="zone-speed-circle">
                 <ZoneSymbol zone={card.attackZone} size="0.875em" color="#333" extraClass="attack-zone-icon" />
+                <SpeedSVGIcon size="1.2em" extraClass="speed-svg" />
                 <span class="speed-value">{card.speed}</span>
               </div>
             </div>
             <div class="damage-stat">
               <div class="damage-value-circle">
+                <DamageIcon size="1.2em" extraClass="damage-svg" />
                 <span class="damage-value">{card.damage}</span>
               </div>
             </div>
@@ -120,10 +134,12 @@
         {#if card.cardType === 'character'}
           <div class="character-stats-group">
             <div class="character-hand-size">
-              <UFSStatSymbols type="handsize" value={card.handSize} size="1.5em" extraClass="character-handsize-icon" />
+              <HandSizeSVGIcon size="2em" extraClass="handsize-svg" />
+              <span class="stat-value">{card.handSize}</span>
             </div>
             <div class="character-vitality">
-              <UFSStatSymbols type="vitality" value={card.maxVitality} size="1.5em" extraClass="character-vitality-icon" />
+              <VitalitySVGIcon size="2em" extraClass="vitality-svg" />
+              <span class="stat-value">{card.maxVitality}</span>
             </div>
             <div class="character-vital-stats">
               <div class="vital-stat-item">
@@ -410,19 +426,29 @@
     position: absolute;
     top: 0.1in;
     left: 0.075in;
-    width: 0.3in;
-    height: 0.3in;
-    background: white;
+    width: 0.4in;
+    height: 0.4in;
+    background: rgba(255, 255, 255, 0.9);
     color: black;
     border: 0.005in solid var(--frame-color);
     border-radius: 50%;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     font-size: 0.04in;
     font-weight: bold;
     z-index: 20;
     box-shadow: 0 0.005in 0.0125in rgba(0,0,0,0.2);
+  }
+
+  .difficulty-value {
+    position: absolute;
+    z-index: 25;
+    font-size: 0.035in;
+    font-weight: bold;
+    color: white;
+    text-shadow: 0 0 0.01in rgba(0,0,0,0.8);
   }
 
   .card-name-container {
@@ -521,8 +547,8 @@
   }
 
   .zone-speed-circle, .damage-value-circle {
-    width: 0.225in; /* 9% of 2.5in */
-    height: 0.225in; /* Make circular instead of oval */
+    width: 0.3in; /* Increased size for SVG icons */
+    height: 0.3in; /* Make circular instead of oval */
     background: rgba(255, 255, 255, 0.95);
     border: 0.0075in solid var(--frame-color);
     border-radius: 50%;
@@ -533,12 +559,17 @@
     font-weight: bold;
     font-size: 0.0325in; /* 1.3% converted to physical */
     box-shadow: 0 0.0075in 0.015in rgba(0,0,0,0.3);
+    position: relative;
   }
 
   .speed-value, .damage-value {
     font-size: 0.025in; /* 1% converted to physical */
     line-height: 1;
-    color: var(--frame-color);
+    color: white;
+    position: absolute;
+    z-index: 25;
+    font-weight: bold;
+    text-shadow: 0 0 0.01in rgba(0,0,0,0.8);
   }
 
   .character-stats-group {
@@ -556,14 +587,24 @@
     background: rgba(255, 255, 255, 0.95);
     border: 0.02in solid var(--frame-color);
     border-radius: 50%;
-    width: 0.35in;
-    height: 0.35in;
+    width: 0.45in;
+    height: 0.45in;
     display: flex;
     align-items: center;
     justify-content: center;
     font-weight: bold;
     font-size: 0.03in; /* Physical unit for consistent print scaling */
     box-shadow: 0 0.0125in 0.025in rgba(0,0,0,0.2);
+    position: relative;
+  }
+
+  .stat-value {
+    position: absolute;
+    z-index: 25;
+    font-size: 0.03in;
+    font-weight: bold;
+    color: white;
+    text-shadow: 0 0 0.01in rgba(0,0,0,0.8);
   }
 
   .character-vital-stats {
@@ -615,9 +656,9 @@
     position: absolute;
     bottom: 0.07in;
     right: 0.05in;
-    width: 0.2in;
-    height: 0.2in;
-    background: white;
+    width: 0.3in;
+    height: 0.3in;
+    background: rgba(255, 255, 255, 0.95);
     color: black;
     border: 0.008in solid var(--frame-color);
     border-radius: 50%;
@@ -628,6 +669,16 @@
     font-weight: bold;
     z-index: 20;
     box-shadow: 0 0.008in 0.015in rgba(0,0,0,0.2);
+    position: relative;
+  }
+
+  .control-value {
+    position: absolute;
+    z-index: 25;
+    font-size: 0.025in;
+    font-weight: bold;
+    color: white;
+    text-shadow: 0 0 0.01in rgba(0,0,0,0.8);
   }
 
   .card-type-label {
