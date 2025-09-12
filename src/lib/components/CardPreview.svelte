@@ -449,7 +449,7 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    transform: none;
+    transform: translateY(0.01in);
     text-align: center;
   }
 
@@ -463,6 +463,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    z-index: 25; /* Above card name container */
   }
   
   .block-modifier-corner :global(.block-modifier-icon) {
