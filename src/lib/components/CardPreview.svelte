@@ -76,7 +76,7 @@
     <!-- Type bracket container (under vertical name for non-character cards) -->
     {#if card.cardType !== 'character'}
       <div class="type-bracket-container">
-        <TypeBracketIcon extraClass="type-bracket-bg" />
+        <TypeBracketIcon extraClass="type-bracket-bg" cardType={card.cardType} />
         <span class="card-type-text">{card.cardType || 'Type'}</span>
       </div>
     {/if}
@@ -383,7 +383,7 @@
   .card-name-container {
     position: absolute;
     top: 0.525in; /* 15% of 3.5in */
-    left: 0;
+    left: 0.05in;
     bottom: 1.4in; /* 40% of 3.5in */
     width: 0.225in; /* 9% of 2.5in */
     display: flex;
@@ -417,7 +417,7 @@
     text-shadow: 0.008in 0.008in 0.015in rgba(0,0,0,0.8);
     letter-spacing: 0.008in;
     text-align: center;
-    transform: rotate(180deg);
+    transform: rotate(180deg) translateX(-0.02in);
   }
 
   /* Character cards have horizontal name */
@@ -438,21 +438,27 @@
 
   .block-modifier-corner {
     position: absolute;
-    top: 0.05in; /* 2% of 3.5in */
-    right: 0.05in; /* 2% of 2.5in */
-    width: 0.8in; /* Increased to accommodate the icon */
-    height: 0.7in; /* Increased to accommodate the icon */
+    top: 0.05in;
+    right: 0.05in;
+    width: 0.5in; /* Made even smaller */
+    height: 0.5in; /* Made even smaller */
     display: flex;
     align-items: center;
     justify-content: center;
-    position: relative;
+  }
+  
+  .block-modifier-corner :global(.block-modifier-icon) {
+    position: absolute;
+    width: 0.5in;
+    height: 0.5in;
+    z-index: 1;
   }
 
 
   .block-number {
     position: absolute;
     z-index: 10;
-    font-size: 0.08in;
+    font-size: 0.12in;
     font-weight: bold;
     color: white;
     font-family: 'OPTICopperplate-Light', Arial, sans-serif;
@@ -461,19 +467,20 @@
 
   .type-bracket-container {
     position: absolute;
-    top: 1.2in; /* Below the card name */
-    left: 0.05in;
-    width: 0.8in;
-    height: 0.8in;
+    top: 1.7in; /* Moved up more */
+    left: -0.02in;
+    width: 0.6in;
+    height: 0.6in;
     display: flex;
     align-items: center;
     justify-content: center;
+    z-index: 25;
   }
   
   .type-bracket-container :global(.type-bracket-icon) {
     position: absolute;
-    width: 0.8in;
-    height: 0.8in;
+    width: 0.6in;
+    height: 0.6in;
     z-index: 1;
   }
 
@@ -481,12 +488,16 @@
   .card-type-text {
     position: absolute;
     z-index: 10;
-    font-size: 0.06in;
+    font-size: 0.065in;
     font-weight: bold;
-    color: white;
-    font-family: 'OPTICopperplate-Light', Arial, sans-serif;
-    text-shadow: 0 0 0.01in rgba(0,0,0,0.8);
+    color: black;
+    font-family: 'ITCBenguiatStd', Arial, sans-serif;
     text-transform: capitalize;
+    text-align: center;
+    width: 100%;
+    top: 73%;
+    left: -5%;
+    transform: translateY(-50%);
   }
 
 
@@ -518,7 +529,7 @@
   }
 
   .speed-value, .damage-value {
-    font-size: 0.025in; /* 1% converted to physical */
+    font-size: 0.08in; /* Increased even more */
     line-height: 1;
     color: white;
     position: absolute;
@@ -623,7 +634,7 @@
   .control-value {
     position: absolute;
     z-index: 25;
-    font-size: 0.025in;
+    font-size: 0.06in;
     font-weight: bold;
     color: white;
     font-family: 'OPTICopperplate-Light', Arial, sans-serif;
