@@ -4,7 +4,6 @@
 </script>
 
 <svg 
-  width={size} 
   height={size} 
   viewBox="0 0 275 275" 
   fill="none" 

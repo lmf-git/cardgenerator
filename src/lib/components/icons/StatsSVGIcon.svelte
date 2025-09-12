@@ -1,10 +1,21 @@
 <script>
   export let size = "1em";
   export let extraClass = "";
+  export let cardType = "character";
+
+  // Define gradients based on card type
+  const gradients = {
+    character: { start: "#8B4513", mid: "#A0522D", end: "#654321" },
+    attack: { start: "#DC143C", mid: "#FF6B6B", end: "#B22222" },
+    action: { start: "#4169E1", mid: "#6495ED", end: "#1E3A8A" },
+    foundation: { start: "#228B22", mid: "#32CD32", end: "#006400" },
+    asset: { start: "#9932CC", mid: "#BA55D3", end: "#4B0082" }
+  };
+
+  $: currentGradient = gradients[cardType] || gradients.character;
 </script>
 
 <svg 
-  width={size} 
   height={size} 
   viewBox="0 0 96 209" 
   fill="none" 
@@ -52,8 +63,8 @@
     </filter>
     <linearGradient id="paint0_diamond_4_11" x1="0" y1="0" x2="500" y2="500" gradientUnits="userSpaceOnUse">
       <stop offset="0.0480769" stop-color="white"/>
-      <stop offset="0.567308" stop-color="#859AC4"/>
-      <stop offset="1" stop-color="#404A5E"/>
+      <stop offset="0.567308" stop-color={currentGradient.mid}/>
+      <stop offset="1" stop-color={currentGradient.end}/>
     </linearGradient>
   </defs>
 </svg>

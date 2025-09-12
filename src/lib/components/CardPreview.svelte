@@ -1,9 +1,6 @@
 <script>
   import { cardData } from '../stores.js';
   import SymbolIcon from './icons/SymbolIcon.svelte';
-  import ZoneSymbol from './icons/ZoneSymbol.svelte';
-  import ControlSymbol from './icons/ControlSymbol.svelte';
-  import UFSStatSymbols from './icons/UFSStatSymbols.svelte';
   // New SVG icons
   import ControlIcon from './icons/ControlIcon.svelte';
   import DamageIcon from './icons/DamageIcon.svelte';
@@ -12,6 +9,8 @@
   import SpeedSVGIcon from './icons/SpeedSVGIcon.svelte';
   import StatsSVGIcon from './icons/StatsSVGIcon.svelte';
   import VitalitySVGIcon from './icons/VitalitySVGIcon.svelte';
+  import BlockModifierIcon from './icons/BlockModifierIcon.svelte';
+  import TypeBracketIcon from './icons/TypeBracketIcon.svelte';
 
   let card = $state($cardData);
   
@@ -57,14 +56,14 @@
 <div class="ufs-card" class:character-card={card.cardType === 'character'} class:attack-card={card.cardType === 'attack'} class:action-card={card.cardType === 'action'} class:foundation-card={card.cardType === 'foundation'} class:asset-card={card.cardType === 'asset'}>
     <!-- A: Difficulty icon (top-left corner) -->
     <div class="difficulty-icon">
-      <DifficultyIcon size="0.5in" extraClass="difficulty-svg" />
+      <DifficultyIcon size="0.5in" extraClass="difficulty-svg" cardType={card.cardType} />
       <span class="difficulty-value">{card.difficulty}</span>
     </div>
 
     <!-- C: Block modifier (top-right corner) -->
     {#if card.hasBlock === true}
       <div class="block-modifier-corner">
-        <ZoneSymbol zone={card.blockZone} size="1em" color="#333" extraClass="block-zone-icon" />
+        <BlockModifierIcon extraClass="block-modifier-svg" />
         <span class="block-number">+{card.blockModifier}</span>
       </div>
     {/if}
@@ -73,6 +72,14 @@
     <div class="card-name-container">
       <span class="card-name">{formatVersionedCardName(card.name, card.version) || 'CARD NAME'}</span>
     </div>
+    
+    <!-- Type bracket container (under vertical name for non-character cards) -->
+    {#if card.cardType !== 'character'}
+      <div class="type-bracket-container">
+        <TypeBracketIcon extraClass="type-bracket-bg" />
+        <span class="card-type-text">{card.cardType || 'Type'}</span>
+      </div>
+    {/if}
 
 
 
@@ -87,16 +94,10 @@
 
     <!-- J: Control Value (bottom-right corner) -->
     <div class="control-value-corner">
-      <ControlIcon size="0.3in" extraClass="control-svg" />
+      <ControlIcon size="0.3in" extraClass="control-svg" cardType={card.cardType} />
       <span class="control-value">{card.controlValue}</span>
     </div>
 
-    <!-- Card Type Label (not shown for character cards) -->
-    {#if card.cardType !== 'character'}
-      <div class="card-type-label">
-        <span class="card-type-text">{card.cardType.toUpperCase()}</span>
-      </div>
-    {/if}
 
     <!-- Card Content Layout -->
     <div class="card-content">
@@ -116,7 +117,6 @@
           <div class="attack-stats-group">
             <div class="attack-zone-stat">
               <div class="zone-speed-icon">
-                <ZoneSymbol zone={card.attackZone} size="0.2in" color="#333" extraClass="attack-zone-icon" />
                 <SpeedSVGIcon size="0.3in" extraClass="speed-svg" />
                 <span class="speed-value">{card.speed}</span>
               </div>
@@ -141,27 +141,34 @@
               <VitalitySVGIcon size="0.4in" extraClass="vitality-svg" />
               <span class="stat-value">{card.maxVitality}</span>
             </div>
-            <div class="character-vital-stats">
-              <div class="vital-stat-item">
-                <span class="vital-label">G:</span>
-                <span class="vital-value">{card.vitalStats.gender || '?'}</span>
-              </div>
-              <div class="vital-stat-item">
-                <span class="vital-label">Ht:</span>
-                <span class="vital-value">{card.vitalStats.height || '?'}</span>
-              </div>
-              <div class="vital-stat-item">
-                <span class="vital-label">Wt:</span>
-                <span class="vital-value">{card.vitalStats.weight || '?'}</span>
-              </div>
-              <div class="vital-stat-item">
-                <span class="vital-label">Bt:</span>
-                <span class="vital-value">{card.vitalStats.bloodType || '?'}</span>
-              </div>
-            </div>
           </div>
         {/if}
       </div>
+
+      <!-- Character Vital Stats (bottom right corner above control) -->
+      {#if card.cardType === 'character'}
+        <div class="character-vital-stats">
+          <StatsSVGIcon size="0.8in" extraClass="stats-container-svg" cardType={card.cardType} />
+          <div class="vital-stats-content">
+            <div class="vital-stat-item">
+              <span class="vital-label">G:</span>
+              <span class="vital-value">{card.vitalStats.gender || '?'}</span>
+            </div>
+            <div class="vital-stat-item">
+              <span class="vital-label">Ht:</span>
+              <span class="vital-value">{card.vitalStats.height || '?'}</span>
+            </div>
+            <div class="vital-stat-item">
+              <span class="vital-label">Wt:</span>
+              <span class="vital-value">{card.vitalStats.weight || '?'}</span>
+            </div>
+            <div class="vital-stat-item">
+              <span class="vital-label">Bt:</span>
+              <span class="vital-value">{card.vitalStats.bloodType || '?'}</span>
+            </div>
+          </div>
+        </div>
+      {/if}
 
       <!-- Info Section -->
       <div class="card-info-section">
@@ -215,6 +222,26 @@
   </div>
 
 <style>
+  @font-face {
+    font-family: 'OPTICopperplate-Light';
+    src: url('/fonts/OPTICopperplate-Light.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: 'ITCBenguiatStd';
+    src: url('/fonts/itc-benguiat-std-cufonfonts/ITCBenguiatStdBookCn.OTF') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: 'ITCBenguiatStd';
+    src: url('/fonts/itc-benguiat-std-cufonfonts/ITCBenguiatStdBookCnIt.OTF') format('opentype');
+    font-weight: normal;
+    font-style: italic;
+  }
 
   .ufs-card {
     --frame-color: #666666;
@@ -261,35 +288,10 @@
 
   /* Removed old header styles - now using absolute positioning */
 
-  /* Art Area */
-  .card-art-area {
-    position: absolute;
-    top: 0.8%;
-    left: 0.8%;
-    right: 0.8%;
-    height: 60%;
-    background: var(--frame-color);
-    overflow: hidden;
-    /* UFS style angled cut - only top-left corner */
-    clip-path: polygon(6% 0, 100% 0, 100% 100%, 0 100%, 0 6%);
-  }
-
   .card-art {
     width: 100%;
     height: 100%;
     object-fit: cover;
-  }
-
-  /* Character cards use full card images that extend beyond art area */
-  .card-art-area.character-art {
-    margin: 0;
-    border-radius: 0;
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: -1;
   }
 
   .card-art.character-art-img {
@@ -305,24 +307,12 @@
     right: 0.1in; /* 4% of 2.5in */
     height: 1.225in; /* 35% of 3.5in */
     background: rgba(255, 255, 255, 0.95);
-    border: 0.02in solid #ccc;
     border-radius: 0.06in 0.06in 0 0;
     overflow: hidden;
   }
 
   /* Ensure character stats are visible over full image */
 
-  .ufs-card:has(.character-art) .text-box-area {
-    background: rgba(255, 255, 255, 0.98);
-    backdrop-filter: blur(0.25em); /* 4px */
-    border: 0.125em solid rgba(255, 255, 255, 0.8); /* 2px */
-  }
-
-
-  .ufs-card:has(.character-art) .resource-symbols-bar {
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(0.125em); /* 2px */
-  }
 
   .art-placeholder {
     width: 100%;
@@ -339,48 +329,6 @@
   /* Removed old overlay styles - now using new positioning system */
 
 
-  /* Text Box */
-  .text-box-area {
-    background: rgba(255, 255, 255, 0.95);
-    border: 0.4% solid #ccc;
-    margin: 0.8% 3%;
-    padding: 2.4%;
-    border-radius: 1.6%;
-    font-size: 0.3%; /* Percentage-based font size for consistent scaling */
-    line-height: 1.2;
-    height: 24%; /* Percentage-based height for consistent scaling */
-    overflow: hidden;
-  }
-
-  /* Character cards have a swooping text box positioned over full image */
-  .text-box-area.character-textbox {
-    background: rgba(255, 255, 255, 0.98);
-    border: 0.8% solid rgba(139, 69, 19, 0.8);
-    margin: 0;
-    padding: 3%;
-    border-radius: 4.8% 4.8% 4.8% 1.6%;
-    position: absolute;
-    bottom: 18%; /* Percentage-based positioning */
-    left: 12%; /* Percentage-based positioning */
-    right: 3%; /* Percentage-based positioning */
-    height: 24%; /* Percentage-based height */
-    backdrop-filter: blur(1.6%);
-    z-index: 15;
-    box-shadow: 0 0.8% 3.2% rgba(0,0,0,0.3);
-  }
-
-  .text-box-area.character-textbox::before {
-    content: '';
-    position: absolute;
-    top: -0.8%;
-    left: -0.8%;
-    right: -0.8%;
-    bottom: -0.8%;
-    background: linear-gradient(135deg, var(--frame-color), transparent);
-    border-radius: 4.8% 4.8% 4.8% 1.6%;
-    z-index: -1;
-    opacity: 0.3;
-  }
 
   .keywords-line {
     margin-bottom: 0.4%;
@@ -394,16 +342,6 @@
 
 
 
-  /* Card Type Indicator */
-  .card-type-indicator {
-    position: absolute;
-    bottom: 2.5%; /* Percentage-based positioning */
-    left: 0.8%; /* Percentage-based positioning */
-    font-size: 0.6%; /* Percentage-based font size for consistent scaling */
-    color: rgba(255, 255, 255, 0.7);
-    text-transform: uppercase;
-    letter-spacing: 0.05%; /* Percentage-based letter spacing */
-  }
 
   /* Print Styles */
   @media print {
@@ -435,7 +373,7 @@
   .difficulty-value {
     position: absolute;
     z-index: 30;
-    font-size: 0.035in;
+    font-size: 0.08in;
     font-weight: bold;
     color: white;
     font-family: 'OPTICopperplate-Light', Arial, sans-serif;
@@ -473,7 +411,9 @@
     text-orientation: mixed;
     color: white;
     font-size: 0.12in; /* Physical unit for consistent print scaling */
-    font-weight: bold;
+    font-weight: 300; /* Lighter font weight */
+    font-style: italic;
+    font-family: 'ITCBenguiatStd', Arial, sans-serif;
     text-shadow: 0.008in 0.008in 0.015in rgba(0,0,0,0.8);
     letter-spacing: 0.008in;
     text-align: center;
@@ -484,39 +424,71 @@
   .character-card .card-name {
     writing-mode: initial;
     text-orientation: initial;
-    font-size: 0.09in; /* Physical unit for consistent print scaling */
+    font-size: 0.15in; /* Increased font size for better visibility */
+    font-weight: 300; /* Lighter font weight */
+    font-style: italic;
+    font-family: 'ITCBenguiatStd', Arial, sans-serif;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     transform: none;
+    text-align: center;
   }
 
 
   .block-modifier-corner {
     position: absolute;
-    top: 0.105in; /* 3% of 3.5in */
-    right: 0.075in; /* 3% of 2.5in */
-    width: 0.3in; /* 12% of 2.5in */
-    height: 0.56in; /* 16% of 3.5in */
-    background: white;
-    border: 0.005in solid var(--frame-color);
-    border-radius: 0.0375in; /* 1.5% converted to physical */
+    top: 0.05in; /* 2% of 3.5in */
+    right: 0.05in; /* 2% of 2.5in */
+    width: 0.8in; /* Increased to accommodate the icon */
+    height: 0.7in; /* Increased to accommodate the icon */
     display: flex;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
-    font-size: 0.0275in; /* 1.1% converted to physical */
-    font-weight: bold;
-    gap: 0.0075in; /* 0.3% converted to physical */
-    z-index: 20;
-    box-shadow: 0 0.005in 0.0125in rgba(0,0,0,0.2);
+    position: relative;
   }
 
+
   .block-number {
-    font-size: 0.02in; /* 0.8% converted to physical */
-    line-height: 1;
-    color: var(--frame-color);
+    position: absolute;
+    z-index: 10;
+    font-size: 0.08in;
+    font-weight: bold;
+    color: white;
+    font-family: 'OPTICopperplate-Light', Arial, sans-serif;
+    text-shadow: 0 0 0.01in rgba(0,0,0,0.8);
   }
+
+  .type-bracket-container {
+    position: absolute;
+    top: 1.2in; /* Below the card name */
+    left: 0.05in;
+    width: 0.8in;
+    height: 0.8in;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .type-bracket-container :global(.type-bracket-icon) {
+    position: absolute;
+    width: 0.8in;
+    height: 0.8in;
+    z-index: 1;
+  }
+
+
+  .card-type-text {
+    position: absolute;
+    z-index: 10;
+    font-size: 0.06in;
+    font-weight: bold;
+    color: white;
+    font-family: 'OPTICopperplate-Light', Arial, sans-serif;
+    text-shadow: 0 0 0.01in rgba(0,0,0,0.8);
+    text-transform: capitalize;
+  }
+
 
   .attack-stats-group {
     position: absolute;
@@ -574,10 +546,11 @@
     position: relative;
   }
 
+
   .stat-value {
     position: absolute;
     z-index: 25;
-    font-size: 0.03in;
+    font-size: 0.08in;
     font-weight: bold;
     color: white;
     font-family: 'OPTICopperplate-Light', Arial, sans-serif;
@@ -585,19 +558,27 @@
   }
 
   .character-vital-stats {
-    background: rgba(255, 255, 255, 0.95);
-    border: 0.02in solid var(--frame-color);
-    border-radius: 0.05in; /* 2% converted to physical */
-    padding: 0.07in 0.075in; /* 2% and 3% converted to physical */
-    backdrop-filter: blur(0.0125in);
-    box-shadow: 0 0.0125in 0.025in rgba(0,0,0,0.2);
+    position: absolute;
+    bottom: 0.7in; /* Above the control icon */
+    right: 0.05in; /* Bottom right corner */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 20; /* Above the info section */
+  }
+
+  .vital-stats-content {
+    position: absolute;
+    z-index: 10;
+    padding: 0.05in;
   }
 
   .vital-stat-item {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-size: 0.03in; /* Physical unit for consistent print scaling */
+    font-size: 0.04in; /* Increased for better visibility */
+    font-family: 'OPTICopperplate-Light', Arial, sans-serif;
     line-height: 1.2;
     margin-bottom: 0.02in;
   }
@@ -649,24 +630,6 @@
     text-shadow: 0 0 0.01in rgba(0,0,0,0.8);
   }
 
-  .card-type-label {
-    position: absolute;
-    bottom: 40%; /* Align with bottom of vertical name */
-    left: 0;
-    background: rgba(255, 255, 255, 0.95);
-    padding: 0.8% 1.5%;
-    border-radius: 0 1% 1% 0;
-    z-index: 21;
-    font-weight: bold;
-    font-size: 1%; /* Percentage-based font size */
-    color: var(--frame-color);
-    text-transform: uppercase;
-    letter-spacing: 0.1%;
-    border-right: 0.3% solid var(--frame-color);
-    border-top: 0.3% solid var(--frame-color);
-    border-bottom: 0.3% solid var(--frame-color);
-  }
-
   /* Remove duplicate card-info-section - using the absolute positioned one above */
 
   .resource-symbols {
@@ -716,12 +679,6 @@
     font-weight: normal;
   }
 
-  .inline-symbol {
-    height: 1.6%; /* Percentage-based size to match text scaling */
-    width: 1.6%; /* Percentage-based size to match text scaling */
-    display: inline;
-    vertical-align: middle;
-  }
 
   .card-meta {
     position: absolute;
