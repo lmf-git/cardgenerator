@@ -9,7 +9,7 @@ export const cardData = writable({
   controlValue: 0,
   resourceSymbols: [],
   textBox: '',
-  hasBlock: false,
+  hasBlock: true,
   blockZone: '',
   blockModifier: 0,
   handSize: 7,

@@ -11,6 +11,8 @@
   import VitalitySVGIcon from './icons/VitalitySVGIcon.svelte';
   import BlockModifierIcon from './icons/BlockModifierIcon.svelte';
   import TypeBracketIcon from './icons/TypeBracketIcon.svelte';
+  import SymbolBracketIcon from './icons/SymbolBracketIcon.svelte';
+  import SymbolBracketSeparatorIcon from './icons/SymbolBracketSeparatorIcon.svelte';
 
   let card = $state($cardData);
   
@@ -176,9 +178,25 @@
         <!-- Resource Symbols at top -->
         {#if card.resourceSymbols.length > 0}
           <div class="resource-symbols" class:character-symbols={card.cardType === 'character'}>
-            {#each card.resourceSymbols as symbol}
-              <SymbolIcon {symbol} size="1.25em" extraClass="resource-symbol-icon" />
-            {/each}
+            {#if card.cardType === 'character'}
+              <!-- Character cards: just show symbols centered -->
+              {#each card.resourceSymbols as symbol}
+                <SymbolIcon {symbol} size="2em" extraClass="resource-symbol-icon" />
+              {/each}
+            {:else}
+              <!-- Non-character cards: use symbol brackets and separators -->
+              <div class="symbol-bracket-container">
+                <SymbolBracketIcon extraClass="symbol-bracket-bg" />
+                <div class="symbols-with-separators">
+                  {#each card.resourceSymbols as symbol, index}
+                    <SymbolIcon {symbol} size="2em" extraClass="bracketed-symbol-icon" />
+                    {#if index < card.resourceSymbols.length - 1}
+                      <SymbolBracketSeparatorIcon size="0.7in" extraClass="symbol-separator" />
+                    {/if}
+                  {/each}
+                </div>
+              </div>
+            {/if}
           </div>
         {/if}
         
@@ -582,6 +600,7 @@
     position: absolute;
     z-index: 10;
     padding: 0.05in;
+    left: 0.1in;
   }
 
   .vital-stat-item {
@@ -646,15 +665,12 @@
   .resource-symbols {
     position: absolute;
     top: 2%;
-    left: 2%;
-    right: 2%;
+    left: 0;
+    right: 0;
     display: flex;
     align-items: center;
     gap: 1%; /* Percentage-based gap */
     justify-content: flex-start;
-    background: rgba(255, 255, 255, 0.8);
-    border: 0.2% solid var(--frame-color);
-    border-radius: 1%;
     padding: 1% 1.5%;
     height: 8%; /* Percentage-based height */
   }
@@ -666,6 +682,42 @@
     border-radius: 0;
     padding: 0.5% 0;
     border-bottom: 0.2% solid rgba(var(--frame-color), 0.3);
+  }
+  
+  .symbol-bracket-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+  }
+  
+  .symbol-bracket-container :global(.symbol-bracket-icon) {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+  }
+  
+  .symbols-with-separators {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.1em;
+    z-index: 10;
+  }
+  
+  .bracketed-symbol-icon {
+    z-index: 15;
+  }
+  
+  .symbol-separator {
+    z-index: 12;
   }
 
   .info-text-area {
