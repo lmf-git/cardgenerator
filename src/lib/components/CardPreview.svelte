@@ -55,9 +55,9 @@
 </script>
 
 <div class="ufs-card" class:character-card={card.cardType === 'character'} class:attack-card={card.cardType === 'attack'} class:action-card={card.cardType === 'action'} class:foundation-card={card.cardType === 'foundation'} class:asset-card={card.cardType === 'asset'}>
-    <!-- A: Difficulty circle (top-left corner) -->
-    <div class="difficulty-circle">
-      <DifficultyIcon size="2em" extraClass="difficulty-svg" />
+    <!-- A: Difficulty icon (top-left corner) -->
+    <div class="difficulty-icon">
+      <DifficultyIcon size="0.5in" extraClass="difficulty-svg" />
       <span class="difficulty-value">{card.difficulty}</span>
     </div>
 
@@ -87,7 +87,7 @@
 
     <!-- J: Control Value (bottom-right corner) -->
     <div class="control-value-corner">
-      <ControlIcon size="1.5em" extraClass="control-svg" />
+      <ControlIcon size="0.3in" extraClass="control-svg" />
       <span class="control-value">{card.controlValue}</span>
     </div>
 
@@ -115,15 +115,15 @@
         {#if card.cardType === 'attack'}
           <div class="attack-stats-group">
             <div class="attack-zone-stat">
-              <div class="zone-speed-circle">
-                <ZoneSymbol zone={card.attackZone} size="0.875em" color="#333" extraClass="attack-zone-icon" />
-                <SpeedSVGIcon size="1.2em" extraClass="speed-svg" />
+              <div class="zone-speed-icon">
+                <ZoneSymbol zone={card.attackZone} size="0.2in" color="#333" extraClass="attack-zone-icon" />
+                <SpeedSVGIcon size="0.3in" extraClass="speed-svg" />
                 <span class="speed-value">{card.speed}</span>
               </div>
             </div>
             <div class="damage-stat">
-              <div class="damage-value-circle">
-                <DamageIcon size="1.2em" extraClass="damage-svg" />
+              <div class="damage-icon">
+                <DamageIcon size="0.3in" extraClass="damage-svg" />
                 <span class="damage-value">{card.damage}</span>
               </div>
             </div>
@@ -134,11 +134,11 @@
         {#if card.cardType === 'character'}
           <div class="character-stats-group">
             <div class="character-hand-size">
-              <HandSizeSVGIcon size="2em" extraClass="handsize-svg" />
+              <HandSizeSVGIcon size="0.4in" extraClass="handsize-svg" />
               <span class="stat-value">{card.handSize}</span>
             </div>
             <div class="character-vitality">
-              <VitalitySVGIcon size="2em" extraClass="vitality-svg" />
+              <VitalitySVGIcon size="0.4in" extraClass="vitality-svg" />
               <span class="stat-value">{card.maxVitality}</span>
             </div>
             <div class="character-vital-stats">
@@ -422,32 +422,23 @@
   }
 
   /* Updated positioning for official UFS layout */
-  .difficulty-circle {
+  .difficulty-icon {
     position: absolute;
-    top: 0.1in;
+    top: 0.05in;
     left: 0.075in;
-    width: 0.4in;
-    height: 0.4in;
-    background: rgba(255, 255, 255, 0.9);
-    color: black;
-    border: 0.005in solid var(--frame-color);
-    border-radius: 50%;
     display: flex;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
-    font-size: 0.04in;
-    font-weight: bold;
-    z-index: 20;
-    box-shadow: 0 0.005in 0.0125in rgba(0,0,0,0.2);
+    z-index: 25;
   }
 
   .difficulty-value {
     position: absolute;
-    z-index: 25;
+    z-index: 30;
     font-size: 0.035in;
     font-weight: bold;
     color: white;
+    font-family: 'OPTICopperplate-Light', Arial, sans-serif;
     text-shadow: 0 0 0.01in rgba(0,0,0,0.8);
   }
 
@@ -546,19 +537,11 @@
     position: relative;
   }
 
-  .zone-speed-circle, .damage-value-circle {
-    width: 0.3in; /* Increased size for SVG icons */
-    height: 0.3in; /* Make circular instead of oval */
-    background: rgba(255, 255, 255, 0.95);
-    border: 0.0075in solid var(--frame-color);
-    border-radius: 50%;
+  .zone-speed-icon, .damage-icon {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    font-weight: bold;
-    font-size: 0.0325in; /* 1.3% converted to physical */
-    box-shadow: 0 0.0075in 0.015in rgba(0,0,0,0.3);
     position: relative;
   }
 
@@ -569,6 +552,7 @@
     position: absolute;
     z-index: 25;
     font-weight: bold;
+    font-family: 'OPTICopperplate-Light', Arial, sans-serif;
     text-shadow: 0 0 0.01in rgba(0,0,0,0.8);
   }
 
@@ -584,17 +568,9 @@
 
   .character-hand-size,
   .character-vitality {
-    background: rgba(255, 255, 255, 0.95);
-    border: 0.02in solid var(--frame-color);
-    border-radius: 50%;
-    width: 0.45in;
-    height: 0.45in;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-weight: bold;
-    font-size: 0.03in; /* Physical unit for consistent print scaling */
-    box-shadow: 0 0.0125in 0.025in rgba(0,0,0,0.2);
     position: relative;
   }
 
@@ -604,6 +580,7 @@
     font-size: 0.03in;
     font-weight: bold;
     color: white;
+    font-family: 'OPTICopperplate-Light', Arial, sans-serif;
     text-shadow: 0 0 0.01in rgba(0,0,0,0.8);
   }
 
@@ -656,20 +633,10 @@
     position: absolute;
     bottom: 0.07in;
     right: 0.05in;
-    width: 0.3in;
-    height: 0.3in;
-    background: rgba(255, 255, 255, 0.95);
-    color: black;
-    border: 0.008in solid var(--frame-color);
-    border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 0.032in; /* Physical unit for consistent print scaling */
-    font-weight: bold;
     z-index: 20;
-    box-shadow: 0 0.008in 0.015in rgba(0,0,0,0.2);
-    position: relative;
   }
 
   .control-value {
@@ -678,6 +645,7 @@
     font-size: 0.025in;
     font-weight: bold;
     color: white;
+    font-family: 'OPTICopperplate-Light', Arial, sans-serif;
     text-shadow: 0 0 0.01in rgba(0,0,0,0.8);
   }
 
