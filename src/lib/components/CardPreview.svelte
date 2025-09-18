@@ -1,6 +1,7 @@
 <script>
   import { cardData } from '../stores.js';
   import SymbolIcon from './icons/SymbolIcon.svelte';
+  import { getFontFamilyCSS } from '../utils/googleFonts.js';
   // New SVG icons
   import ControlIcon from './icons/ControlIcon.svelte';
   import DamageIcon from './icons/DamageIcon.svelte';
@@ -15,10 +16,14 @@
   import SymbolBracketSeparatorIcon from './icons/SymbolBracketSeparatorIcon.svelte';
 
   let card = $state($cardData);
-  
+  let nameFontFamily = $state('');
+  let typeFontFamily = $state('');
+
   // Sync with store changes
   $effect(() => {
     card = $cardData;
+    nameFontFamily = getFontFamilyCSS(card.nameFont || 'ITCBenguiatStd', card.nameFontType || 'local');
+    typeFontFamily = getFontFamilyCSS(card.typeFont || 'ITCBenguiatStd', card.typeFontType || 'local');
   });
 
   function formatVersionedCardName(name, version = 1) {
@@ -72,14 +77,14 @@
 
     <!-- B: Card name (vertical text on left side for non-character, horizontal on top for character) -->
     <div class="card-name-container">
-      <span class="card-name">{formatVersionedCardName(card.name, card.version) || 'CARD NAME'}</span>
+      <span class="card-name" style="font-family: {nameFontFamily};">{formatVersionedCardName(card.name, card.version) || 'CARD NAME'}</span>
     </div>
     
     <!-- Type bracket container (under vertical name for non-character cards) -->
     {#if card.cardType !== 'character'}
       <div class="type-bracket-container">
         <TypeBracketIcon extraClass="type-bracket-bg" cardType={card.cardType} />
-        <span class="card-type-text">{card.cardType || 'Type'}</span>
+        <span class="card-type-text" style="font-family: {typeFontFamily};">{card.cardType || 'Type'}</span>
       </div>
     {/if}
 
@@ -431,7 +436,6 @@
     font-size: 0.12in; /* Physical unit for consistent print scaling */
     font-weight: 300; /* Lighter font weight */
     font-style: italic;
-    font-family: 'ITCBenguiatStd', Arial, sans-serif;
     text-shadow: 0.008in 0.008in 0.015in rgba(0,0,0,0.8);
     letter-spacing: 0.008in;
     text-align: center;
@@ -445,7 +449,6 @@
     font-size: 0.15in; /* Increased font size for better visibility */
     font-weight: 300; /* Lighter font weight */
     font-style: italic;
-    font-family: 'ITCBenguiatStd', Arial, sans-serif;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -510,7 +513,6 @@
     font-size: 0.065in;
     font-weight: bold;
     color: black;
-    font-family: 'ITCBenguiatStd', Arial, sans-serif;
     text-transform: capitalize;
     text-align: center;
     width: 100%;

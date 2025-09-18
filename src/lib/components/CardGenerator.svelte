@@ -1,6 +1,7 @@
 <script>
   import { cardData } from '../stores.js';
   import RichTextEditor from './RichTextEditor.svelte';
+  import FontSelector from './FontSelector.svelte';
 
   const CARD_TYPES = {
     CHARACTER: 'character',
@@ -173,12 +174,25 @@
     if (!Array.isArray(card.resourceSymbols)) {
       card.resourceSymbols = [];
     }
-    
+
     if (card.resourceSymbols.includes(symbol)) {
       card.resourceSymbols = card.resourceSymbols.filter(s => s !== symbol);
     } else {
       card.resourceSymbols = [...card.resourceSymbols, symbol];
     }
+    cardData.set(card);
+  }
+
+  // Font selection handlers
+  function handleNameFontChange(fontFamily, fontType) {
+    card.nameFont = fontFamily;
+    card.nameFontType = fontType;
+    cardData.set(card);
+  }
+
+  function handleTypeFontChange(fontFamily, fontType) {
+    card.typeFont = fontFamily;
+    card.typeFontType = fontType;
     cardData.set(card);
   }
 
@@ -226,28 +240,57 @@
 
       <div class="form-group">
         <label for="difficulty">Difficulty</label>
-        <input 
-          id="difficulty" 
-          type="number" 
+        <input
+          id="difficulty"
+          type="number"
           class="form-input"
-          min="0" 
-          max="10" 
+          min="0"
+          max="10"
           bind:value={card.difficulty}
         />
       </div>
 
       <div class="form-group">
         <label for="control-value">Control Value</label>
-        <input 
-          id="control-value" 
-          type="number" 
+        <input
+          id="control-value"
+          type="number"
           class="form-input"
-          min="0" 
-          max="10" 
+          min="0"
+          max="10"
           bind:value={card.controlValue}
         />
       </div>
     </div>
+  </fieldset>
+
+  <!-- Font Selection -->
+  <fieldset class="form-section">
+    <legend>Typography</legend>
+
+    <div class="form-row">
+      <div class="form-group">
+        <FontSelector
+          label="Character Name Font"
+          selectedFont={card.nameFont}
+          selectedFontType={card.nameFontType}
+          previewText={card.name || "Character Name"}
+          onFontChange={handleNameFontChange}
+        />
+      </div>
+
+      <div class="form-group">
+        <FontSelector
+          label="Card Type Font"
+          selectedFont={card.typeFont}
+          selectedFontType={card.typeFontType}
+          previewText={card.cardType || "Card Type"}
+          onFontChange={handleTypeFontChange}
+        />
+      </div>
+    </div>
+
+    <small class="form-helper">Choose fonts for the character name (horizontal for character cards, vertical for others) and card type text</small>
   </fieldset>
 
   <!-- Character Specific Fields -->

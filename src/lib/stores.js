@@ -25,7 +25,12 @@ export const cardData = writable({
   setNumber: '',
   setName: '',
   cardNumber: '',
-  artist: ''
+  artist: '',
+  // Font settings
+  nameFont: 'ITCBenguiatStd',
+  nameFontType: 'local',
+  typeFont: 'ITCBenguiatStd',
+  typeFontType: 'local'
 });
 
 // Print settings store
