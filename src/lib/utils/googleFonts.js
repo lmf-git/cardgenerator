@@ -6,46 +6,28 @@ export const loadedFonts = writable(new Set());
 
 // Popular Google Fonts suitable for card names and types
 export const GOOGLE_FONTS = [
-  { family: 'Inter', weight: '300,400,500,600,700' },
-  { family: 'Roboto', weight: '300,400,500,700' },
-  { family: 'Open Sans', weight: '300,400,600,700' },
-  { family: 'Lato', weight: '300,400,700' },
-  { family: 'Montserrat', weight: '300,400,500,600,700' },
-  { family: 'Poppins', weight: '300,400,500,600,700' },
-  { family: 'Source Sans Pro', weight: '300,400,600,700' },
-  { family: 'Nunito', weight: '300,400,600,700' },
-  { family: 'Roboto Condensed', weight: '300,400,700' },
-  { family: 'Oswald', weight: '300,400,500,600,700' },
-  { family: 'Merriweather', weight: '300,400,700' },
-  { family: 'Playfair Display', weight: '400,500,600,700' },
-  { family: 'Crimson Text', weight: '400,600,700' },
-  { family: 'Lora', weight: '400,500,600,700' },
-  { family: 'Raleway', weight: '300,400,500,600,700' },
-  { family: 'PT Sans', weight: '400,700' },
-  { family: 'PT Serif', weight: '400,700' },
-  { family: 'Ubuntu', weight: '300,400,500,700' },
-  { family: 'Noto Sans', weight: '300,400,500,600,700' },
-  { family: 'Roboto Slab', weight: '300,400,500,600,700' },
-  { family: 'Titillium Web', weight: '300,400,600,700' },
-  { family: 'Libre Baskerville', weight: '400,700' },
+  { family: 'Inter', weight: '400,500,600,700' },
+  { family: 'Roboto', weight: '400,500,700' },
+  { family: 'Lato', weight: '400,700' },
+  { family: 'Montserrat', weight: '400,500,600,700' },
+  { family: 'Poppins', weight: '400,500,600,700' },
+  { family: 'Nunito', weight: '400,600,700' },
+  { family: 'Oswald', weight: '400,500,600,700' },
+  { family: 'Merriweather', weight: '400,700' },
+  { family: 'Lora', weight: '400,500,700' },
+  { family: 'Raleway', weight: '400,500,600,700' },
+  { family: 'Ubuntu', weight: '400,500,700' },
   { family: 'Cabin', weight: '400,500,600,700' },
-  { family: 'Fira Sans', weight: '300,400,500,600,700' },
-  { family: 'Dosis', weight: '300,400,500,600,700' },
-  { family: 'Arimo', weight: '400,500,600,700' },
+  { family: 'Arimo', weight: '400,700' },
   { family: 'Tinos', weight: '400,700' },
-  { family: 'Cousine', weight: '400,700' },
-  { family: 'Vollkorn', weight: '400,500,600,700' },
-  { family: 'Alegreya', weight: '400,500,700' },
-  { family: 'Karla', weight: '300,400,500,600,700' },
-  { family: 'Bitter', weight: '300,400,500,600,700' },
-  { family: 'Cormorant Garamond', weight: '300,400,500,600,700' },
-  { family: 'Cinzel', weight: '400,500,600' },
-  { family: 'Cinzel Decorative', weight: '400,700' },
-  { family: 'Bebas Neue', weight: '400' },
+  { family: 'Vollkorn', weight: '400,700' },
+  { family: 'Alegreya', weight: '400,700' },
+  { family: 'Karla', weight: '400,700' },
+  { family: 'Bitter', weight: '400,700' },
+  { family: 'Cinzel', weight: '400,600' },
   { family: 'Anton', weight: '400' },
   { family: 'Bangers', weight: '400' },
-  { family: 'Righteous', weight: '400' },
-  { family: 'Fredoka One', weight: '400' }
+  { family: 'Righteous', weight: '400' }
 ];
 
 // Default local fonts (current implementation)
@@ -65,7 +47,7 @@ export const LOCAL_FONTS = [
  * @returns {Promise<void>}
  */
 export async function loadGoogleFont(fontFamily, weights = '400') {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     // Check if font is already loaded
     loadedFonts.update(fonts => {
       if (fonts.has(fontFamily)) {
@@ -76,7 +58,11 @@ export async function loadGoogleFont(fontFamily, weights = '400') {
       // Create a link element to load the font
       const link = document.createElement('link');
       link.rel = 'stylesheet';
-      link.href = `https://fonts.googleapis.com/css2?family=${encodeURIComponent(fontFamily)}:wght@${weights}&display=swap`;
+
+      // Properly encode font family name for Google Fonts API
+      // Replace spaces with + and handle special characters
+      const encodedFamily = fontFamily.replace(/\s+/g, '+');
+      link.href = `https://fonts.googleapis.com/css2?family=${encodedFamily}:wght@${weights}&display=swap`;
 
       link.onload = () => {
         loadedFonts.update(fonts => {
@@ -87,8 +73,9 @@ export async function loadGoogleFont(fontFamily, weights = '400') {
       };
 
       link.onerror = () => {
-        console.error(`Failed to load Google Font: ${fontFamily}`);
-        reject(new Error(`Failed to load font: ${fontFamily}`));
+        console.warn(`Failed to load Google Font: ${fontFamily}, using fallback`);
+        // Don't reject, just resolve to allow fallback fonts to work
+        resolve();
       };
 
       document.head.appendChild(link);

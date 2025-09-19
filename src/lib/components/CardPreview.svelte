@@ -186,7 +186,7 @@
             {#if card.cardType === 'character'}
               <!-- Character cards: just show symbols centered -->
               {#each card.resourceSymbols as symbol}
-                <SymbolIcon {symbol} size="2em" extraClass="resource-symbol-icon" />
+                <SymbolIcon {symbol} size="3em" extraClass="resource-symbol-icon character-resource-symbol" />
               {/each}
             {:else}
               <!-- Non-character cards: use symbol brackets and separators -->
@@ -196,7 +196,7 @@
                   {#each card.resourceSymbols as symbol, index}
                     <SymbolIcon {symbol} size="2em" extraClass="bracketed-symbol-icon" />
                     {#if index < card.resourceSymbols.length - 1}
-                      <SymbolBracketSeparatorIcon size="0.7in" extraClass="symbol-separator" />
+                      <SymbolBracketSeparatorIcon extraClass="symbol-separator" />
                     {/if}
                   {/each}
                 </div>
