@@ -170,7 +170,7 @@
     justify-content: center;
   }
 
-  .edit-btn, .print-btn, .export-btn {
+  .print-btn, .export-btn {
     padding: 8px 16px;
     border: none;
     border-radius: 5px;
@@ -179,15 +179,6 @@
     font-size: 14px;
     transition: all 0.3s ease;
     white-space: nowrap;
-  }
-
-  .edit-btn {
-    background: #3498db;
-    color: white;
-  }
-
-  .edit-btn:hover {
-    background: #2980b9;
   }
 
   .print-btn {
@@ -238,19 +229,6 @@
       display: block; /* Always show on mobile */
     }
 
-    .preview-panel {
-      order: 1;
-      background: white;
-      padding: 0;
-      border-radius: 0;
-      border: none;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 50vh;
-      width: 100%;
-      position: static;
-    }
 
     .export-controls {
       position: static;
@@ -292,11 +270,8 @@
       background: white;
     }
 
-    .preview-panel {
-      padding: 0;
-    }
 
-    .edit-btn, .print-btn, .export-btn {
+    .print-btn, .export-btn {
       flex: 1;
       min-height: 48px; /* Better touch targets */
     }
@@ -336,15 +311,6 @@
       display: none;
     }
 
-    .preview-controls {
-      display: none;
-    }
-
-    .preview-panel {
-      background: white;
-      border: none;
-      padding: 0;
-    }
   }
 
   /* Print Styles - Only show the card */

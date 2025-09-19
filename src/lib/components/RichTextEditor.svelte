@@ -259,10 +259,6 @@
     line-height: 1.4;
   }
 
-  .inline-symbol {
-    vertical-align: middle;
-    display: inline;
-  }
 
   .help-text {
     color: #6c757d;

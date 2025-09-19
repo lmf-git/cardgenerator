@@ -513,7 +513,7 @@
     <!-- Current keywords with remove buttons -->
     {#if card.keywords.length > 0}
       <div class="current-keywords">
-        <label>Current Keywords</label>
+        <div class="keyword-label">Current Keywords</div>
         <div class="keyword-tags">
           {#each card.keywords as keyword}
             <div class="keyword-tag">
@@ -750,9 +750,8 @@
     letter-spacing: 0.025em;
   }
 
-  .form-input, 
-  .form-select,
-  .form-textarea {
+  .form-input,
+  .form-select {
     width: 100%;
     padding: 0.75em; /* 12px */
     border: 0.125em solid #e1e8ed; /* 2px */
@@ -764,18 +763,16 @@
     transition: all 0.2s ease;
   }
 
-  .form-input:focus, 
-  .form-select:focus,
-  .form-textarea:focus {
+  .form-input:focus,
+  .form-select:focus {
     outline: none;
     border-color: #3498db;
     box-shadow: 0 0 0 0.1875em rgba(52, 152, 219, 0.15); /* 3px */
     background: #fbfcfd;
   }
 
-  .form-input:hover:not(:focus), 
-  .form-select:hover:not(:focus),
-  .form-textarea:hover:not(:focus) {
+  .form-input:hover:not(:focus),
+  .form-select:hover:not(:focus) {
     border-color: #cbd6e0;
   }
 
@@ -956,7 +953,7 @@
     margin-bottom: 1.25em;
   }
 
-  .current-keywords label {
+  .keyword-label {
     display: block;
     margin-bottom: 0.5em;
     font-weight: 500;

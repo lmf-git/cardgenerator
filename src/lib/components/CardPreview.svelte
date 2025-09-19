@@ -715,13 +715,6 @@
     z-index: 10;
   }
   
-  .bracketed-symbol-icon {
-    z-index: 15;
-  }
-  
-  .symbol-separator {
-    z-index: 12;
-  }
 
   .info-text-area {
     position: absolute;
@@ -794,6 +787,12 @@
   .ufs-card.asset-card {
     --frame-color: #9932CC;
     --frame-secondary: #BA55D3;
+  }
+
+  /* Inline symbols in card text */
+  :global(.inline-symbol) {
+    vertical-align: middle;
+    display: inline;
   }
 
 </style>
