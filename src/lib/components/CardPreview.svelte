@@ -194,7 +194,7 @@
                 <SymbolBracketIcon extraClass="symbol-bracket-bg" />
                 <div class="symbols-with-separators">
                   {#each card.resourceSymbols as symbol, index}
-                    <SymbolIcon {symbol} size="2em" extraClass="bracketed-symbol-icon" />
+                    <SymbolIcon {symbol} size="3.5em" extraClass="bracketed-symbol-icon" />
                     {#if index < card.resourceSymbols.length - 1}
                       <SymbolBracketSeparatorIcon extraClass="symbol-separator" />
                     {/if}
