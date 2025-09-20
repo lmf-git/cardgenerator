@@ -693,10 +693,12 @@
     left: 0;
     right: 0;
     display: flex;
-    align-items: center;
-    justify-content: center;
+    align-items: flex-start;
+    justify-content: flex-start;
     width: 100%;
     height: 100%;
+    padding: 0.2em 0.5em;
+    box-sizing: border-box;
   }
   
   .symbol-bracket-container :global(.symbol-bracket-icon) {
@@ -707,12 +709,13 @@
   }
   
   .symbols-with-separators {
-    position: absolute;
+    position: relative;
     display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.1em;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 0.2em;
     z-index: 10;
+    padding-top: 0.1em;
   }
   
 
