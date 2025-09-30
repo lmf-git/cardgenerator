@@ -1,5 +1,4 @@
 <script>
-  export let size = "1em";
   export let extraClass = "";
 </script>
 
