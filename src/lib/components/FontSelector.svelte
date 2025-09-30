@@ -27,12 +27,8 @@
     if (fontType === 'google') {
       isLoading = true;
       try {
-        // Find the font weights for this Google Font
-        const googleFont = fonts.find(f => f.family === fontFamily && f.type === 'google');
-        if (googleFont) {
-          // For now, just load with default weights
-          await loadGoogleFont(fontFamily, '300,400,500,600,700');
-        }
+        // Load with a simple weight specification that works for all fonts
+        await loadGoogleFont(fontFamily, '400;700');
       } catch (error) {
         console.error('Failed to load font:', error);
       }

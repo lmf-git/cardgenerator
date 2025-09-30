@@ -59,9 +59,12 @@ export async function loadGoogleFont(fontFamily, weights = '400') {
       const link = document.createElement('link');
       link.rel = 'stylesheet';
 
-      // Properly encode font family name for Google Fonts API
-      // Replace spaces with + and handle special characters
+      // Properly encode font family name for Google Fonts API v2
+      // Replace spaces with + for URL encoding
       const encodedFamily = fontFamily.replace(/\s+/g, '+');
+
+      // For Google Fonts API v2, use semicolons between weights
+      // Format: family=Font+Name:wght@400;700
       link.href = `https://fonts.googleapis.com/css2?family=${encodedFamily}:wght@${weights}&display=swap`;
 
       link.onload = () => {

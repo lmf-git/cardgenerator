@@ -3,10 +3,10 @@
   export let extraClass = "";
 </script>
 
-<svg 
+<svg
   height={size}
-  viewBox="0 0 55 111" 
-  fill="none" 
+  viewBox="0 0 55 111"
+  fill="none"
   xmlns="http://www.w3.org/2000/svg"
   class="symbol-bracket-separator-icon {extraClass}"
 >
@@ -16,6 +16,6 @@
 <style>
   .symbol-bracket-separator-icon {
     display: inline-block;
-    vertical-align: middle;
+    vertical-align: top;
   }
 </style>

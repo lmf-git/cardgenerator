@@ -3,12 +3,12 @@
   export let extraClass = "";
 </script>
 
-<svg 
-  height={size}
-  viewBox="0 0 757 128" 
-  fill="none" 
+<svg
+  viewBox="0 0 757 128"
+  fill="none"
   xmlns="http://www.w3.org/2000/svg"
   class="symbol-bracket-icon {extraClass}"
+  preserveAspectRatio="none"
 >
   <defs>
     <linearGradient id="metalGradient" x1="0%" y1="0%" x2="0%" y2="100%">
@@ -30,15 +30,16 @@
       <feDropShadow dx="2" dy="3" stdDeviation="2" flood-color="#000" flood-opacity="0.3"/>
     </filter>
   </defs>
-  <path d="M756.5 7L6.5 0C25.3 46.4 10 93 0 110.5L26.5 127.5C29.3333 127.5 39.6 124.1 58 110.5C52 93.7 55.5 50.8333 58 31.5H707.706L715.5 18H756.5V7Z" 
-        fill="url(#metalGradient)" 
-        filter="url(#bevelEffect)" 
+  <path d="M756.5 7L6.5 0C25.3 46.4 10 93 0 110.5L26.5 127.5C29.3333 127.5 39.6 124.1 58 110.5C52 93.7 55.5 50.8333 58 31.5H707.706L715.5 18H756.5V7Z"
+        fill="url(#metalGradient)"
+        filter="url(#bevelEffect)"
         style="filter: url(#bevelEffect) url(#dropShadow);"/>
 </svg>
 
 <style>
   .symbol-bracket-icon {
-    display: inline-block;
-    vertical-align: middle;
+    display: block;
+    width: 100%;
+    height: 100%;
   }
 </style>

@@ -122,16 +122,16 @@
         <!-- D & E: Attack zone/speed and damage (middle-right on attack cards) -->
         {#if card.cardType === 'attack'}
           <div class="attack-stats-group">
-            <div class="attack-zone-stat">
-              <div class="zone-speed-icon">
-                <SpeedSVGIcon size="0.3in" extraClass="speed-svg" />
-                <span class="speed-value">{card.speed}</span>
-              </div>
-            </div>
             <div class="damage-stat">
               <div class="damage-icon">
                 <DamageIcon size="0.3in" extraClass="damage-svg" />
                 <span class="damage-value">{card.damage}</span>
+              </div>
+            </div>
+            <div class="attack-zone-stat">
+              <div class="zone-speed-icon">
+                <SpeedSVGIcon size="0.3in" extraClass="speed-svg" />
+                <span class="speed-value">{card.speed}</span>
               </div>
             </div>
           </div>
@@ -194,9 +194,9 @@
                 <SymbolBracketIcon extraClass="symbol-bracket-bg" />
                 <div class="symbols-with-separators">
                   {#each card.resourceSymbols as symbol, index}
-                    <SymbolIcon {symbol} size="3.5em" extraClass="bracketed-symbol-icon" />
+                    <SymbolIcon {symbol} size="6.5em" extraClass="bracketed-symbol-icon" />
                     {#if index < card.resourceSymbols.length - 1}
-                      <SymbolBracketSeparatorIcon extraClass="symbol-separator" />
+                      <SymbolBracketSeparatorIcon size="6.5em" extraClass="symbol-separator" />
                     {/if}
                   {/each}
                 </div>
@@ -674,8 +674,8 @@
     align-items: center;
     gap: 1%; /* Percentage-based gap */
     justify-content: flex-start;
-    padding: 1% 1.5%;
-    height: 8%; /* Percentage-based height */
+    padding: 0;
+    min-height: 8%; /* Percentage-based height */
   }
 
   .resource-symbols.character-symbols {
@@ -688,34 +688,40 @@
   }
   
   .symbol-bracket-container {
+    position: relative;
+    display: block;
+    width: 100%;
+  }
+
+  .symbol-bracket-container :global(.symbol-bracket-icon) {
     position: absolute;
     top: 0;
     left: 0;
-    right: 0;
-    display: flex;
-    align-items: flex-start;
-    justify-content: flex-start;
-    width: 100%;
-    height: 100%;
-    padding: 0.2em 0.5em;
-    box-sizing: border-box;
-  }
-  
-  .symbol-bracket-container :global(.symbol-bracket-icon) {
-    position: absolute;
     width: 100%;
     height: 100%;
     z-index: 1;
   }
-  
+
   .symbols-with-separators {
     position: relative;
     display: flex;
     align-items: flex-start;
     justify-content: flex-start;
-    gap: 0.2em;
+    gap: 0;
     z-index: 10;
-    padding-top: 0.1em;
+    padding: 1.5em 0 0.3em 3.5em;
+  }
+
+  .symbols-with-separators :global(.symbol-separator) {
+    height: 6.5em;
+    width: auto;
+    align-self: flex-start;
+    margin-left: -1em;
+    margin-right: -1em;
+  }
+
+  .symbols-with-separators :global(.symbol-icon) {
+    align-self: flex-start;
   }
   
 
