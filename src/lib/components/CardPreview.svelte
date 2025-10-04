@@ -96,7 +96,11 @@
 
     <!-- I: Universe/set info (bottom-left corner) -->
     <div class="universe-set-corner">
-      {card.universe || 'UFS'}
+      {#if card.universe}
+        <img src="/universes/{card.universe}.png" alt="{card.universe}" class="universe-logo" />
+      {:else}
+        <span class="universe-text">UFS</span>
+      {/if}
     </div>
 
     <!-- J: Control Value (bottom-right corner) -->
@@ -633,14 +637,28 @@
 
   .universe-set-corner {
     position: absolute;
-    bottom: 2%;
-    left: 2%;
-    font-size: 0.8%; /* Percentage-based font size */
+    bottom: 0.07in;
+    left: 0.07in;
+    z-index: 20;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .universe-logo {
+    max-height: 0.4in;
+    max-width: 0.6in;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+  }
+
+  .universe-text {
+    font-size: 0.06in;
     color: white;
     background: var(--frame-color);
-    padding: 0.3% 0.5%;
-    border-radius: 0.5%;
-    z-index: 20;
+    padding: 0.02in 0.04in;
+    border-radius: 0.02in;
   }
 
   .control-value-corner {

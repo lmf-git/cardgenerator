@@ -90,6 +90,11 @@
     { value: 8, label: 'Version 8 (:::::Name:::::)' }
   ];
 
+  const universeOptions = [
+    { value: '', label: 'None' },
+    { value: 'soul_calibur_v', label: 'Soul Calibur V' }
+  ];
+
 
 
   // State for keyword modifiers
@@ -615,13 +620,12 @@
     <div class="form-row">
       <div class="form-group">
         <label for="universe">Universe</label>
-        <input 
-          id="universe" 
-          type="text" 
-          class="form-input"
-          bind:value={card.universe}
-          placeholder="Street Fighter, Tekken, etc."
-        />
+        <select class="form-select" bind:value={card.universe}>
+          {#each universeOptions as option}
+            <option value={option.value}>{option.label}</option>
+          {/each}
+        </select>
+        <small class="form-helper">Select a universe to display its logo on the card</small>
       </div>
 
       <div class="form-group">
