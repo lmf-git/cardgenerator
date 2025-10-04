@@ -754,6 +754,14 @@
     line-height: 1.3;
   }
 
+  /* More space for non-character cards due to larger resource bracket */
+  .attack-card .info-text-area,
+  .action-card .info-text-area,
+  .foundation-card .info-text-area,
+  .asset-card .info-text-area {
+    top: 22%;
+  }
+
   .keywords-line {
     margin-bottom: 1%; /* Percentage-based margin */
     color: var(--frame-color);
