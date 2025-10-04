@@ -759,7 +759,7 @@
   .action-card .info-text-area,
   .foundation-card .info-text-area,
   .asset-card .info-text-area {
-    top: 22%;
+    top: 32%;
   }
 
   .keywords-line {
