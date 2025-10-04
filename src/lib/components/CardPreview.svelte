@@ -70,7 +70,7 @@
     <!-- C: Block modifier (top-right corner) -->
     {#if card.hasBlock === true}
       <div class="block-modifier-corner">
-        <BlockModifierIcon extraClass="block-modifier-svg" />
+        <BlockModifierIcon blockZone={card.blockZone} extraClass="block-modifier-svg" />
         <span class="block-number">+{card.blockModifier}</span>
       </div>
     {/if}
@@ -124,7 +124,7 @@
           <div class="attack-stats-group">
             <div class="damage-stat">
               <div class="damage-icon">
-                <DamageIcon size="0.3in" extraClass="damage-svg" />
+                <DamageIcon attackZone={card.attackZone} size="0.3in" extraClass="damage-svg" />
                 <span class="damage-value">{card.damage}</span>
               </div>
             </div>
@@ -732,7 +732,7 @@
     right: 2%;
     bottom: 2%;
     overflow-y: auto;
-    font-size: 1%; /* Percentage-based font size */
+    font-size: 0.065in; /* Physical unit for consistent print scaling */
     line-height: 1.3;
   }
 
