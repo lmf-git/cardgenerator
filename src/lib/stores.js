@@ -40,5 +40,8 @@ export const printSettings = writable({
   resolution: 300, // DPI
   bleedSize: 0.125, // inches
   showBleed: true,
-  showCropMarks: false
+  showCropMarks: false,
+  copiesPerPage: 1,
+  bleedMargin: 0.125, // inches
+  spaceBetween: 0.25, // inches
 });

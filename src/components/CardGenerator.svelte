@@ -1,5 +1,5 @@
 <script>
-  import { cardData } from '../stores.js';
+  import { cardData } from '../../src/lib/stores.js';
   import RichTextEditor from './RichTextEditor.svelte';
   import FontSelector from './FontSelector.svelte';
 

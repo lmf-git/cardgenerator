@@ -1,8 +1,9 @@
 <script>
   import { cardData, printSettings } from '../lib/stores.js';
-  import CardGenerator from '../lib/components/CardGenerator.svelte';
-  import CardPreview from '../lib/components/CardPreview.svelte';
-  import { exportCardToPDF, exportCardToPNG } from '../lib/export.js';
+  import CardGenerator from '../components/CardGenerator.svelte';
+  import CardPreview from '../components/CardPreview.svelte';
+  import { exportCardToPDF, exportCardToPNG, prepareForPrint } from '../lib/export.js';
+  import { downloadJSON, readJSONFile } from '../lib/io.js';
 
   let showEditMobile = $state(false);
   let cardPreviewRef = $state(null);
@@ -14,7 +15,7 @@
     
     isExporting = true;
     const cardElement = cardPreviewRef.querySelector('.ufs-card');
-    const success = await exportCardToPDF(cardElement, `${$cardData.name || 'ufs-card'}.pdf`);
+    const success = await exportCardToPDF(cardElement, `${$cardData.name || 'ufs-card'}.pdf`, $printSettings);
     
     if (success) {
       alert('PDF exported successfully!');
@@ -38,6 +39,39 @@
     }
     isExporting = false;
   }
+
+  // Save/Load functions
+  function saveConfig() {
+    const filename = `${$cardData.name || 'ufs-card'}-config.json`;
+    downloadJSON($cardData, filename);
+  }
+
+  async function loadConfig(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    try {
+      const data = await readJSONFile(file);
+      cardData.set(data);
+      alert('Configuration loaded successfully!');
+    } catch (error) {
+      alert('Error loading configuration: ' + error.message);
+    }
+    event.target.value = ''; // Reset file input
+  }
+
+  async function handlePrint() {
+    if (!cardPreviewRef) return;
+    
+    const cardElement = cardPreviewRef.querySelector('.ufs-card');
+    const printContainer = await prepareForPrint(cardElement, $printSettings);
+    
+    if (printContainer) {
+      window.print();
+      // Clean up after print dialog closes
+      setTimeout(() => document.body.removeChild(printContainer), 1000);
+    }
+  }
 </script>
 
 <main class="container">
@@ -59,8 +93,48 @@
     </div>
   </div>
 
+  <div class="print-settings">
+    <h3>Print Settings</h3>
+    <div class="settings-grid">
+      <div class="setting-group">
+        <label for="copies">Copies per page</label>
+        <input
+          id="copies"
+          type="number"
+          min="1"
+          max="9"
+          bind:value={$printSettings.copiesPerPage}
+        />
+      </div>
+      
+      <div class="setting-group">
+        <label for="bleed">Bleed margin (inches)</label>
+        <input
+          id="bleed"
+          type="number"
+          min="0"
+          max="0.5"
+          step="0.125"
+          bind:value={$printSettings.bleedMargin}
+        />
+      </div>
+      
+      <div class="setting-group">
+        <label for="space">Space between cards (inches)</label>
+        <input
+          id="space"
+          type="number"
+          min="0"
+          max="1"
+          step="0.125"
+          bind:value={$printSettings.spaceBetween}
+        />
+      </div>
+    </div>
+  </div>
+
   <div class="export-controls">
-    <button onclick={() => window.print()} class="print-btn">
+    <button onclick={handlePrint} class="print-btn">
       🖨️ Print
     </button>
     <button onclick={exportToPDF} class="export-btn" disabled={isExporting}>
@@ -69,6 +143,18 @@
     <button onclick={exportToPNG} class="export-btn" disabled={isExporting}>
       {isExporting ? 'Exporting...' : '🖼️ PNG'}
     </button>
+    <button onclick={saveConfig} class="config-btn save-btn">
+      💾 Save Config
+    </button>
+    <label class="config-btn load-btn">
+      📂 Load Config
+      <input
+        type="file"
+        accept=".json"
+        onchange={loadConfig}
+        style="display: none;"
+      />
+    </label>
   </div>
 </main>
 
@@ -202,6 +288,36 @@
   .export-btn:disabled {
     background: #bdc3c7;
     cursor: not-allowed;
+  }
+
+  .config-btn {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+  }
+
+  .save-btn {
+    background: #2ecc71;
+    color: white;
+  }
+
+  .save-btn:hover {
+    background: #27ae60;
+  }
+
+  .load-btn {
+    background: #3498db;
+    color: white;
+    display: inline-block;
+  }
+
+  .load-btn:hover {
+    background: #2980b9;
   }
 
 
@@ -349,6 +465,57 @@
     * {
       -webkit-print-color-adjust: exact !important;
       print-color-adjust: exact !important;
+    }
+  }
+
+  .print-settings {
+    margin-top: 1.25em;
+    padding: 15px;
+    background: #f8f9fa;
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+
+  .print-settings h3 {
+    margin: 0 0 15px 0;
+    color: #2c3e50;
+    font-size: 1.1em;
+  }
+
+  .settings-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+  }
+
+  .setting-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .setting-group label {
+    font-size: 0.9em;
+    color: #495057;
+  }
+
+  .setting-group input {
+    padding: 8px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    font-size: 0.9em;
+  }
+
+  .setting-group input:focus {
+    outline: none;
+    border-color: #86b7fe;
+    box-shadow: 0 0 0 0.2rem rgba(13,110,253,.25);
+  }
+
+  @media (max-width: 768px) {
+    .settings-grid {
+      grid-template-columns: 1fr;
     }
   }
 </style>

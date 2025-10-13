@@ -1,8 +1,6 @@
 <script>
-  import { cardData } from '../stores.js';
-  import SymbolIcon from './icons/SymbolIcon.svelte';
-  import { getFontFamilyCSS } from '../utils/googleFonts.js';
-  // New SVG icons
+  import { cardData } from '../lib/stores.js';
+  import { getFontFamilyCSS } from '../lib/fonts.js';
   import ControlIcon from './icons/ControlIcon.svelte';
   import DamageIcon from './icons/DamageIcon.svelte';
   import DifficultyIcon from './icons/DifficultyIcon.svelte';
@@ -113,7 +111,7 @@
     <!-- Card Content Layout -->
     <div class="card-content">
       <!-- Art Area -->
-      <div class="card-art-section">
+      <div class="card-art-section" class:character-art={card.cardType === 'character'}>
         {#if card.cardArt}
           <img src={card.cardArt} alt="Card Art" class="card-art" 
                class:character-art-img={card.cardType === 'character'} />
@@ -307,13 +305,18 @@
     top: 0.028in;
     left: 0.02in;
     right: 0.02in;
-    height: 2.1in; /* 60% of 3.5in */
+    height: 60%; /* Standard height for non-character cards */
     background: var(--frame-color);
     overflow: hidden;
-    clip-path: polygon(0.15in 0, 100% 0, 100% 100%, 0 100%, 0 0.21in);
+    clip-path: polygon(0.15in 0, 100% 0, 100% 100%, 0 100%, 0 0.21in); /* Corner cut remains for all cards */
   }
 
-  /* Removed old header styles - now using absolute positioning */
+  .card-art-section.character-art {
+    height: 100%; /* Full height for character cards */
+    top: 0;
+    left: 0;
+    right: 0;
+  }
 
   .card-art {
     width: 100%;
@@ -321,10 +324,11 @@
     object-fit: cover;
   }
 
-  .card-art.character-art-img {
-    object-fit: cover;
-    opacity: 0.9;
+  .character-art-img {
+    object-position: center 10%;
   }
+
+  /* Removed old header styles - now using absolute positioning */
 
   /* Info section positioned at bottom 40% of card */
   .card-info-section {
