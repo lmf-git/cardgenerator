@@ -744,6 +744,13 @@
     margin-bottom: 1.25em; /* 20px */
   }
 
+  @media (max-width: 768px) {
+    .form-row {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+
   .form-group label {
     display: block;
     margin-bottom: 0.5em; /* 8px */
