@@ -271,14 +271,14 @@
   .ufs-card {
     --frame-color: #666666;
     --frame-secondary: #888888;
-    
-    width: 2.5in; /* Standard card width */
-    height: 3.5in; /* Standard card height */
+
+    width: 63mm; /* Standard card width */
+    height: 88mm; /* Standard card height */
     background: var(--frame-color);
-    border: 0.008in solid var(--frame-color);
-    border-radius: 0.03in;
+    border: 0.2mm solid var(--frame-color);
+    border-radius: 0.75mm;
     position: relative;
-    box-shadow: 0 0.015in 0.05in rgba(0, 0, 0, 0.4);
+    box-shadow: 0 0.4mm 1.3mm rgba(0, 0, 0, 0.4);
     font-family: 'Arial Black', Arial, sans-serif;
     overflow: hidden;
     /* Ensure consistent anti-aliasing */
@@ -287,7 +287,7 @@
     backface-visibility: hidden;
     box-sizing: border-box;
     /* Base font size using physical units for consistent print output */
-    font-size: 0.04in; /* Base font size in inches */
+    font-size: 1mm; /* Base font size in mm */
   }
 
 
@@ -377,8 +377,8 @@
   /* Print Styles */
   @media print {
     .ufs-card {
-      width: 2.5in; /* Standard trading card width */
-      height: 3.5in; /* Standard trading card height */
+      width: 63mm; /* Standard trading card width */
+      height: 88mm; /* Standard trading card height */
       box-shadow: none;
       /* Ensure container queries work in print */
       container-type: inline-size;

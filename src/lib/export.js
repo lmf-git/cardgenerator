@@ -24,13 +24,13 @@ export async function exportCardToPDF(cardElement, filename = 'ufs-card.pdf', se
       scrollY: 0
     });
 
-    // Card dimensions (2.5" x 3.5")
-    const cardWidth = 2.5;
-    const cardHeight = 3.5;
-    
-    // Page dimensions (letter size)
-    const pageWidth = 8.5;
-    const pageHeight = 11;
+    // Card dimensions (63mm x 88mm)
+    const cardWidth = 63;
+    const cardHeight = 88;
+
+    // Page dimensions (A4 size in mm)
+    const pageWidth = 210;
+    const pageHeight = 297;
 
     // Calculate max cards per row and column based on settings
     const totalCardWidth = cardWidth + (2 * settings.bleedMargin) + settings.spaceBetween;
@@ -43,8 +43,8 @@ export async function exportCardToPDF(cardElement, filename = 'ufs-card.pdf', se
     // Create PDF
     const pdf = new jsPDF({
       orientation: 'portrait',
-      unit: 'in',
-      format: 'letter'
+      unit: 'mm',
+      format: 'a4'
     });
 
     let currentPage = 1;
@@ -83,11 +83,11 @@ export async function exportCardToPDF(cardElement, filename = 'ufs-card.pdf', se
 
 // Update crop marks to include bleed margin
 function addCropMarks(pdf, x, y, width, height, bleed) {
-  const markLength = 0.125;
+  const markLength = 3; // 3mm
   const markOffset = bleed;
-  
+
   pdf.setDrawColor(0, 0, 0);
-  pdf.setLineWidth(0.005);
+  pdf.setLineWidth(0.1);
 
   // Top-left crop marks
   pdf.line(x - markOffset, y - markOffset, x - markOffset + markLength, y - markOffset);
@@ -152,9 +152,9 @@ export async function prepareForPrint(cardElement, settings) {
       left: -9999px;
       top: 0;
       display: grid;
-      grid-gap: ${settings.spaceBetween}in;
-      padding: ${settings.bleedMargin}in;
-      grid-template-columns: repeat(auto-fill, 2.5in);
+      grid-gap: ${settings.spaceBetween}mm;
+      padding: ${settings.bleedMargin}mm;
+      grid-template-columns: repeat(auto-fill, 63mm);
     `;
 
     // Create copies

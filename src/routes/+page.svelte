@@ -108,25 +108,25 @@
       </div>
       
       <div class="setting-group">
-        <label for="bleed">Bleed margin (inches)</label>
+        <label for="bleed">Bleed margin (mm)</label>
         <input
           id="bleed"
           type="number"
           min="0"
-          max="0.5"
-          step="0.125"
+          max="12"
+          step="1"
           bind:value={$printSettings.bleedMargin}
         />
       </div>
-      
+
       <div class="setting-group">
-        <label for="space">Space between cards (inches)</label>
+        <label for="space">Space between cards (mm)</label>
         <input
           id="space"
           type="number"
           min="0"
-          max="1"
-          step="0.125"
+          max="25"
+          step="1"
           bind:value={$printSettings.spaceBetween}
         />
       </div>
@@ -211,7 +211,7 @@
   }
 
   .card-container {
-    flex: 0 0 2.6in; /* Fixed width to accommodate 2.5in card + margin */
+    flex: 0 0 66mm; /* Fixed width to accommodate 63mm card + margin */
     position: sticky;
     top: 1.25em;
     display: flex;

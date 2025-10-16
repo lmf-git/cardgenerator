@@ -35,13 +35,13 @@ export const cardData = writable({
 
 // Print settings store
 export const printSettings = writable({
-  cardWidth: 2.5, // inches
-  cardHeight: 3.5, // inches  
+  cardWidth: 63, // mm
+  cardHeight: 88, // mm
   resolution: 300, // DPI
-  bleedSize: 0.125, // inches
+  bleedSize: 3, // mm
   showBleed: true,
   showCropMarks: false,
   copiesPerPage: 1,
-  bleedMargin: 0.125, // inches
-  spaceBetween: 0.25, // inches
+  bleedMargin: 3, // mm
+  spaceBetween: 6, // mm
 });
