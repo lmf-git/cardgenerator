@@ -35,8 +35,8 @@
   ];
 
   const RESOURCE_SYMBOLS = [
-    'all', 'fire', 'water', 'earth', 'air', 'void', 
-    'life', 'death', 'chaos', 'order', 'good', 'evil', 'energy'
+    'all', 'fire', 'water', 'earth', 'air', 'void',
+    'life', 'death', 'chaos', 'order', 'good', 'evil', 'infinity'
   ];
 
   let card = $state($cardData);

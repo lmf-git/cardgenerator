@@ -12,6 +12,7 @@
   import TypeBracketIcon from './icons/TypeBracketIcon.svelte';
   import SymbolBracketIcon from './icons/SymbolBracketIcon.svelte';
   import SymbolBracketSeparatorIcon from './icons/SymbolBracketSeparatorIcon.svelte';
+  import SymbolIcon from './icons/SymbolIcon.svelte';
 
   let card = $state($cardData);
   let nameFontFamily = $state('');
