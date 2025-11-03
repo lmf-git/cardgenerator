@@ -861,7 +861,11 @@
   /* Inline symbols in card text */
   :global(.inline-symbol) {
     vertical-align: middle;
-    display: inline;
+    display: inline-block;
+    height: 0.08in;
+    width: 0.08in;
+    object-fit: contain;
+    margin: 0 0.01in;
   }
 
 </style>

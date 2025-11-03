@@ -1,19 +1,17 @@
 <script>
-  const { value = '', placeholder = '', onValueChange = (v) => {} } = $props();
-  
+  let { value = $bindable(''), placeholder = '' } = $props();
+
   let editor = $state(null);
   let cursorPosition = $state(0);
 
   function insertSymbol(symbol) {
     if (!editor) return;
-    
+
     const start = editor.selectionStart;
     const end = editor.selectionEnd;
     const symbolText = `{${symbol}}`;
-    const newValue = value.substring(0, start) + symbolText + value.substring(end);
-    
-    onValueChange(newValue);
-    
+    value = value.substring(0, start) + symbolText + value.substring(end);
+
     // Update cursor position after symbol
     setTimeout(() => {
       editor.selectionStart = start + symbolText.length;
@@ -24,11 +22,11 @@
 
   function insertFormatting(tag) {
     if (!editor) return;
-    
+
     const start = editor.selectionStart;
     const end = editor.selectionEnd;
     const selectedText = value.substring(start, end);
-    
+
     let formattedText;
     switch(tag) {
       case 'bold':
@@ -40,10 +38,9 @@
       default:
         return;
     }
-    
-    const newValue = value.substring(0, start) + formattedText + value.substring(end);
-    onValueChange(newValue);
-    
+
+    value = value.substring(0, start) + formattedText + value.substring(end);
+
     // Maintain selection
     setTimeout(() => {
       if (selectedText.length > 0) {
@@ -73,20 +70,55 @@
         <em>I</em>
       </button>
     </div>
-    <div class="symbol-buttons">
-      <button type="button" class="symbol-btn" onclick={() => insertSymbol('fire')}>🔥</button>
-      <button type="button" class="symbol-btn" onclick={() => insertSymbol('water')}>💧</button>
-      <button type="button" class="symbol-btn" onclick={() => insertSymbol('earth')}>🌍</button>
-      <button type="button" class="symbol-btn" onclick={() => insertSymbol('air')}>💨</button>
-      <button type="button" class="symbol-btn" onclick={() => insertSymbol('void')}>⚫</button>
-      <button type="button" class="symbol-btn" onclick={() => insertSymbol('all')}>✨</button>
+    <div class="symbol-buttons-container">
+      <div class="symbol-buttons">
+      <button type="button" class="symbol-btn" onclick={() => insertSymbol('all')} title="All">
+        <img src="/symbols/all.png" alt="all" class="symbol-icon" />
+      </button>
+      <button type="button" class="symbol-btn" onclick={() => insertSymbol('fire')} title="Fire">
+        <img src="/symbols/fire.png" alt="fire" class="symbol-icon" />
+      </button>
+      <button type="button" class="symbol-btn" onclick={() => insertSymbol('water')} title="Water">
+        <img src="/symbols/water.png" alt="water" class="symbol-icon" />
+      </button>
+      <button type="button" class="symbol-btn" onclick={() => insertSymbol('earth')} title="Earth">
+        <img src="/symbols/earth.png" alt="earth" class="symbol-icon" />
+      </button>
+      <button type="button" class="symbol-btn" onclick={() => insertSymbol('air')} title="Air">
+        <img src="/symbols/air.png" alt="air" class="symbol-icon" />
+      </button>
+      <button type="button" class="symbol-btn" onclick={() => insertSymbol('void')} title="Void">
+        <img src="/symbols/void.png" alt="void" class="symbol-icon" />
+      </button>
+      <button type="button" class="symbol-btn" onclick={() => insertSymbol('life')} title="Life">
+        <img src="/symbols/life.png" alt="life" class="symbol-icon" />
+      </button>
+      <button type="button" class="symbol-btn" onclick={() => insertSymbol('death')} title="Death">
+        <img src="/symbols/death.png" alt="death" class="symbol-icon" />
+      </button>
+      <button type="button" class="symbol-btn" onclick={() => insertSymbol('chaos')} title="Chaos">
+        <img src="/symbols/chaos.png" alt="chaos" class="symbol-icon" />
+      </button>
+      <button type="button" class="symbol-btn" onclick={() => insertSymbol('order')} title="Order">
+        <img src="/symbols/order.png" alt="order" class="symbol-icon" />
+      </button>
+      <button type="button" class="symbol-btn" onclick={() => insertSymbol('good')} title="Good">
+        <img src="/symbols/good.png" alt="good" class="symbol-icon" />
+      </button>
+      <button type="button" class="symbol-btn" onclick={() => insertSymbol('evil')} title="Evil">
+        <img src="/symbols/evil.png" alt="evil" class="symbol-icon" />
+      </button>
+      <button type="button" class="symbol-btn" onclick={() => insertSymbol('infinity')} title="Infinity">
+        <img src="/symbols/infinity.png" alt="infinity" class="symbol-icon" />
+      </button>
+    </div>
+    <small class="symbol-hint">Click symbols or type {`{symbolname}`} (e.g., {`{fire}`}, {`{water}`})</small>
     </div>
   </div>
   
   <textarea
     bind:this={editor}
-    value={value}
-    onchange={(e) => onValueChange(e.target.value)}
+    bind:value={value}
     {placeholder}
     class="editor-textarea"
     onselect={handleSelect}
@@ -106,17 +138,39 @@
     padding: 8px;
     background: #f8f9fa;
     border-bottom: 1px solid #ddd;
+    flex-wrap: wrap;
   }
 
   .format-buttons,
   .symbol-buttons {
     display: flex;
     gap: 4px;
+    flex-wrap: wrap;
   }
 
   .format-buttons {
     border-right: 1px solid #ddd;
     padding-right: 8px;
+  }
+
+  .symbol-buttons-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .symbol-buttons {
+    display: flex;
+    gap: 4px;
+    flex-wrap: wrap;
+  }
+
+  .symbol-hint {
+    font-size: 11px;
+    color: #6c757d;
+    font-style: italic;
+    line-height: 1.2;
   }
 
   .format-btn,
@@ -138,6 +192,13 @@
   .symbol-btn:hover {
     background: #e9ecef;
     border-color: #ced4da;
+  }
+
+  .symbol-icon {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+    display: block;
   }
 
   .editor-textarea {
