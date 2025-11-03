@@ -5,6 +5,27 @@
   let currentFont = $state(props.selectedFont || '');
   let currentFontType = $state(props.selectedFontType || 'local');
   let fonts = $derived(currentFontType === 'google' ? availableGoogleFonts : availableLocalFonts);
+  let loadedGoogleFonts = $state(new Set());
+
+  // Function to load Google Fonts dynamically
+  function loadGoogleFont(fontFamily) {
+    if (loadedGoogleFonts.has(fontFamily)) return;
+
+    // Check if the link already exists
+    const existingLink = document.querySelector(`link[href*="${fontFamily.replace(/\s+/g, '+')}"]`);
+    if (existingLink) {
+      loadedGoogleFonts.add(fontFamily);
+      return;
+    }
+
+    // Create and add the Google Fonts link
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = `https://fonts.googleapis.com/css2?family=${fontFamily.replace(/\s+/g, '+')}:wght@300;400;500;600;700&display=swap`;
+    document.head.appendChild(link);
+
+    loadedGoogleFonts.add(fontFamily);
+  }
 
   function handleFontTypeChange(event) {
     currentFontType = event.target.value;
@@ -12,12 +33,29 @@
       currentFont = fonts[0];
       props.onFontChange?.(currentFont, currentFontType);
     }
+
+    // Load Google Font if switching to google
+    if (currentFontType === 'google' && currentFont) {
+      loadGoogleFont(currentFont);
+    }
   }
 
   function handleFontChange(event) {
     currentFont = event.target.value;
     props.onFontChange?.(currentFont, currentFontType);
+
+    // Load Google Font if selected
+    if (currentFontType === 'google' && currentFont) {
+      loadGoogleFont(currentFont);
+    }
   }
+
+  // Load initial font if it's a Google font
+  $effect(() => {
+    if (currentFontType === 'google' && currentFont) {
+      loadGoogleFont(currentFont);
+    }
+  });
 
   const fontTypeId = crypto.randomUUID();
   const fontSelectId = crypto.randomUUID();

@@ -16,12 +16,41 @@
   let card = $state($cardData);
   let nameFontFamily = $state('');
   let typeFontFamily = $state('');
+  let loadedGoogleFonts = $state(new Set());
 
-  // Sync with store changes
+  // Function to load Google Fonts dynamically
+  function loadGoogleFont(fontFamily) {
+    if (loadedGoogleFonts.has(fontFamily)) return;
+
+    // Check if the link already exists
+    const existingLink = document.querySelector(`link[href*="${fontFamily.replace(/\s+/g, '+')}"]`);
+    if (existingLink) {
+      loadedGoogleFonts.add(fontFamily);
+      return;
+    }
+
+    // Create and add the Google Fonts link
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = `https://fonts.googleapis.com/css2?family=${fontFamily.replace(/\s+/g, '+')}:wght@300;400;500;600;700&display=swap`;
+    document.head.appendChild(link);
+
+    loadedGoogleFonts.add(fontFamily);
+  }
+
+  // Sync with store changes and load Google Fonts
   $effect(() => {
     card = $cardData;
     nameFontFamily = getFontFamilyCSS(card.nameFont || 'ITCBenguiatStd', card.nameFontType || 'local');
     typeFontFamily = getFontFamilyCSS(card.typeFont || 'ITCBenguiatStd', card.typeFontType || 'local');
+
+    // Load Google Fonts if needed
+    if (card.nameFontType === 'google' && card.nameFont) {
+      loadGoogleFont(card.nameFont);
+    }
+    if (card.typeFontType === 'google' && card.typeFont) {
+      loadGoogleFont(card.typeFont);
+    }
   });
 
   function formatVersionedCardName(name, version = 1) {
