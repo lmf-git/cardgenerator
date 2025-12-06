@@ -30,7 +30,11 @@ export const cardData = writable({
   nameFont: 'ITCBenguiatStd',
   nameFontType: 'local',
   typeFont: 'ITCBenguiatStd',
-  typeFontType: 'local'
+  typeFontType: 'local',
+  // Name styling controls
+  nameFontSize: 0.12,
+  nameLineHeight: 1.2,
+  nameTranslateY: 0.01
 });
 
 // Print settings store

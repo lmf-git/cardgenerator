@@ -11,11 +11,11 @@
 >
   <defs>
     <linearGradient id="metalGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="#F0F0F0"/>
-      <stop offset="15%" stop-color="#E8E8E8"/>
-      <stop offset="50%" stop-color="#C0C0C0"/>
-      <stop offset="85%" stop-color="#A0A0A0"/>
-      <stop offset="100%" stop-color="#808080"/>
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="15%" stop-color="#F5F5F5"/>
+      <stop offset="50%" stop-color="#D0D0D0"/>
+      <stop offset="85%" stop-color="#B0B0B0"/>
+      <stop offset="100%" stop-color="#909090"/>
     </linearGradient>
     <filter id="bevelEffect" x="-20%" y="-20%" width="140%" height="140%">
       <feGaussianBlur in="SourceAlpha" stdDeviation="2" result="blur"/>

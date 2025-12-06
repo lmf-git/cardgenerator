@@ -5,11 +5,11 @@
 
   // Define gradients based on card type
   const gradients = {
-    character: { start: "#8B4513", mid: "#A0522D", end: "#654321" },
-    attack: { start: "#DC143C", mid: "#FF6B6B", end: "#B22222" },
-    action: { start: "#4169E1", mid: "#6495ED", end: "#1E3A8A" },
-    foundation: { start: "#228B22", mid: "#32CD32", end: "#006400" },
-    asset: { start: "#9932CC", mid: "#BA55D3", end: "#4B0082" }
+    character: { start: "#2d3a8c", mid: "#1a237e", end: "#0a0f3d" },
+    attack: { start: "#ff4d4d", mid: "#DC143C", end: "#8B0000" },
+    action: { start: "#6495ED", mid: "#4169E1", end: "#1E3A8A" },
+    foundation: { start: "#32CD32", mid: "#228B22", end: "#004d00" },
+    asset: { start: "#BA55D3", mid: "#9932CC", end: "#4B0082" }
   };
 
   $: currentGradient = gradients[cardType] || gradients.character;
@@ -62,7 +62,7 @@
       <feBlend mode="normal" in2="shape" result="effect1_innerShadow_4_11"/>
     </filter>
     <linearGradient id="paint0_diamond_4_11" x1="0" y1="0" x2="500" y2="500" gradientUnits="userSpaceOnUse">
-      <stop offset="0.0480769" stop-color="white"/>
+      <stop offset="0.0480769" stop-color={currentGradient.start}/>
       <stop offset="0.567308" stop-color={currentGradient.mid}/>
       <stop offset="1" stop-color={currentGradient.end}/>
     </linearGradient>

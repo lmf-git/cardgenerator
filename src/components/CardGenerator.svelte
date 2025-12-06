@@ -295,6 +295,47 @@
       </div>
     </div>
 
+    <div class="form-row">
+      <div class="form-group">
+        <label for="name-font-size">Name Font Size (in)</label>
+        <input
+          id="name-font-size"
+          type="number"
+          class="form-input"
+          min="0.05"
+          max="0.30"
+          step="0.01"
+          bind:value={card.nameFontSize}
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="name-line-height">Name Line Height</label>
+        <input
+          id="name-line-height"
+          type="number"
+          class="form-input"
+          min="0.8"
+          max="2.0"
+          step="0.1"
+          bind:value={card.nameLineHeight}
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="name-translate-y">Name Vertical Offset (in)</label>
+        <input
+          id="name-translate-y"
+          type="number"
+          class="form-input"
+          min="-0.1"
+          max="0.1"
+          step="0.01"
+          bind:value={card.nameTranslateY}
+        />
+      </div>
+    </div>
+
     <small class="form-helper">Choose fonts for the character name (horizontal for character cards, vertical for others) and card type text</small>
   </fieldset>
 

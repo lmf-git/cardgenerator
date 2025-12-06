@@ -105,7 +105,7 @@
 
     <!-- B: Card name (vertical text on left side for non-character, horizontal on top for character) -->
     <div class="card-name-container">
-      <span class="card-name" style="font-family: {nameFontFamily};">{formatVersionedCardName(card.name, card.version) || 'CARD NAME'}</span>
+      <span class="card-name" style="font-family: {nameFontFamily}; font-size: {card.nameFontSize}in; line-height: {card.nameLineHeight}; transform: {card.cardType === 'character' ? `translateY(${card.nameTranslateY}in)` : `rotate(180deg) translateX(-0.02in)`};">{formatVersionedCardName(card.name, card.version) || 'CARD NAME'}</span>
     </div>
     
     <!-- Type bracket container (under vertical name for non-character cards) -->
@@ -230,7 +230,7 @@
             {#if card.cardType === 'character'}
               <!-- Character cards: just show symbols centered -->
               {#each card.resourceSymbols as symbol}
-                <SymbolIcon {symbol} size="3em" extraClass="resource-symbol-icon character-resource-symbol" />
+                <SymbolIcon {symbol} size="6em" extraClass="resource-symbol-icon character-resource-symbol" />
               {/each}
             {:else}
               <!-- Non-character cards: use symbol brackets and separators -->
@@ -384,8 +384,9 @@
   }
 
   .card-art-section.character-art {
-    height: 100%; /* Full height for character cards */
-    top: 0;
+    height: auto;
+    top: 0.42in; /* Start below the character name */
+    bottom: 0;
     left: 0; /* Character cards have no left margin */
     right: 0;
     clip-path: polygon(0.15in 0, 100% 0, 100% 100%, 0 100%, 0 0.21in); /* Clipped corner for character cards */
@@ -411,10 +412,18 @@
     left: 0.1in; /* Slight margin on left */
     right: 0.1in; /* Slight margin on right */
     height: 1.225in; /* 35% of 3.5in */
-    background: rgba(255, 255, 255, 0.95);
+    background: rgba(255, 255, 255, 0.75); /* More transparent */
     border-radius: 0.06in; /* All corners rounded */
     overflow: hidden;
     z-index: 15; /* Above cream background and art section */
+  }
+
+  /* Character cards: info section extends to right edge */
+  .character-card .card-info-section {
+    left: 0.35in; /* More margin on left */
+    right: 0; /* No right margin - flush to edge */
+    bottom: 0; /* No bottom margin - flush to bottom */
+    border-radius: 0.15in 0.06in 0 0; /* More border radius at top left corner, no radius at bottom corners */
   }
 
   /* Ensure character stats are visible over full image */
@@ -502,42 +511,40 @@
 
   /* Character cards have horizontal name at top */
   .character-card .card-name-container {
-    top: 0.105in; /* 3% of 3.5in */
+    top: 0.05in; /* Less margin from top */
     left: 50%;
     transform: translateX(-50%);
     height: 0.28in; /* 8% of 3.5in */
     width: 2in; /* 80% of 2.5in */
     bottom: auto;
-    background: linear-gradient(to right, var(--frame-color), var(--frame-secondary)); /* Character cards keep gradient */
-    border-radius: 0.1in; /* 4% converted to physical */
+    background: linear-gradient(to right, rgba(255,255,255,0.4), rgba(255,255,255,0.95), rgba(255,255,255,0.4)); /* White gradient darker at edges */
+    border: 0.015in solid var(--frame-color); /* Solid color stroke */
+    border-radius: 0; /* No border radius - sharp corners */
+    padding: 0.01in; /* Less padding */
   }
 
   .card-name {
     writing-mode: vertical-lr;
     text-orientation: mixed;
     color: #333; /* Dark text for cream background */
-    font-size: 0.12in; /* Physical unit for consistent print scaling */
     font-weight: 600; /* Bolder for better visibility on cream */
     font-style: italic;
     text-shadow: none;
     letter-spacing: 0.008in;
     text-align: center;
-    transform: rotate(180deg) translateX(-0.02in);
   }
 
   /* Character cards have horizontal name */
   .character-card .card-name {
     writing-mode: initial;
     text-orientation: initial;
-    font-size: 0.15in; /* Increased font size for better visibility */
-    font-weight: 300; /* Lighter font weight */
+    font-weight: 600; /* Bolder weight for visibility on white */
     font-style: italic;
-    color: white; /* White text on dark gradient background */
-    text-shadow: 0.008in 0.008in 0.015in rgba(0,0,0,0.8);
+    color: #333; /* Dark text on white gradient background */
+    text-shadow: none;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    transform: translateY(0.01in);
     text-align: center;
   }
 
@@ -647,7 +654,7 @@
 
   .character-stats-group {
     position: absolute;
-    top: 0.77in; /* 22% of 3.5in */
+    bottom: 1.55in; /* Higher, well above the card info section */
     right: 0.075in; /* 3% of 2.5in */
     display: flex;
     flex-direction: column;
@@ -676,12 +683,12 @@
 
   .character-vital-stats {
     position: absolute;
-    bottom: 0.7in; /* Above the control icon */
-    right: 0.05in; /* Bottom right corner */
+    bottom: 0.35in; /* Lower in bottom right corner, closer to control icon */
+    right: 0.02in; /* Closer to right edge */
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 20; /* Above the info section */
+    z-index: 25; /* Above the info section and control icon */
   }
 
   .vital-stats-content {
@@ -707,12 +714,12 @@
 
   .vital-label {
     font-weight: bold;
-    color: var(--frame-color);
+    color: white;
     min-width: 0.06in; /* Physical unit for consistent print scaling */
   }
 
   .vital-value {
-    color: #333;
+    color: white;
     font-weight: 500;
   }
 
@@ -845,6 +852,11 @@
     top: 32%;
   }
 
+  /* Character cards need more space due to larger symbols */
+  .character-card .info-text-area {
+    top: 25%;
+  }
+
   .keywords-line {
     margin-bottom: 1%; /* Percentage-based margin */
     color: var(--frame-color);
@@ -883,8 +895,8 @@
 
   /* Card Type Colors */
   .ufs-card.character-card {
-    --frame-color: #8B4513;
-    --frame-secondary: #A0522D;
+    --frame-color: #1a237e;
+    --frame-secondary: #3949ab;
   }
 
   .ufs-card.attack-card {

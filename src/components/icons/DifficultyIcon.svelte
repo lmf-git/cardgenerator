@@ -5,11 +5,11 @@
 
   // Define gradients based on card type
   const gradients = {
-    character: { start: "#8B4513", mid: "#A0522D", end: "#654321" },
-    attack: { start: "#DC143C", mid: "#FF6B6B", end: "#B22222" },
-    action: { start: "#4169E1", mid: "#6495ED", end: "#1E3A8A" },
-    foundation: { start: "#228B22", mid: "#32CD32", end: "#006400" },
-    asset: { start: "#9932CC", mid: "#BA55D3", end: "#4B0082" }
+    character: { start: "#2d3a8c", mid: "#1a237e", end: "#0a0f3d" },
+    attack: { start: "#ff4d4d", mid: "#DC143C", end: "#8B0000" },
+    action: { start: "#6495ED", mid: "#4169E1", end: "#1E3A8A" },
+    foundation: { start: "#32CD32", mid: "#228B22", end: "#004d00" },
+    asset: { start: "#BA55D3", mid: "#9932CC", end: "#4B0082" }
   };
 
   $: currentGradient = gradients[cardType] || gradients.character;
@@ -50,7 +50,7 @@
       <path d="M14.0308 124.371C9.43334 213.386 35.1239 241.571 56.5308 257.371C63.7076 207.571 128.031 171.371 128.031 171.371C128.031 171.371 132.031 131.491 116.531 86.8716C101.031 42.2517 86.6317 38.0192 78.0308 28.3716C76.9025 35.8792 72.0375 62.2336 65.0308 77.3716C58.0241 92.5095 44.3428 97.9293 37.4471 102.67C24.0816 111.86 16.8415 117.759 14.0308 124.371Z"/>
     </clipPath>
     <linearGradient id="paint0_diamond_1_34" x1="0" y1="0" x2="500" y2="500" gradientUnits="userSpaceOnUse">
-      <stop stop-color="white"/>
+      <stop stop-color={currentGradient.start}/>
       <stop offset="0.640664" stop-color={currentGradient.mid}/>
       <stop offset="0.862718" stop-color={currentGradient.end}/>
     </linearGradient>
