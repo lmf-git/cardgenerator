@@ -133,13 +133,25 @@
 
     <!-- J: Control Value (bottom-right corner) -->
     <div class="control-value-corner">
-      <ControlIcon size="0.3in" extraClass="control-svg" cardType={card.cardType} />
+      <ControlIcon size="0.45in" extraClass="control-svg" cardType={card.cardType} />
       <span class="control-value">{card.controlValue}</span>
     </div>
 
 
     <!-- Card Content Layout -->
     <div class="card-content">
+      <!-- Top Section with cream background (for non-character cards) -->
+      {#if card.cardType !== 'character'}
+        <div class="top-section-background"></div>
+      {/if}
+
+      <!-- Type Background (for non-character cards) -->
+      {#if card.cardType !== 'character' && card.cardType}
+        <div class="type-background">
+          <img src="/types/{card.cardType}bg.png" alt="{card.cardType} background" class="type-bg-image" />
+        </div>
+      {/if}
+
       <!-- Art Area -->
       <div class="card-art-section" class:character-art={card.cardType === 'character'}>
         {#if card.cardArt}
@@ -305,8 +317,8 @@
     width: 63mm; /* Standard card width */
     height: 88mm; /* Standard card height */
     background: var(--frame-color);
-    border: 0.2mm solid var(--frame-color);
-    border-radius: 0.75mm;
+    border: 1.5mm solid #000000; /* Black border for bleed */
+    border-radius: 2mm;
     position: relative;
     box-shadow: 0 0.4mm 1.3mm rgba(0, 0, 0, 0.4);
     font-family: 'Arial Black', Arial, sans-serif;
@@ -330,22 +342,54 @@
     overflow: hidden;
   }
 
+  .top-section-background {
+    position: absolute;
+    top: 0;
+    left: 0.05in; /* Slight spacing from left edge */
+    right: 0;
+    bottom: 1.3in; /* Slightly overlap the info section */
+    background: #F8F8F0; /* Lighter, less yellow cream color */
+    z-index: 2; /* Above type background, below most content */
+    border-radius: 0 0 0.1in 0;
+  }
+
+  .type-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 100%; /* Cover entire card */
+    z-index: 1; /* Behind everything else */
+    overflow: hidden;
+  }
+
+  .type-bg-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center center;
+  }
+
   .card-art-section {
     position: absolute;
-    top: 0.028in;
-    left: 0.02in;
-    right: 0.02in;
+    top: 0; /* No top gap - flush with border */
+    left: 0.35in; /* Left margin for non-character cards to clear the vertical name */
+    right: 0; /* No right gap - flush with border */
     height: 60%; /* Standard height for non-character cards */
     background: var(--frame-color);
     overflow: hidden;
-    clip-path: polygon(0.15in 0, 100% 0, 100% 100%, 0 100%, 0 0.21in); /* Corner cut remains for all cards */
+    border-radius: 0.1in 0 0 0; /* Rounded top-left corner for non-character cards */
+    z-index: 10; /* Above cream background */
   }
 
   .card-art-section.character-art {
     height: 100%; /* Full height for character cards */
     top: 0;
-    left: 0;
+    left: 0; /* Character cards have no left margin */
     right: 0;
+    clip-path: polygon(0.15in 0, 100% 0, 100% 100%, 0 100%, 0 0.21in); /* Clipped corner for character cards */
+    border-radius: 0; /* Remove rounded corners for character cards */
   }
 
   .card-art {
@@ -364,12 +408,13 @@
   .card-info-section {
     position: absolute;
     bottom: 0.105in; /* 3% of 3.5in */
-    left: 0.3in; /* Significant left margin - clear of vertical name */
-    right: 0.1in; /* 4% of 2.5in */
+    left: 0.1in; /* Slight margin on left */
+    right: 0.1in; /* Slight margin on right */
     height: 1.225in; /* 35% of 3.5in */
     background: rgba(255, 255, 255, 0.95);
-    border-radius: 0.06in 0.06in 0 0;
+    border-radius: 0.06in; /* All corners rounded */
     overflow: hidden;
+    z-index: 15; /* Above cream background and art section */
   }
 
   /* Ensure character stats are visible over full image */
@@ -423,8 +468,8 @@
   /* Updated positioning for official UFS layout */
   .difficulty-icon {
     position: absolute;
-    top: 0.05in;
-    left: 0.075in;
+    top: 0.02in;
+    left: 0.02in;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -450,7 +495,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(to bottom, var(--frame-color), var(--frame-secondary));
+    background: transparent; /* No background - part of cream section */
     z-index: 20;
     padding: 0.0375in; /* 1.5% of 2.5in */
   }
@@ -463,18 +508,18 @@
     height: 0.28in; /* 8% of 3.5in */
     width: 2in; /* 80% of 2.5in */
     bottom: auto;
-    background: linear-gradient(to right, var(--frame-color), var(--frame-secondary));
+    background: linear-gradient(to right, var(--frame-color), var(--frame-secondary)); /* Character cards keep gradient */
     border-radius: 0.1in; /* 4% converted to physical */
   }
 
   .card-name {
     writing-mode: vertical-lr;
     text-orientation: mixed;
-    color: white;
+    color: #333; /* Dark text for cream background */
     font-size: 0.12in; /* Physical unit for consistent print scaling */
-    font-weight: 300; /* Lighter font weight */
+    font-weight: 600; /* Bolder for better visibility on cream */
     font-style: italic;
-    text-shadow: 0.008in 0.008in 0.015in rgba(0,0,0,0.8);
+    text-shadow: none;
     letter-spacing: 0.008in;
     text-align: center;
     transform: rotate(180deg) translateX(-0.02in);
@@ -487,6 +532,8 @@
     font-size: 0.15in; /* Increased font size for better visibility */
     font-weight: 300; /* Lighter font weight */
     font-style: italic;
+    color: white; /* White text on dark gradient background */
+    text-shadow: 0.008in 0.008in 0.015in rgba(0,0,0,0.8);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -497,20 +544,20 @@
 
   .block-modifier-corner {
     position: absolute;
-    top: 0.05in;
-    right: 0.05in;
-    width: 0.5in; /* Made even smaller */
-    height: 0.5in; /* Made even smaller */
+    top: 0.02in;
+    right: 0.02in;
+    width: 0.35in; /* Smaller */
+    height: 0.35in; /* Smaller */
     display: flex;
     align-items: center;
     justify-content: center;
     z-index: 25; /* Above card name container */
   }
-  
+
   .block-modifier-corner :global(.block-modifier-icon) {
     position: absolute;
-    width: 0.5in;
-    height: 0.5in;
+    width: 0.35in;
+    height: 0.35in;
     z-index: 1;
   }
 
@@ -518,7 +565,7 @@
   .block-number {
     position: absolute;
     z-index: 10;
-    font-size: 0.12in;
+    font-size: 0.08in;
     font-weight: bold;
     color: white;
     font-family: 'OPTICopperplate-Light', Arial, sans-serif;
@@ -697,8 +744,8 @@
 
   .control-value-corner {
     position: absolute;
-    bottom: 0.07in;
-    right: 0.05in;
+    bottom: 0.02in;
+    right: 0.02in;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -708,7 +755,7 @@
   .control-value {
     position: absolute;
     z-index: 25;
-    font-size: 0.06in;
+    font-size: 0.1in;
     font-weight: bold;
     color: white;
     font-family: 'OPTICopperplate-Light', Arial, sans-serif;
@@ -742,7 +789,8 @@
   .symbol-bracket-container {
     position: relative;
     display: block;
-    width: 100%;
+    width: 70%; /* Narrower bracket */
+    margin-left: 5em; /* Start further from the left */
   }
 
   .symbol-bracket-container :global(.symbol-bracket-icon) {
@@ -761,7 +809,8 @@
     justify-content: flex-start;
     gap: 0;
     z-index: 10;
-    padding: 1.5em 0 0.3em 3.5em;
+    padding: 1.5em 0 0.3em 0;
+    margin-left: 3.5em; /* Use margin for left offset */
   }
 
   .symbols-with-separators :global(.symbol-separator) {
