@@ -411,11 +411,12 @@
     bottom: 0.105in; /* 3% of 3.5in */
     left: 0.1in; /* Slight margin on left */
     right: 0.1in; /* Slight margin on right */
-    height: 1.225in; /* 35% of 3.5in */
+    height: 1.125in; /* Reduced height to account for top margin */
     background: rgba(255, 255, 255, 0.75); /* More transparent */
     border-radius: 0.06in; /* All corners rounded */
     overflow: hidden;
     z-index: 15; /* Above cream background and art section */
+    margin-top: 0.1in; /* Add top margin for spacing from card art */
   }
 
   /* Character cards: info section extends to right edge */
@@ -423,6 +424,8 @@
     left: 0.35in; /* More margin on left */
     right: 0; /* No right margin - flush to edge */
     bottom: 0; /* No bottom margin - flush to bottom */
+    height: 1.225in; /* Restore full height for character cards */
+    margin-top: 0; /* No top margin for character cards */
     border-radius: 0.15in 0.06in 0 0; /* More border radius at top left corner, no radius at bottom corners */
   }
 
