@@ -1,38 +1,26 @@
 <script>
-  export let extraClass = "";
+  let { extraClass = "" } = $props();
 </script>
 
 <svg
-  viewBox="0 0 757 128"
+  viewBox="0 0 922 156"
   fill="none"
   xmlns="http://www.w3.org/2000/svg"
   class="symbol-bracket-icon {extraClass}"
   preserveAspectRatio="none"
 >
+  <path d="M6 0H918.081C919.081 1 921.181 3.4 921.581 5C921.981 6.6 916.578 16.6667 913.578 24C913.411 24.3333 912.181 25 910.581 25H14.1491C8.57812 20 10.8333 20.8333 6 17.5V0Z" fill="#595959"/>
+  <path d="M918.081 0C919.081 1 921.181 3.4 921.581 5C921.714 5.53285 921.201 7.00336 920.351 9H6V0H918.081Z" fill="#E4E4E4"/>
+  <path d="M58.003 17.4892C54.5202 19.5 47.5031 32.7328 47.503 61.8338C47.503 90.935 65.5604 134.68 65.0604 137.002C63.5 137.42 35.0768 153.475 32.0147 153.514L32.0108 153.514L32.0069 153.514L32.003 153.514L31.9981 153.514C28.9302 153.471 2.02561 137.5 0.0108171 136.337C-0.489183 134.015 16.5108 90.935 16.5108 61.8338C16.5108 32.7328 8.59808 19 6 17.5L5.86602 8.5L57.869 8.51449L58.003 17.4892Z" fill="url(#paint0_linear_66_241)"/>
+  <path d="M58.013 17.4824V9.00781L32.0102 17.4893L30 124C45.5 130 63.5 136.584 65.0604 137.002C65.5604 134.680 47.5131 90.9284 47.513 61.8271C47.5131 32.7264 54.5302 19.4934 58.013 17.4824Z" fill="#595959"/>
+  <path d="M30 124.008L65.0399 137.008L31.0151 156.008L0.0108171 136.337L30 124.008Z" fill="#747474"/>
+  <path d="M65.0604 137.002L31.0058 156.002L29.9979 124.002L65.0604 137.002Z" fill="#494949"/>
   <defs>
-    <linearGradient id="metalGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="#FFFFFF"/>
-      <stop offset="15%" stop-color="#F5F5F5"/>
-      <stop offset="50%" stop-color="#D0D0D0"/>
-      <stop offset="85%" stop-color="#B0B0B0"/>
-      <stop offset="100%" stop-color="#909090"/>
+    <linearGradient id="paint0_linear_66_241" x1="32.5353" y1="8.5" x2="32.5353" y2="156.008" gradientUnits="userSpaceOnUse">
+      <stop offset="0.5625" stop-color="#E4E4E4"/>
+      <stop offset="1" stop-color="#A4A4A4"/>
     </linearGradient>
-    <filter id="bevelEffect" x="-20%" y="-20%" width="140%" height="140%">
-      <feGaussianBlur in="SourceAlpha" stdDeviation="2" result="blur"/>
-      <feSpecularLighting in="blur" result="specOut" lighting-color="white" specularConstant="2" specularExponent="20">
-        <fePointLight x="-200" y="-100" z="300"/>
-      </feSpecularLighting>
-      <feComposite in="specOut" in2="SourceAlpha" operator="in" result="specOut2"/>
-      <feComposite in="SourceGraphic" in2="specOut2" operator="arithmetic" k1="0" k2="1" k3="1" k4="0"/>
-    </filter>
-    <filter id="dropShadow" x="-20%" y="-20%" width="140%" height="140%">
-      <feDropShadow dx="2" dy="3" stdDeviation="2" flood-color="#000" flood-opacity="0.3"/>
-    </filter>
   </defs>
-  <path d="M756.5 7L6.5 0C25.3 46.4 10 93 0 110.5L26.5 127.5C29.3333 127.5 39.6 124.1 58 110.5C52 93.7 55.5 50.8333 58 31.5H707.706L715.5 18H756.5V7Z"
-        fill="url(#metalGradient)"
-        filter="url(#bevelEffect)"
-        style="filter: url(#bevelEffect) url(#dropShadow);"/>
 </svg>
 
 <style>

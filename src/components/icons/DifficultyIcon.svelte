@@ -1,58 +1,38 @@
 <script>
-  export let size = "1em";
-  export let extraClass = "";
-  export let cardType = "character";
+  let { size = "1em", extraClass = "", cardType = "character" } = $props();
 
-  // Define gradients based on card type
-  const gradients = {
-    character: { start: "#2d3a8c", mid: "#1a237e", end: "#0a0f3d" },
-    attack: { start: "#ff4d4d", mid: "#DC143C", end: "#8B0000" },
-    action: { start: "#6495ED", mid: "#4169E1", end: "#1E3A8A" },
-    foundation: { start: "#32CD32", mid: "#228B22", end: "#004d00" },
-    asset: { start: "#BA55D3", mid: "#9932CC", end: "#4B0082" }
+  // Define colors based on card type for the inner fill
+  const cardColors = {
+    character: "#698BAD",
+    attack: "#FF6B6B",
+    action: "#6495ED",
+    foundation: "#32CD32",
+    asset: "#BA55D3"
   };
 
-  $: currentGradient = gradients[cardType] || gradients.character;
+  let currentColor = $derived(cardColors[cardType] || cardColors.character);
 </script>
 
-<svg 
-  height={size} 
-  viewBox="0 0 143 287" 
-  fill="none" 
+<svg
+  height={size}
+  viewBox="0 0 139 294"
+  fill="none"
   xmlns="http://www.w3.org/2000/svg"
   class="difficulty-icon {extraClass}"
 >
-  <g filter="url(#filter0_i_1_34)">
-    <g clip-path="url(#paint0_diamond_1_34_clip_path)" data-figma-skip-parse="true">
-      <g transform="matrix(0.0116723 0.141394 -0.13691 0.0113021 71.3277 143.106)">
-        <rect x="0" y="0" width="867.494" height="545.224" fill="url(#paint0_diamond_1_34)" opacity="1" shape-rendering="crispEdges"/>
-        <rect x="0" y="0" width="867.494" height="545.224" transform="scale(1 -1)" fill="url(#paint0_diamond_1_34)" opacity="1" shape-rendering="crispEdges"/>
-        <rect x="0" y="0" width="867.494" height="545.224" transform="scale(-1 1)" fill="url(#paint0_diamond_1_34)" opacity="1" shape-rendering="crispEdges"/>
-        <rect x="0" y="0" width="867.494" height="545.224" transform="scale(-1)" fill="url(#paint0_diamond_1_34)" opacity="1" shape-rendering="crispEdges"/>
-      </g>
-    </g>
-    <path d="M14.0308 124.371C9.43334 213.386 35.1239 241.571 56.5308 257.371C63.7076 207.571 128.031 171.371 128.031 171.371C128.031 171.371 132.031 131.491 116.531 86.8716C101.031 42.2517 86.6317 38.0192 78.0308 28.3716C76.9025 35.8792 72.0375 62.2336 65.0308 77.3716C58.0241 92.5095 44.3428 97.9293 37.4471 102.67C24.0816 111.86 16.8415 117.759 14.0308 124.371Z" fill="url(#paint0_diamond_1_34)"/>
-  </g>
-  <path d="M68 0C81.2035 11.4781 101 20 125 70.5C149 121 142 180 142 180C142 180 70.0001 210.496 67 286.498C45 276.831 0.799999 229.498 0 117.498C3.49992 108.999 5.00019 110.496 23.5 97.998C33.0447 91.5497 47.6628 78.9988 56.5 59.5C65.3372 40.0011 67 9.49999 68 0ZM79 29.5C77.8717 37.0076 73.0067 63.362 66 78.5C58.9933 93.638 45.3117 99.0577 38.416 103.799C25.0506 112.988 17.8107 118.887 15 125.5C10.4026 214.514 36.0931 242.699 57.5 258.5C64.671 208.739 128.897 172.558 129 172.5C129 172.5 133 132.62 117.5 88C102 43.3802 87.601 39.1476 79 29.5Z" fill="#D9D9D9"/>
-  <path d="M68 0C81.2035 11.4781 101 20 125 70.5C149 121 142 180 142 180C142 180 70.0001 210.496 67 286.498C45 276.831 0.799999 229.498 0 117.498C3.49992 108.999 5.00019 110.496 23.5 97.998C33.0447 91.5497 47.6628 78.9988 56.5 59.5C65.3372 40.0011 67 9.49999 68 0ZM79 29.5C77.8717 37.0076 73.0067 63.362 66 78.5C58.9933 93.638 45.3117 99.0577 38.416 103.799C25.0506 112.988 17.8107 118.887 15 125.5C10.4026 214.514 36.0931 242.699 57.5 258.5C64.671 208.739 128.897 172.558 129 172.5C129 172.5 133 132.62 117.5 88C102 43.3802 87.601 39.1476 79 29.5Z" fill="#D9D9D9"/>
+  <path d="M9 115.5C9 235.5 26.5 227 56.5394 265C64.5394 183.5 108.039 197.5 128.539 168C121.039 50.5 100.5 49.5 77 20C65.5 98.5 55.5582 67.8497 9 115.5Z" fill="#D9D9D9" fill-opacity="0.5"/>
+  <path d="M0 115C0.00961552 239.586 31 257 65.5 294C74.5 206 117 206.5 137.5 177C145 52.5 99.4236 32.9676 74 0C62.5 78.5 46.5582 67.3497 0 115Z" fill="url(#paint0_linear_59_27)"/>
+  <path d="M9.5 118C9.50775 218.144 31.0898 224.385 54 257.5C60.3202 183.688 108.196 191.833 124 165.5C124 76.1282 101.5 52.5 81 26C66.0419 93.5 47.0417 79.6978 9.5 118Z" fill={currentColor}/>
+  <path d="M74 0C99.4236 32.9676 145 52.5 137.5 177C117 206.5 74.5 206 65.5 294C31 257 0.00961552 239.586 0 115C46.5582 67.3497 62.5 78.5 74 0ZM77 20C65.5 98.5 55.5582 67.8497 9 115.5C6.50043 224 26.4997 227 56.5391 265C70.4996 188 108.039 197.5 128.539 168C121.039 50.5 100.5 49.5 77 20Z" fill="url(#paint1_linear_59_27)"/>
+  <path d="M80.5 26C82.173 28.1627 83.8586 30.307 85.5449 32.4688C85.5242 35.2119 85.5 38.5063 85.5 42.5C83.5 63 61.9996 94 18.498 122.5C9.52498 165.496 37.1297 221.743 54.9277 249.185C54.5578 251.835 54.2479 254.604 54 257.5C31.0898 224.385 9.00775 218.144 9 118C46.5417 79.6978 65.5419 93.5 80.5 26Z" fill="black" fill-opacity="0.5"/>
   <defs>
-    <filter id="filter0_i_1_34" x="13.4912" y="28.3716" width="115.003" height="229" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-      <feFlood flood-opacity="0" result="BackgroundImageFix"/>
-      <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
-      <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
-      <feOffset/>
-      <feGaussianBlur stdDeviation="21.85"/>
-      <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1"/>
-      <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"/>
-      <feBlend mode="normal" in2="shape" result="effect1_innerShadow_1_34"/>
-    </filter>
-    <clipPath id="paint0_diamond_1_34_clip_path">
-      <path d="M14.0308 124.371C9.43334 213.386 35.1239 241.571 56.5308 257.371C63.7076 207.571 128.031 171.371 128.031 171.371C128.031 171.371 132.031 131.491 116.531 86.8716C101.031 42.2517 86.6317 38.0192 78.0308 28.3716C76.9025 35.8792 72.0375 62.2336 65.0308 77.3716C58.0241 92.5095 44.3428 97.9293 37.4471 102.67C24.0816 111.86 16.8415 117.759 14.0308 124.371Z"/>
-    </clipPath>
-    <linearGradient id="paint0_diamond_1_34" x1="0" y1="0" x2="500" y2="500" gradientUnits="userSpaceOnUse">
-      <stop stop-color={currentGradient.start}/>
-      <stop offset="0.640664" stop-color={currentGradient.mid}/>
-      <stop offset="0.862718" stop-color={currentGradient.end}/>
+    <linearGradient id="paint0_linear_59_27" x1="97.5" y1="147" x2="-37" y2="109" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#D9D9D9"/>
+      <stop offset="1"/>
+    </linearGradient>
+    <linearGradient id="paint1_linear_59_27" x1="26.5" y1="79.5" x2="138" y2="248" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#D9D9D9"/>
+      <stop offset="1" stop-color="#1E1E1E"/>
     </linearGradient>
   </defs>
 </svg>

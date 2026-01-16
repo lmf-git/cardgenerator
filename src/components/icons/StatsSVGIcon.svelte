@@ -1,71 +1,59 @@
 <script>
-  export let size = "1em";
-  export let extraClass = "";
-  export let cardType = "character";
+  let { size = "1em", extraClass = "", cardType = "character" } = $props();
 
-  // Define gradients based on card type
-  const gradients = {
-    character: { start: "#2d3a8c", mid: "#1a237e", end: "#0a0f3d" },
-    attack: { start: "#ff4d4d", mid: "#DC143C", end: "#8B0000" },
-    action: { start: "#6495ED", mid: "#4169E1", end: "#1E3A8A" },
-    foundation: { start: "#32CD32", mid: "#228B22", end: "#004d00" },
-    asset: { start: "#BA55D3", mid: "#9932CC", end: "#4B0082" }
+  // Define gradient colors based on card type for the inner fill
+  const cardGradients = {
+    character: { start: "#48BEFF", end: "#29729C" },
+    attack: { start: "#FF6B6B", end: "#8B0000" },
+    action: { start: "#6495ED", end: "#1E3A8A" },
+    foundation: { start: "#32CD32", end: "#004d00" },
+    asset: { start: "#BA55D3", end: "#4B0082" }
   };
 
-  $: currentGradient = gradients[cardType] || gradients.character;
+  let currentGradient = $derived(cardGradients[cardType] || cardGradients.character);
 </script>
 
-<svg 
-  height={size} 
-  viewBox="0 0 96 209" 
-  fill="none" 
+<svg
+  height={size}
+  viewBox="0 0 127 277"
+  fill="none"
   xmlns="http://www.w3.org/2000/svg"
   class="stats-svg-icon {extraClass}"
 >
-  <g filter="url(#filter0_i_4_11)">
-    <g clip-path="url(#paint0_diamond_4_11_clip_path)" data-figma-skip-parse="true">
-      <g transform="matrix(-0.231 0.023 -0.0108728 -0.109201 47.0001 92.5)">
-        <rect x="0" y="0" width="241.846" height="1015.53" fill="url(#paint0_diamond_4_11)" opacity="1" shape-rendering="crispEdges"/>
-        <rect x="0" y="0" width="241.846" height="1015.53" transform="scale(1 -1)" fill="url(#paint0_diamond_4_11)" opacity="1" shape-rendering="crispEdges"/>
-        <rect x="0" y="0" width="241.846" height="1015.53" transform="scale(-1 1)" fill="url(#paint0_diamond_4_11)" opacity="1" shape-rendering="crispEdges"/>
-        <rect x="0" y="0" width="241.846" height="1015.53" transform="scale(-1)" fill="url(#paint0_diamond_4_11)" opacity="1" shape-rendering="crispEdges"/>
-      </g>
-    </g>
-    <path d="M76.2049 11C69.2774 29.6628 40.9899 37.3779 27.7121 38.9027C30.4832 56.4676 17.0322 62.3836 9.96031 63.146C6.06357 96.8427 -3.39125 158.38 7.00006 148.5C19.9892 136.15 46.9276 137.181 40.0001 144.5C33.0725 151.819 16.0219 172.47 22.5165 172.47C49.3607 161.491 70.1433 188.937 81.4006 199C83.5654 188.479 87.4622 134.504 90.493 99.7397C93.5238 64.9757 85.7303 32.9562 76.2049 11Z" fill="url(#paint0_diamond_4_11)"/>
-  </g>
-  <path d="M76.2049 11C69.2774 29.6628 40.9899 37.3779 27.7121 38.9027C30.4832 56.4676 17.0322 62.3836 9.96031 63.146C6.06357 96.8427 -3.39125 158.38 7.00006 148.5C19.9892 136.15 46.9276 137.181 40.0001 144.5C33.0725 151.819 16.0219 172.47 22.5165 172.47C49.3607 161.491 70.1433 188.937 81.4006 199C83.5654 188.479 87.4622 134.504 90.493 99.7397C93.5238 64.9757 85.7303 32.9562 76.2049 11Z" stroke="black"/>
-  <g filter="url(#filter1_i_4_11)">
-    <path d="M79.5 0C90.5 24 95.7922 76 95.5 98.5C95 137 91.5 187 83.5 208.5C71.5 195 44 162 10 181C16 168.5 27 153 35 145C40 138.5 18.5 140 0 158.5C-3.8147e-05 145 2.49999 100.5 4 59C12.1667 58.1667 27.5 51.5 23.5 31.5C38.8333 29.8333 71.5 20.4 79.5 0ZM76.9463 20C62.4998 33.4999 48 35 31.5 39C34.7666 55.4988 18.6918 66.2344 12.0225 66.9219C10.7975 101.157 9.49997 128.863 9.5 140C24.6081 124.739 47 135.5 41.5 144C36 152.5 32.8472 157.188 27.9473 167.5C53.9999 165.5 67.1464 179.113 76.9463 190.25C83.4795 172.514 86.3378 131.267 86.7461 99.5068C86.9847 80.9457 82.9997 42 76.9463 20Z" fill="#CCCCCC"/>
+  <path d="M111 0C111.163 0.596555 111.257 1.19957 111.418 1.80859L0 209L8.93359 73C17.9336 73 42.4336 66 31.9336 38.5C49.4336 35 99.5 31 111 0Z" fill="url(#paint0_linear_80_62)"/>
+  <path d="M111 0C128.586 66.8209 134.264 209.656 110 277C92 254 53.5 210 13 239C18.6667 226.333 32.0788 197.416 42.1318 187.067C56.9181 171.846 14.2833 192.293 0 209L111 0Z" fill="url(#paint1_linear_80_62)"/>
+  <g filter="url(#filter0_ii_80_62)">
+    <path d="M17 81L12 184C25 171.5 60 167.5 54 190.5C45.5749 199.205 39.749 208.845 35 219.5C69.5 219.5 83.5 236 104 254.5C122.5 197.5 117 82 104.5 24C86 41 57.1661 43.556 42.5 46.5C48.5 67.5 27 81 17 81Z" fill="url(#paint2_radial_80_62)"/>
   </g>
   <defs>
-    <filter id="filter0_i_4_11" x="1.78333" y="9.66048" width="89.8735" height="190.291" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+    <filter id="filter0_ii_80_62" x="8" y="20" width="107.953" height="238.5" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
       <feFlood flood-opacity="0" result="BackgroundImageFix"/>
       <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
       <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
-      <feMorphology radius="1" operator="erode" in="SourceAlpha" result="effect1_innerShadow_4_11"/>
-      <feOffset/>
-      <feGaussianBlur stdDeviation="13.4"/>
-      <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1"/>
-      <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"/>
-      <feBlend mode="normal" in2="shape" result="effect1_innerShadow_4_11"/>
-    </filter>
-    <clipPath id="paint0_diamond_4_11_clip_path">
-      <path d="M76.2049 11C69.2774 29.6628 40.9899 37.3779 27.7121 38.9027C30.4832 56.4676 17.0322 62.3836 9.96031 63.146C6.06357 96.8427 -3.39125 158.38 7.00006 148.5C19.9892 136.15 46.9276 137.181 40.0001 144.5C33.0725 151.819 16.0219 172.47 22.5165 172.47C49.3607 161.491 70.1433 188.937 81.4006 199C83.5654 188.479 87.4622 134.504 90.493 99.7397C93.5238 64.9757 85.7303 32.9562 76.2049 11Z"/>
-    </clipPath>
-    <filter id="filter1_i_4_11" x="0" y="0" width="95.5115" height="208.5" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-      <feFlood flood-opacity="0" result="BackgroundImageFix"/>
-      <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
-      <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
-      <feOffset dy="4"/>
+      <feOffset dx="-4" dy="-4"/>
+      <feGaussianBlur stdDeviation="2"/>
       <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1"/>
       <feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.25 0"/>
-      <feBlend mode="normal" in2="shape" result="effect1_innerShadow_4_11"/>
+      <feBlend mode="normal" in2="shape" result="effect1_innerShadow_80_62"/>
+      <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+      <feOffset dy="4"/>
+      <feGaussianBlur stdDeviation="2"/>
+      <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1"/>
+      <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"/>
+      <feBlend mode="normal" in2="effect1_innerShadow_80_62" result="effect2_innerShadow_80_62"/>
     </filter>
-    <linearGradient id="paint0_diamond_4_11" x1="0" y1="0" x2="500" y2="500" gradientUnits="userSpaceOnUse">
-      <stop offset="0.0480769" stop-color={currentGradient.start}/>
-      <stop offset="0.567308" stop-color={currentGradient.mid}/>
-      <stop offset="1" stop-color={currentGradient.end}/>
+    <linearGradient id="paint0_linear_80_62" x1="24.5" y1="45.5" x2="-15.5" y2="248.5" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#D9D9D9"/>
+      <stop offset="1" stop-color="#B5B5B5"/>
     </linearGradient>
+    <linearGradient id="paint1_linear_80_62" x1="12" y1="265" x2="177.5" y2="-27" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#D9D9D9"/>
+      <stop offset="1" stop-color="#C8C8C8"/>
+    </linearGradient>
+    <radialGradient id="paint2_radial_80_62" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(70.5 139) rotate(79.1527) scale(85.0191 115.908)">
+      <stop stop-color={currentGradient.start}/>
+      <stop offset="0.756274" stop-color={currentGradient.end}/>
+    </radialGradient>
   </defs>
 </svg>
 

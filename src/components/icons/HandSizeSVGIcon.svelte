@@ -1,38 +1,63 @@
 <script>
-  export let size = "1em";
-  export let extraClass = "";
+  let { size = "1em", extraClass = "" } = $props();
 </script>
 
-<svg 
-  height={size} 
-  viewBox="0 0 275 275" 
-  fill="none" 
+<svg
+  height={size}
+  viewBox="0 0 166 166"
+  fill="none"
   xmlns="http://www.w3.org/2000/svg"
   class="handsize-svg-icon {extraClass}"
 >
-  <g filter="url(#filter0_i_5_7)">
-    <circle cx="137.5" cy="137.5" r="137.5" fill="url(#paint0_radial_5_7)"/>
+  <g filter="url(#filter0_dii_80_110)">
+    <circle cx="82.7031" cy="82.6992" r="59" fill="url(#paint0_radial_80_110)"/>
+    <circle cx="82.7031" cy="82.6992" r="58" stroke="#8D8D8D" stroke-width="2"/>
   </g>
-  <rect x="136.503" y="58.7969" width="108.425" height="151.802" rx="9.5" transform="rotate(11.9399 136.503 58.7969)" fill="#67A27A" stroke="#4E634C" stroke-width="3"/>
-  <rect x="84.4775" y="59.4214" width="109.475" height="151.802" rx="9.5" transform="rotate(-3.60683 84.4775 59.4214)" fill="#6B9976" stroke="#4E634C" stroke-width="3"/>
-  <rect x="33.891" y="71.5926" width="111.992" height="152.462" rx="9.5" transform="rotate(-18.0506 33.891 71.5926)" fill="#5E9A71" stroke="#4E634C" stroke-width="3"/>
+  <rect x="37.7031" y="54.0195" width="46.546" height="70" rx="3" transform="rotate(-14.0805 37.7031 54.0195)" fill="url(#paint1_linear_80_110)" stroke="#01321C" stroke-width="2"/>
+  <rect x="60.7031" y="47.0391" width="46.546" height="70" rx="3" transform="rotate(-0.420808 60.7031 47.0391)" fill="url(#paint2_linear_80_110)" stroke="#01321C" stroke-width="2"/>
+  <rect x="82.6484" y="51.6953" width="46.546" height="70" rx="3" transform="rotate(14.8514 82.6484 51.6953)" fill="url(#paint3_linear_80_110)" stroke="#01321C" stroke-width="2"/>
   <defs>
-    <filter id="filter0_i_5_7" x="0" y="0" width="275" height="276" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+    <filter id="filter0_dii_80_110" x="0.00312424" y="-0.000782013" width="165.4" height="165.4" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
       <feFlood flood-opacity="0" result="BackgroundImageFix"/>
-      <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
       <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
-      <feMorphology radius="8" operator="erode" in="SourceAlpha" result="effect1_innerShadow_5_7"/>
-      <feOffset dy="1"/>
-      <feGaussianBlur stdDeviation="9.65"/>
+      <feOffset/>
+      <feGaussianBlur stdDeviation="11.85"/>
+      <feComposite in2="hardAlpha" operator="out"/>
+      <feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.5 0"/>
+      <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_80_110"/>
+      <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_80_110" result="shape"/>
+      <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+      <feOffset dy="-15"/>
+      <feGaussianBlur stdDeviation="2"/>
       <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1"/>
-      <feColorMatrix type="matrix" values="0 0 0 0 0.703407 0 0 0 0 0.703407 0 0 0 0 0.703407 0 0 0 1 0"/>
-      <feBlend mode="normal" in2="shape" result="effect1_innerShadow_5_7"/>
+      <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.1 0"/>
+      <feBlend mode="normal" in2="shape" result="effect2_innerShadow_80_110"/>
+      <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+      <feOffset dx="3" dy="6"/>
+      <feGaussianBlur stdDeviation="2"/>
+      <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1"/>
+      <feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.5 0"/>
+      <feBlend mode="normal" in2="effect2_innerShadow_80_110" result="effect3_innerShadow_80_110"/>
     </filter>
-    <radialGradient id="paint0_radial_5_7" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(137.5 137.5) rotate(90) scale(137.5)">
+    <radialGradient id="paint0_radial_80_110" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(82.7031 82.6992) rotate(90) scale(76 110.44)">
       <stop stop-color="white"/>
-      <stop offset="0.841346" stop-color="#AEAEAE"/>
       <stop offset="1" stop-color="#737373"/>
     </radialGradient>
+    <linearGradient id="paint1_linear_80_110" x1="60.9761" y1="54.0195" x2="60.9761" y2="124.02" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#06794D"/>
+      <stop offset="0.5" stop-color="#38A775"/>
+      <stop offset="1" stop-color="#0F8754"/>
+    </linearGradient>
+    <linearGradient id="paint2_linear_80_110" x1="83.9761" y1="47.0391" x2="83.9761" y2="117.039" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#06794D"/>
+      <stop offset="0.5" stop-color="#38A775"/>
+      <stop offset="1" stop-color="#0F8754"/>
+    </linearGradient>
+    <linearGradient id="paint3_linear_80_110" x1="105.921" y1="51.6953" x2="105.921" y2="121.695" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#06794D"/>
+      <stop offset="0.5" stop-color="#38A775"/>
+      <stop offset="1" stop-color="#0F8754"/>
+    </linearGradient>
   </defs>
 </svg>
 

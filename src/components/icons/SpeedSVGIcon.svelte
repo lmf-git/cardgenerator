@@ -1,41 +1,38 @@
 <script>
-  export let size = "1em";
-  export let extraClass = "";
+  let { size = "1em", extraClass = "" } = $props();
 </script>
 
-<svg 
-  height={size} 
-  viewBox="0 0 174 142" 
-  fill="none" 
+<svg
+  height={size}
+  viewBox="0 0 98 123"
+  fill="none"
   xmlns="http://www.w3.org/2000/svg"
   class="speed-svg-icon {extraClass}"
 >
-  <g filter="url(#filter0_ii_5_3)">
-    <path d="M68 32.0024C66.5002 36.0024 61.3334 38.5024 59.0002 37.5024C57.5002 36.0024 45.0002 21.5024 45.0002 21.5024L31.5002 4.00243C28.3002 -0.145717 27.3336 3.77404 28.0002 6.00243C35.5 25.5024 37.0002 45.7024 37.0002 48.5024C37.0002 51.3024 35.3333 52.0024 34.5 51.5024C34.5 51.5024 1.99976 52.5024 3 54.0024C4.00024 55.5024 27.1381 70.8558 30.0002 73.0024C32.0002 74.5024 30.1669 76.8358 29.5002 77.5024C29.5002 77.5024 19.5002 83.5024 20.5002 84.0024C22.5002 86.0024 32.3 89.4024 35.5 91.0024C38.7 92.6024 37.0002 94.0024 35.5 96.5024C35.5 96.5024 4.00024 134.002 0 140.002C6.00021 138.002 58 108.002 60 108.002C62.5 108.002 62.5 106.502 62.5 108.002C62.5 109.202 55.1667 129.836 51.5 140.002C54 140.002 77.5 115.002 80 110.502C82.4 108.902 84 109.836 84.5 110.502C84.5 110.502 89.5 144.502 91.5 141.502C93.1172 139.077 96 110.502 96 110.502C95.8333 108.502 96.2002 103.503 99.0002 103.503C113.5 105.503 136 123.002 139.5 124.502C142.3 125.702 142.667 123.002 142.5 121.502C136.833 115.169 125.2 102.202 124 101.002C122.8 99.8024 123.5 99.1691 124 99.0024C125.833 99.8358 130.1 101.702 132.5 102.502C134.9 103.302 137 102.003 136 99.0024C135 95.0027 127.5 92.0027 124.5 89.0027C123.249 87.7517 124.454 86.5483 125.444 85.5588L125.5 85.5027C125.5 85.5027 176 47.0027 173 46.0024C163 47.0027 137.5 54.7024 117.5 57.5024C121 46.0024 114 44.5024 107.5 44.5024H103C103 44.5024 115 -0.397558 113 0.0026597C111 0.402877 95.5002 33.0024 92.0002 37.5024C90.6761 39.2049 88.5002 39.5024 86.0002 40.0024C82.0779 40.7869 79.5 28.0024 73 21.5024C68.5002 17.0027 69.5002 24.5024 68 32.0024Z" fill="url(#paint0_linear_5_3)"/>
+  <g filter="url(#filter0_ii_80_38)">
+    <path d="M61.0022 34.3394L35.0022 0.339388C33.8039 -0.460612 33.5014 0.339388 33.5 0.839388C35.8333 13.1727 40.5 37.9394 40.5 38.3394C40.5 38.7394 40.1667 38.8394 40 38.8394H33C32.6 38.8394 32.5 39.5061 32.5 39.8394V46.8394C32.5 48.0394 30.8333 48.0061 30 47.8394L0 38.8394C7.66667 44.5061 23.4 56.0394 25 56.8394C26.6 57.6394 26.3333 59.5061 26 60.3394C22 62.5061 13.8 66.9394 13 67.3394C12.2 67.7394 12.6667 68.8394 13 69.3394C15.8333 71.0061 21.9 74.5394 23.5 75.3394C25.1 76.1394 24.8333 77.3394 24.5 77.8394C16.6674 83.5061 0.902163 94.9394 0.502163 95.3394C0.00216311 95.8394 0.00216305 96.3394 1.50216 97.3394C5.50216 95.3394 30.5022 93.3394 32.0022 93.3394C33.2022 93.3394 34.1688 94.0061 34.5022 94.3394C34.6688 100.506 35.0022 113.039 35.0022 113.839C35.0022 114.639 35.6688 114.839 36.0022 114.839C40.0022 109.839 48.2022 99.5394 49.0022 98.3394C49.8022 97.1394 51.6688 97.8394 52.5022 98.3394L57.0022 104.839C58.8355 101.506 62.7022 94.6394 63.5022 93.8394C64.3022 93.0394 65.5022 93.8394 66.0022 94.3394C75.0022 103.173 93.3022 121.039 94.5022 121.839C95.7022 122.639 96.6688 122.173 97.0022 121.839L75.5022 78.8394C75.1022 78.0394 76.3355 77.8394 77.0022 77.8394L97.5022 84.8394C91.3355 78.3394 78.9022 65.1394 78.5022 64.3394C78.1022 63.5394 79.3355 63.0061 80.0022 62.8394C85.6688 61.6727 97.1022 59.1394 97.5022 58.3394C93.0022 56.8394 76.5022 54.8394 74.5022 54.8394C72.9022 54.8394 73.1688 52.5061 73.5022 51.3394L88.5022 22.8394C83.3355 26.6727 72.6022 34.7394 71.0022 36.3394C69.4022 37.9394 69.6688 35.6727 70.0022 34.3394L72.5022 26.3394C70.1688 28.1727 65.2022 32.3394 64.0022 34.3394C62.8022 36.3394 61.5022 35.1727 61.0022 34.3394Z" fill="url(#paint0_radial_80_38)"/>
   </g>
   <defs>
-    <filter id="filter0_ii_5_3" x="0" y="-4" width="173.129" height="148.69" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+    <filter id="filter0_ii_80_38" x="0" y="-4" width="97.5" height="130.281" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
       <feFlood flood-opacity="0" result="BackgroundImageFix"/>
       <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
       <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
-      <feMorphology radius="4" operator="erode" in="SourceAlpha" result="effect1_innerShadow_5_3"/>
       <feOffset dy="-4"/>
-      <feGaussianBlur stdDeviation="1.85"/>
+      <feGaussianBlur stdDeviation="2"/>
       <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1"/>
-      <feColorMatrix type="matrix" values="0 0 0 0 0.134766 0 0 0 0 0.134766 0 0 0 0 0.134766 0 0 0 0.27 0"/>
-      <feBlend mode="normal" in2="shape" result="effect1_innerShadow_5_3"/>
+      <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"/>
+      <feBlend mode="normal" in2="shape" result="effect1_innerShadow_80_38"/>
       <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
-      <feOffset dy="6"/>
-      <feGaussianBlur stdDeviation="1.5"/>
+      <feOffset dy="4"/>
+      <feGaussianBlur stdDeviation="2"/>
       <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1"/>
-      <feColorMatrix type="matrix" values="0 0 0 0 0.998498 0 0 0 0 0.998498 0 0 0 0 0.998498 0 0 0 0.25 0"/>
-      <feBlend mode="normal" in2="effect1_innerShadow_5_3" result="effect2_innerShadow_5_3"/>
+      <feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.25 0"/>
+      <feBlend mode="normal" in2="effect1_innerShadow_80_38" result="effect2_innerShadow_80_38"/>
     </filter>
-    <linearGradient id="paint0_linear_5_3" x1="180" y1="71" x2="-0.499749" y2="67.5" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#D45D2C"/>
-      <stop offset="0.466346" stop-color="#D99F49"/>
-      <stop offset="0.980769" stop-color="#C3512F"/>
-    </linearGradient>
+    <radialGradient id="paint0_radial_80_38" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(53.5 68.5) rotate(128.991) scale(54.037 49.4373)">
+      <stop stop-color="#FECE22"/>
+      <stop offset="1" stop-color="#F68A5F"/>
+    </radialGradient>
   </defs>
 </svg>
 

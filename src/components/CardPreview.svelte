@@ -238,7 +238,7 @@
                 <SymbolBracketIcon extraClass="symbol-bracket-bg" />
                 <div class="symbols-with-separators">
                   {#each card.resourceSymbols as symbol, index}
-                    <SymbolIcon {symbol} size="6.5em" extraClass="bracketed-symbol-icon" />
+                    <SymbolIcon {symbol} size="5em" extraClass="bracketed-symbol-icon" />
                     {#if index < card.resourceSymbols.length - 1}
                       <SymbolBracketSeparatorIcon size="6.5em" extraClass="symbol-separator" />
                     {/if}
@@ -414,9 +414,9 @@
     height: 1.125in; /* Reduced height to account for top margin */
     background: rgba(255, 255, 255, 0.75); /* More transparent */
     border-radius: 0.06in; /* All corners rounded */
-    overflow: hidden;
+    overflow: visible; /* Allow content to overflow */
     z-index: 15; /* Above cream background and art section */
-    margin-top: 0.1in; /* Add top margin for spacing from card art */
+    margin-top: 0; /* No top margin - directly under card art */
   }
 
   /* Character cards: info section extends to right edge */
@@ -776,7 +776,7 @@
 
   .resource-symbols {
     position: absolute;
-    top: 2%;
+    top: -9%;
     left: 0;
     right: 0;
     display: flex;
@@ -800,7 +800,7 @@
     position: relative;
     display: block;
     width: 70%; /* Narrower bracket */
-    margin-left: 5em; /* Start further from the left */
+    margin-left: 12em; /* Start further from the left */
   }
 
   .symbol-bracket-container :global(.symbol-bracket-icon) {
@@ -808,7 +808,7 @@
     top: 0;
     left: 0;
     width: 100%;
-    height: 100%;
+    height: auto;
     z-index: 1;
   }
 
@@ -820,19 +820,22 @@
     gap: 0;
     z-index: 10;
     padding: 1.5em 0 0.3em 0;
-    margin-left: 3.5em; /* Use margin for left offset */
+    margin-left: 3em; /* Use margin for left offset */
   }
 
   .symbols-with-separators :global(.symbol-separator) {
-    height: 6.5em;
+    height: 0.24in;
     width: auto;
     align-self: flex-start;
     margin-left: -1em;
     margin-right: -1em;
+    margin-top: -1.1em; /* Move separator up */
+    flex-shrink: 0; /* Prevent scaling */
   }
 
   .symbols-with-separators :global(.symbol-icon) {
     align-self: flex-start;
+    margin-top: -0.6em; /* Move symbols up */
   }
   
 
