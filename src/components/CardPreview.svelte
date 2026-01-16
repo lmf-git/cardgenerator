@@ -580,6 +580,7 @@
     color: white;
     font-family: 'OPTICopperplate-Light', Arial, sans-serif;
     text-shadow: 0 0 0.01in rgba(0,0,0,0.8);
+    margin-left: 0.02in; /* Move block value right */
   }
 
   .type-bracket-container {
@@ -653,6 +654,10 @@
     font-weight: bold;
     font-family: 'OPTICopperplate-Light', Arial, sans-serif;
     text-shadow: 0 0 0.01in rgba(0,0,0,0.8);
+  }
+
+  .damage-value {
+    margin-left: -0.04in; /* Move damage value left */
   }
 
   .character-stats-group {
