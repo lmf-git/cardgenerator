@@ -2,12 +2,14 @@
   import { cardData, printSettings } from '../lib/stores.js';
   import CardGenerator from '../components/CardGenerator.svelte';
   import CardPreview from '../components/CardPreview.svelte';
-  import { exportCardToPDF, exportCardToPNG, prepareForPrint } from '../lib/export.js';
+  import PrintLayout from '../components/PrintLayout.svelte';
+  import { exportCardToPDF, exportCardToPNG } from '../lib/export.js';
   import { downloadJSON, readJSONFile } from '../lib/io.js';
 
   let showEditMobile = $state(false);
   let cardPreviewRef = $state(null);
   let isExporting = $state(false);
+  let showPrintLayout = $state(false);
 
   // Export functions
   async function exportToPDF() {
@@ -60,20 +62,11 @@
     event.target.value = ''; // Reset file input
   }
 
-  async function handlePrint() {
-    if (!cardPreviewRef) return;
-    
-    const cardElement = cardPreviewRef.querySelector('.ufs-card');
-    const printContainer = await prepareForPrint(cardElement, $printSettings);
-    
-    if (printContainer) {
-      window.print();
-      // Clean up after print dialog closes
-      setTimeout(() => document.body.removeChild(printContainer), 1000);
-    }
-  }
 </script>
 
+{#if showPrintLayout}
+  <PrintLayout onClose={() => showPrintLayout = false} />
+{:else}
 <main class="container">
   <header>
     <h1>
@@ -86,89 +79,103 @@
   <div class="app-layout">
     <div class="generator-panel" class:hide-mobile={!showEditMobile}>
       <CardGenerator />
+
+      <div class="print-settings">
+        <h3>Print Settings</h3>
+        <div class="settings-grid">
+          <div class="setting-group">
+            <label for="copies">Copies per page</label>
+            <input
+              id="copies"
+              type="number"
+              min="1"
+              max="9"
+              bind:value={$printSettings.copiesPerPage}
+            />
+          </div>
+
+          <div class="setting-group">
+            <label for="bleed">Bleed margin (mm)</label>
+            <input
+              id="bleed"
+              type="number"
+              min="0"
+              max="12"
+              step="1"
+              bind:value={$printSettings.bleedMargin}
+            />
+          </div>
+
+          <div class="setting-group">
+            <label for="space">Space between cards (mm)</label>
+            <input
+              id="space"
+              type="number"
+              min="0"
+              max="25"
+              step="1"
+              bind:value={$printSettings.spaceBetween}
+            />
+          </div>
+        </div>
+      </div>
+
+      <div class="export-controls">
+        <button onclick={() => showPrintLayout = true} class="print-btn">
+          Print Layout
+        </button>
+        <button onclick={exportToPDF} class="export-btn" disabled={isExporting}>
+          {isExporting ? 'Exporting...' : 'PDF'}
+        </button>
+        <button onclick={exportToPNG} class="export-btn" disabled={isExporting}>
+          {isExporting ? 'Exporting...' : 'PNG'}
+        </button>
+        <button onclick={saveConfig} class="config-btn save-btn">
+          💾 Save
+        </button>
+        <label class="config-btn load-btn">
+          📂 Load
+          <input
+            type="file"
+            accept=".json"
+            onchange={loadConfig}
+            style="display: none;"
+          />
+        </label>
+      </div>
     </div>
 
     <div bind:this={cardPreviewRef} class="card-container">
       <CardPreview />
     </div>
   </div>
-
-  <div class="print-settings">
-    <h3>Print Settings</h3>
-    <div class="settings-grid">
-      <div class="setting-group">
-        <label for="copies">Copies per page</label>
-        <input
-          id="copies"
-          type="number"
-          min="1"
-          max="9"
-          bind:value={$printSettings.copiesPerPage}
-        />
-      </div>
-      
-      <div class="setting-group">
-        <label for="bleed">Bleed margin (mm)</label>
-        <input
-          id="bleed"
-          type="number"
-          min="0"
-          max="12"
-          step="1"
-          bind:value={$printSettings.bleedMargin}
-        />
-      </div>
-
-      <div class="setting-group">
-        <label for="space">Space between cards (mm)</label>
-        <input
-          id="space"
-          type="number"
-          min="0"
-          max="25"
-          step="1"
-          bind:value={$printSettings.spaceBetween}
-        />
-      </div>
-    </div>
-  </div>
-
-  <div class="export-controls">
-    <button onclick={handlePrint} class="print-btn">
-      🖨️ Print
-    </button>
-    <button onclick={exportToPDF} class="export-btn" disabled={isExporting}>
-      {isExporting ? 'Exporting...' : '📄 PDF'}
-    </button>
-    <button onclick={exportToPNG} class="export-btn" disabled={isExporting}>
-      {isExporting ? 'Exporting...' : '🖼️ PNG'}
-    </button>
-    <button onclick={saveConfig} class="config-btn save-btn">
-      💾 Save Config
-    </button>
-    <label class="config-btn load-btn">
-      📂 Load Config
-      <input
-        type="file"
-        accept=".json"
-        onchange={loadConfig}
-        style="display: none;"
-      />
-    </label>
-  </div>
 </main>
+{/if}
 
 <style>
+  :global(html), :global(body) {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow: hidden;
+  }
+
   .container {
     max-width: 75em;
     margin: 0 auto;
     padding: 1.25em;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    box-sizing: border-box;
   }
 
   header {
     text-align: center;
-    margin-bottom: 1.875em;
+    margin-bottom: 1em;
+    flex-shrink: 0;
   }
 
   header h1 {
@@ -192,22 +199,16 @@
   .app-layout {
     display: flex;
     gap: 1.25em;
-    min-height: 37.5em;
-    align-items: start;
+    flex: 1;
+    min-height: 0;
+    align-items: stretch;
   }
 
   .generator-panel {
     flex: 1;
     padding: 1.25em;
-    height: fit-content;
-    max-height: 80vh;
     overflow-y: auto;
-    scrollbar-width: none; /* Firefox */
-    -ms-overflow-style: none; /* Internet Explorer 10+ */
-  }
-
-  .generator-panel::-webkit-scrollbar {
-    display: none; /* WebKit */
+    min-height: 0;
   }
 
   .card-container {
@@ -221,22 +222,27 @@
 
   /* Mobile styles */
   @media (max-width: 1024px) {
+    .container {
+      height: auto;
+      max-height: 100vh;
+      overflow-y: auto;
+    }
+
     .app-layout {
       flex-direction: column;
       gap: 1em;
+      flex: none;
     }
 
     .card-container {
       flex: none;
       position: static;
-      order: -1; /* Show card above form on mobile */
-      display: block; /* Ensure it displays */
-      width: 100%; /* Take full width */
-      min-height: 300px; /* Minimum height for visibility */
+      order: -1;
+      width: 100%;
     }
 
     .generator-panel {
-      max-height: none;
+      flex: none;
       overflow-y: visible;
     }
   }
@@ -248,13 +254,12 @@
     gap: 8px;
     flex-wrap: wrap;
     padding: 15px;
-    background: #f8f9fa;
-    border: 1px solid #e9ecef;
+    background: #e9ecef;
     border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     margin-top: 1.25em;
     justify-content: center;
   }
+
 
   .print-btn, .export-btn {
     padding: 8px 16px;
@@ -336,30 +341,9 @@
       border-radius: 8px;
       border: none;
       order: 2;
-      max-height: none;
-      overflow: visible;
+      max-height: 70vh;
+      overflow-y: auto;
       margin: 0;
-    }
-
-    .generator-panel.hide-mobile {
-      display: block; /* Always show on mobile */
-    }
-
-
-    .export-controls {
-      position: static;
-      bottom: auto;
-      right: auto;
-      background: #f8f9fa;
-      padding: 15px;
-      border: 1px solid #ddd;
-      border-radius: 8px;
-      box-shadow: none;
-      z-index: auto;
-      display: flex;
-      gap: 10px;
-      margin-top: 20px;
-      justify-content: center;
     }
 
     .title-mobile {
@@ -411,70 +395,18 @@
     }
   }
 
+  /* Print Styles - Hide main content, let PrintLayout handle printing */
   @media print {
     .container {
-      max-width: none;
-      margin: 0;
-      padding: 0;
-    }
-
-    .app-layout {
-      grid-template-columns: 1fr;
-      gap: 0;
-    }
-
-    .generator-panel {
       display: none;
-    }
-
-  }
-
-  /* Print Styles - Only show the card */
-  @media print {
-    /* Hide everything except the card */
-    header,
-    .generator-panel,
-    .export-controls {
-      display: none !important;
-    }
-
-    /* Make the card container fill the page */
-    .container {
-      margin: 0;
-      padding: 0;
-      max-width: none;
-    }
-
-    .app-layout {
-      display: block;
-      margin: 0;
-      padding: 0;
-    }
-
-    .card-container {
-      position: static;
-      width: auto;
-      height: auto;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-    }
-
-    /* Ensure colors print correctly */
-    * {
-      -webkit-print-color-adjust: exact !important;
-      print-color-adjust: exact !important;
     }
   }
 
   .print-settings {
-    margin-top: 1.25em;
+    margin-top: 1.5em;
     padding: 15px;
-    background: #f8f9fa;
-    border: 1px solid #e9ecef;
+    background: #e9ecef;
     border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
   }
 
   .print-settings h3 {

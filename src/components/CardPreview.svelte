@@ -472,8 +472,8 @@
     }
 
     * {
-      -webkit-print-color-adjust: exact !important;
-      print-color-adjust: exact !important;
+      -webkit-print-color-adjust: exact ;
+      print-color-adjust: exact ;
     }
   }
 
@@ -495,7 +495,10 @@
     font-weight: bold;
     color: white;
     font-family: 'OPTICopperplate-Light', Arial, sans-serif;
-    text-shadow: 0 0 0.01in rgba(0,0,0,0.8);
+    -webkit-text-stroke: 0.01in rgba(0,0,0,0.8);
+    paint-order: stroke fill;
+    top: 50%;
+    transform: translateY(-50%);
   }
 
   .card-name-container {
@@ -579,8 +582,11 @@
     font-weight: bold;
     color: white;
     font-family: 'OPTICopperplate-Light', Arial, sans-serif;
-    text-shadow: 0 0 0.01in rgba(0,0,0,0.8);
+    -webkit-text-stroke: 0.01in rgba(0,0,0,0.8);
+    paint-order: stroke fill;
     margin-left: 0.02in; /* Move block value right */
+    top: 50%;
+    transform: translateY(-50%);
   }
 
   .type-bracket-container {
@@ -653,7 +659,10 @@
     z-index: 25;
     font-weight: bold;
     font-family: 'OPTICopperplate-Light', Arial, sans-serif;
-    text-shadow: 0 0 0.01in rgba(0,0,0,0.8);
+    -webkit-text-stroke: 0.01in rgba(0,0,0,0.8);
+    paint-order: stroke fill;
+    top: 50%;
+    transform: translateY(-50%);
   }
 
   .damage-value {
@@ -686,7 +695,10 @@
     font-weight: bold;
     color: white;
     font-family: 'OPTICopperplate-Light', Arial, sans-serif;
-    text-shadow: 0 0 0.01in rgba(0,0,0,0.8);
+    -webkit-text-stroke: 0.01in rgba(0,0,0,0.8);
+    paint-order: stroke fill;
+    top: 50%;
+    transform: translateY(-50%);
   }
 
   .character-vital-stats {
@@ -774,7 +786,10 @@
     font-weight: bold;
     color: white;
     font-family: 'OPTICopperplate-Light', Arial, sans-serif;
-    text-shadow: 0 0 0.01in rgba(0,0,0,0.8);
+    -webkit-text-stroke: 0.01in rgba(0,0,0,0.8);
+    paint-order: stroke fill;
+    top: 50%;
+    transform: translateY(-50%);
   }
 
   /* Remove duplicate card-info-section - using the absolute positioned one above */

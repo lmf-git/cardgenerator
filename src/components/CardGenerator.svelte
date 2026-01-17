@@ -730,18 +730,7 @@
 
 <style>
   .card-generator {
-    max-height: 37.5em; /* 600px */
-    overflow-y: auto;
-    padding-right: 0.625em; /* 10px */
     font-size: 1rem;
-  }
-
-  @media (max-width: 1024px) {
-    .card-generator {
-      max-height: none;
-      overflow-y: visible;
-      padding-right: 0;
-    }
   }
 
   .card-generator h2 {
@@ -830,7 +819,7 @@
 
 
   .checkbox-label {
-    display: flex !important;
+    display: flex;
     align-items: center;
     gap: 0.625em; /* 10px */
     cursor: pointer;
@@ -934,25 +923,6 @@
   }
 
 
-
-  /* Scrollbar styling */
-  .card-generator::-webkit-scrollbar {
-    width: 0.375em; /* 6px */
-  }
-
-  .card-generator::-webkit-scrollbar-track {
-    background: #f1f1f1;
-    border-radius: 0.1875em; /* 3px */
-  }
-
-  .card-generator::-webkit-scrollbar-thumb {
-    background: #c1c1c1;
-    border-radius: 0.1875em; /* 3px */
-  }
-
-  .card-generator::-webkit-scrollbar-thumb:hover {
-    background: #a8a8a8;
-  }
 
   /* Select dropdown styling */
   .form-select {
