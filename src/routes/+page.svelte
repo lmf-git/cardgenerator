@@ -3,44 +3,11 @@
   import CardGenerator from '../components/CardGenerator.svelte';
   import CardPreview from '../components/CardPreview.svelte';
   import PrintLayout from '../components/PrintLayout.svelte';
-  import { exportCardToPDF, exportCardToPNG } from '../lib/export.js';
   import { downloadJSON, readJSONFile } from '../lib/io.js';
 
   let showEditMobile = $state(false);
   let cardPreviewRef = $state(null);
-  let isExporting = $state(false);
   let showPrintLayout = $state(false);
-
-  // Export functions
-  async function exportToPDF() {
-    if (!cardPreviewRef) return;
-    
-    isExporting = true;
-    const cardElement = cardPreviewRef.querySelector('.ufs-card');
-    const success = await exportCardToPDF(cardElement, `${$cardData.name || 'ufs-card'}.pdf`, $printSettings);
-    
-    if (success) {
-      alert('PDF exported successfully!');
-    } else {
-      alert('Failed to export PDF. Please try again.');
-    }
-    isExporting = false;
-  }
-
-  async function exportToPNG() {
-    if (!cardPreviewRef) return;
-    
-    isExporting = true;
-    const cardElement = cardPreviewRef.querySelector('.ufs-card');
-    const success = await exportCardToPNG(cardElement, `${$cardData.name || 'ufs-card'}.png`);
-    
-    if (success) {
-      alert('PNG exported successfully!');
-    } else {
-      alert('Failed to export PNG. Please try again.');
-    }
-    isExporting = false;
-  }
 
   // Save/Load functions
   function saveConfig() {
@@ -123,12 +90,6 @@
       <div class="export-controls">
         <button onclick={() => showPrintLayout = true} class="print-btn">
           Print Layout
-        </button>
-        <button onclick={exportToPDF} class="export-btn" disabled={isExporting}>
-          {isExporting ? 'Exporting...' : 'PDF'}
-        </button>
-        <button onclick={exportToPNG} class="export-btn" disabled={isExporting}>
-          {isExporting ? 'Exporting...' : 'PNG'}
         </button>
         <button onclick={saveConfig} class="config-btn save-btn">
           💾 Save
@@ -261,7 +222,7 @@
   }
 
 
-  .print-btn, .export-btn {
+  .print-btn {
     padding: 8px 16px;
     border: none;
     border-radius: 5px;
@@ -270,29 +231,12 @@
     font-size: 14px;
     transition: all 0.3s ease;
     white-space: nowrap;
-  }
-
-  .print-btn {
     background: #27ae60;
     color: white;
   }
 
   .print-btn:hover {
     background: #229954;
-  }
-
-  .export-btn {
-    background: #8e44ad;
-    color: white;
-  }
-
-  .export-btn:hover:not(:disabled) {
-    background: #7d3c98;
-  }
-
-  .export-btn:disabled {
-    background: #bdc3c7;
-    cursor: not-allowed;
   }
 
   .config-btn {
@@ -371,7 +315,7 @@
     }
 
 
-    .print-btn, .export-btn {
+    .print-btn {
       flex: 1;
       min-height: 48px; /* Better touch targets */
     }

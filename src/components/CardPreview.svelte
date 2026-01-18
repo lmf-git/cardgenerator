@@ -166,16 +166,16 @@
         <!-- D & E: Attack zone/speed and damage (middle-right on attack cards) -->
         {#if card.cardType === 'attack'}
           <div class="attack-stats-group">
-            <div class="damage-stat">
-              <div class="damage-icon">
-                <DamageIcon attackZone={card.attackZone} size="0.3in" extraClass="damage-svg" />
-                <span class="damage-value">{card.damage}</span>
-              </div>
-            </div>
             <div class="attack-zone-stat">
               <div class="zone-speed-icon">
                 <SpeedSVGIcon size="0.3in" extraClass="speed-svg" />
                 <span class="speed-value">{card.speed}</span>
+              </div>
+            </div>
+            <div class="damage-stat">
+              <div class="damage-icon">
+                <DamageIcon attackZone={card.attackZone} size="0.3in" extraClass="damage-svg" />
+                <span class="damage-value">{card.damage}</span>
               </div>
             </div>
           </div>
@@ -808,12 +808,18 @@
   }
 
   .resource-symbols.character-symbols {
+    top: 0;
     justify-content: center;
+    gap: 0;
     background: transparent;
     border: none;
     border-radius: 0;
     padding: 0.5% 0;
     border-bottom: 0.2% solid rgba(var(--frame-color), 0.3);
+  }
+
+  .resource-symbols.character-symbols :global(.symbol-icon) {
+    transform: scale(0.85);
   }
   
   .symbol-bracket-container {
@@ -875,12 +881,12 @@
   .action-card .info-text-area,
   .foundation-card .info-text-area,
   .asset-card .info-text-area {
-    top: 32%;
+    top: 26%;
   }
 
   /* Character cards need more space due to larger symbols */
   .character-card .info-text-area {
-    top: 25%;
+    top: 22%;
   }
 
   .keywords-line {
