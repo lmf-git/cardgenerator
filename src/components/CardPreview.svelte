@@ -168,13 +168,11 @@
           <div class="attack-stats-group">
             <div class="attack-zone-stat">
               <div class="zone-speed-icon">
-                <SpeedSVGIcon size="0.3in" extraClass="speed-svg" />
+                <SpeedSVGIcon attackZone={card.attackZone} size="0.3in" extraClass="speed-svg" />
                 <span class="speed-value">{card.speed}</span>
               </div>
-            </div>
-            <div class="damage-stat">
               <div class="damage-icon">
-                <DamageIcon attackZone={card.attackZone} size="0.3in" extraClass="damage-svg" />
+                <DamageIcon size="0.3in" extraClass="damage-svg" />
                 <span class="damage-value">{card.damage}</span>
               </div>
             </div>
@@ -626,8 +624,8 @@
 
   .attack-stats-group {
     position: absolute;
-    top: 50%;
-    right: 0.05in; /* 2% of 2.5in */
+    top: 60%;
+    right: 0.01in; /* Closer to right edge */
     transform: translateY(-50%);
     display: flex;
     flex-direction: column;
@@ -637,10 +635,10 @@
 
   .attack-zone-stat {
     position: relative;
-  }
-
-  .damage-stat {
-    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.05in;
   }
 
   .zone-speed-icon, .damage-icon {
@@ -665,14 +663,18 @@
     transform: translateY(-50%);
   }
 
+  .speed-value {
+    margin-left: -0.02in; /* Move speed value left */
+  }
+
   .damage-value {
-    margin-left: -0.04in; /* Move damage value left */
+    margin-left: 0.02in; /* Move damage value right */
   }
 
   .character-stats-group {
     position: absolute;
     bottom: 1.55in; /* Higher, well above the card info section */
-    right: 0.075in; /* 3% of 2.5in */
+    right: -0.02in; /* Closer to right edge */
     display: flex;
     flex-direction: column;
     gap: 0.07in; /* 2% of 3.5in for vertical gap */
